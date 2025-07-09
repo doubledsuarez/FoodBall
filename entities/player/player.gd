@@ -7,6 +7,9 @@ extends CharacterBody3D
 
 var target_velocity = Vector3.ZERO
 
+var hasFood : bool = false
+var equipped = null
+
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
@@ -38,4 +41,8 @@ func _physics_process(delta: float) -> void:
 	velocity = target_velocity
 	var collision_count = move_and_slide()
 			
-			
+	if Input.is_action_pressed("throw"):
+		if hasFood == true:
+			equipped.throw()
+			equipped.reparent(get_parent())
+			hasFood = false
