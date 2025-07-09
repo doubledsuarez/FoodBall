@@ -36,4 +36,6 @@ func _physics_process(delta: float) -> void:
 		
 	# Moving the Character
 	velocity = target_velocity
-	move_and_slide()
+	var collision_count = move_and_slide()
+			
+			

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn8n0j2de43v4"]
+
+[ext_resource type="Script" uid="uid://5tr1j1k8kty3" path="res://entities/food/food.gd" id="1_bw6vg"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bw6vg"]
+
+[node name="Food" type="Area3D"]
+script = ExtResource("1_bw6vg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_ylt38")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_bw6vg")
