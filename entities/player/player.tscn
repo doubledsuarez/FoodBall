@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://wu14x6pdx8fq"]
+
+[ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_symyc"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_symyc"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_symyc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_sfv1e")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+material_override = SubResource("StandardMaterial3D_symyc")
+mesh = SubResource("BoxMesh_symyc")
+skeleton = NodePath("")
