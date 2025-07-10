@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://s7vjk7wpxkuw"]
+
+[ext_resource type="Script" uid="uid://weypjb7bumsf" path="res://ui/main_menu/menus.gd" id="1_en8h8"]
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="1_ljot1"]
+[ext_resource type="Theme" uid="uid://cq7yef5qym1vr" path="res://ui/main_menu/menu.tres" id="3_54dqq"]
+[ext_resource type="Script" uid="uid://by4udh5ir3ngx" path="res://ui/main_menu/button_effect.gd" id="3_wjnhl"]
+
+[node name="Menus" type="Node2D"]
+script = ExtResource("1_en8h8")
+
+[node name="Main Menu" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Main Menu"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.0
+offset_top = 100.0
+offset_right = 204.0
+offset_bottom = 211.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_ljot1")
+theme_override_font_sizes/font_size = 128
+text = "Foodball!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mmhbox" type="HBoxContainer" parent="Main Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="mmvbox" type="VBoxContainer" parent="Main Menu/mmhbox"]
+layout_mode = 2
+theme = ExtResource("3_54dqq")
+alignment = 1
+
+[node name="mmstart" type="Button" parent="Main Menu/mmhbox/mmvbox"]
+layout_mode = 2
+text = "Start Game"
+script = ExtResource("3_wjnhl")
+
+[node name="mmunlocks" type="Button" parent="Main Menu/mmhbox/mmvbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ljot1")
+theme_override_font_sizes/font_size = 32
+text = "Unlocks"
+script = ExtResource("3_wjnhl")
+
+[node name="mmoptions" type="Button" parent="Main Menu/mmhbox/mmvbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ljot1")
+theme_override_font_sizes/font_size = 32
+text = "Options"
+script = ExtResource("3_wjnhl")
+
+[node name="Menu Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Menu Background"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
