@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://wu14x6pdx8fq"]
+[gd_scene load_steps=7 format=3 uid="uid://wu14x6pdx8fq"]
 
 [ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
+[ext_resource type="Script" uid="uid://cqbpu4vebvpg2" path="res://entities/player/team_color.gd" id="2_abrql"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_symyc"]
-albedo_color = Color(0, 0, 1, 1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_symyc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_symyc"]
+font_size = 60
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_symyc"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_symyc")
@@ -17,7 +21,24 @@ shape = SubResource("BoxShape3D_sfv1e")
 
 [node name="Pivot" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
-material_override = SubResource("StandardMaterial3D_symyc")
+[node name="TeamColor" type="MeshInstance3D" parent="Pivot"]
 mesh = SubResource("BoxMesh_symyc")
 skeleton = NodePath("")
+script = ExtResource("2_abrql")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(256, 256)
+
+[node name="PlayerNum" type="Label" parent="SubViewport"]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 40.0
+offset_bottom = 23.0
+text = "test"
+label_settings = SubResource("LabelSettings_symyc")
+horizontal_alignment = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = SubResource("ViewportTexture_symyc")
+
+[node name="LeaveTimer" type="Timer" parent="."]
