@@ -60,3 +60,16 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 
 [node name="Wall4" parent="Walls" instance=ExtResource("5_7jktm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 15)
+
+[node name="Red Points" type="Label" parent="."]
+offset_left = 8.0
+offset_right = 230.0
+offset_bottom = 24.0
+text = "Lorem"
+
+[node name="Blue Points" type="Label" parent="."]
+offset_left = 1696.0
+offset_right = 1918.0
+offset_bottom = 24.0
+text = "Ipsum"
+horizontal_alignment = 2
