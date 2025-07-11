@@ -18,10 +18,15 @@ config/icon="res://ui/icon.svg"
 [autoload]
 
 g="*res://globals/globals.gd"
+MultiplayerInput="*res://addons/multiplayer_input/multiplayer_input.gd"
 
 [display]
 
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/multiplayer_input/plugin.cfg")
 
 [input]
 
