@@ -21,7 +21,7 @@ func init(player_num: int):
 	device = PlayerManager.get_player_device(player)
 	input = DeviceInput.new(device)
 	
-	$SubViewport/PlayerNum.text = "%s" % player_num
+	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
@@ -60,10 +60,7 @@ func _physics_process(delta: float) -> void:
 			equipped.reparent(get_parent())
 			hasFood = false
 			
-		# let the player leave by pressing the "leave" button
 	if input.is_action_just_pressed("leave"):
-		# an alternative to this is just call PlayerManager.leave(player)
-		# but that only works if you set up the PlayerManager singleton
 		PlayerManager.leave(player)
 		
 		
