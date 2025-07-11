@@ -11,6 +11,9 @@ func _ready():
 
 func _process(_delta):
 	PlayerManager.handle_join_input()
+	
+	$"Red Points".text = "Red Points: %s" % (g.red_points)
+	$"Blue Points".text = "Blue Points: %s" % (g.blue_points)
 
 func spawn_player(player: int):
 	# create the player node
