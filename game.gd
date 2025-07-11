@@ -28,8 +28,11 @@ func spawn_player(player: int):
 	
 	if PlayerManager.get_player_data(player, "team") == "red":
 		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
+		player_node.assignColor("red")
 	elif PlayerManager.get_player_data(player, "team") == "blue":
 		player_node.position = Vector3(randf_range(2, 13), 0, randf_range(-13, 13))
+		player_node.assignColor("blue")
+		
 
 
 func delete_player(player: int):

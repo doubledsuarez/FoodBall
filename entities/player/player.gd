@@ -65,3 +65,8 @@ func _physics_process(delta: float) -> void:
 		# an alternative to this is just call PlayerManager.leave(player)
 		# but that only works if you set up the PlayerManager singleton
 		PlayerManager.leave(player)
+		
+		
+func assignColor(team: String) -> void:
+	$Pivot/TeamColor.assignTeamColor(team)
+	
