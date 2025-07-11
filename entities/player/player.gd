@@ -10,18 +10,31 @@ var target_velocity = Vector3.ZERO
 var hasFood : bool = false
 var equipped = null
 
+var player : int
+var input
+var device
+
+signal leave
+
+func init(player_num: int):
+	player = player_num
+	device = PlayerManager.get_player_device(player)
+	input = DeviceInput.new(device)
+	
+	$SubViewport/PlayerNum.text = "%s" % player_num
+
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
 	
 	# We check for each move input and update the direction accordingly.
-	if Input.is_action_pressed("move_right"):
+	if input.is_action_pressed("move_right"):
 		direction.x += 1
-	if Input.is_action_pressed("move_left"):
+	if input.is_action_pressed("move_left"):
 		direction.x -= 1
-	if Input.is_action_pressed("move_forward"):
+	if input.is_action_pressed("move_forward"):
 		direction.z -= 1
-	if Input.is_action_pressed("move_back"):
+	if input.is_action_pressed("move_back"):
 		direction.z += 1
 		
 	if direction != Vector3.ZERO:
@@ -41,8 +54,14 @@ func _physics_process(delta: float) -> void:
 	velocity = target_velocity
 	var collision_count = move_and_slide()
 			
-	if Input.is_action_pressed("throw"):
+	if input.is_action_just_pressed("throw"):
 		if hasFood == true:
 			equipped.throw()
 			equipped.reparent(get_parent())
 			hasFood = false
+			
+		# let the player leave by pressing the "leave" button
+	if input.is_action_just_pressed("leave"):
+		# an alternative to this is just call PlayerManager.leave(player)
+		# but that only works if you set up the PlayerManager singleton
+		PlayerManager.leave(player)
