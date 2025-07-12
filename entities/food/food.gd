@@ -6,6 +6,8 @@ extends Area3D
 
 var human
 var team : String
+var type : String = "food"
+var time : int = 5
 
 var isEquipped : bool = false
 var inAction : bool = false
@@ -29,10 +31,11 @@ func _on_body_entered(body: Node3D) -> void:
 	if coll is CharacterBody3D and inAction == true:
 		opp = PlayerManager.get_player_data(coll.player, "team")
 		if opp == "red" and team == "blue":
+			queue_free()
 			g.blue_points += 1
 		if opp == "blue" and team == "red":
+			queue_free()
 			g.red_points += 1
-		queue_free()
 	elif coll is CharacterBody3D and inAction == false and body.hasFood == false:
 		body.add_child(foodInstance)
 		body.hasFood = true
@@ -49,5 +52,10 @@ func _on_body_entered(body: Node3D) -> void:
 func throw() -> void:
 	isEquipped = false
 	inAction = true
+	
+	
+func eat() -> void:
+	isEquipped = false
+	queue_free()
 	
 	

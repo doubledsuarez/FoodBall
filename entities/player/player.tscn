@@ -42,3 +42,7 @@ horizontal_alignment = 1
 texture = SubResource("ViewportTexture_symyc")
 
 [node name="LeaveTimer" type="Timer" parent="."]
+
+[node name="PowerUpTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="PowerUpTimer" to="." method="_on_power_up_timer_timeout"]

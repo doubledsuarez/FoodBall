@@ -9,6 +9,7 @@ var target_velocity = Vector3.ZERO
 
 var hasFood : bool = false
 var equipped = null
+var powerup_active : bool = false
 
 var player : int
 var input
@@ -63,7 +64,30 @@ func _physics_process(delta: float) -> void:
 	if input.is_action_just_pressed("leave"):
 		PlayerManager.leave(player)
 		
+	if input.is_action_just_pressed("eat"):
+		if hasFood == true and powerup_active == false:
+			equipped.eat()
+			powerUp(equipped)
+
+				
+
+func powerUp(food: PackedScene):
+	powerup_active = true
+	match equipped.type:
+		"food":
+			speed *= 2
+			$PowerUpTimer.wait_time = equipped.time
+			$PowerUpTimer.start()
+		_:
+			print("Invalid food type %s passed" % equipped.type)
+			
+			
+func setDefaults() -> void:
+	speed = 14
 		
 func assignColor(team: String) -> void:
 	$Pivot/TeamColor.assignTeamColor(team)
 	
+
+func _on_power_up_timer_timeout() -> void:
+	setDefaults()
