@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 	var collision_count = move_and_slide()
 			
 	if input.is_action_just_pressed("throw"):
-		var forward_direction = -global_transform.basis.z
+		var forward_direction = global_transform.basis.z
 		if hasFood == true:
 			equipped.throw(forward_direction)
 			equipped.reparent(get_parent())
@@ -84,6 +84,7 @@ func powerUp(food):
 			
 			
 func setDefaults() -> void:
+	powerup_active = false
 	speed = 14
 		
 func assignColor(team: String) -> void:

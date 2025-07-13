@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Food Fight"
+config/name="FoodBall"
 run/main_scene="uid://c4ejbhsvcm1fe"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://ui/icon.svg"
