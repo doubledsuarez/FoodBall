@@ -2,7 +2,7 @@ extends RigidBody3D
 
 @onready var area = $Area3D  # Assuming the Area3D is a child of the RigidBody3D
 @onready var foodInstance = duplicate()
-@export var throw_force: float = 15.0
+@export var throw_force: float = 10.0
 var human
 var team: String
 var type: String = "food"
