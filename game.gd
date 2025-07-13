@@ -1,19 +1,19 @@
 extends Node
 
 #@onready var player_scene : PackedScene = preload("res://entities/player/player.tscn")
+@onready var cafe_scene : PackedScene = preload("res://levels/cafeteria/cafeteria.tscn")
 
 # map from player integer to the player node
 var player_nodes = {}
 
 func _ready():
+	add_child(cafe_scene.instantiate())
 	PlayerManager.player_joined.connect(spawn_player)
 	PlayerManager.player_left.connect(delete_player)
 
 func _process(_delta):
 	PlayerManager.handle_join_input()
 	
-	$"Red Points".text = "Red Points: %s" % (g.red_points)
-	$"Blue Points".text = "Blue Points: %s" % (g.blue_points)
 
 func spawn_player(player: int):
 	# create the player node
