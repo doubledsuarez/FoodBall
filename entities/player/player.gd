@@ -56,8 +56,9 @@ func _physics_process(delta: float) -> void:
 	var collision_count = move_and_slide()
 			
 	if input.is_action_just_pressed("throw"):
+		var forward_direction = -global_transform.basis.z
 		if hasFood == true:
-			equipped.throw()
+			equipped.throw(forward_direction)
 			equipped.reparent(get_parent())
 			hasFood = false
 			
@@ -71,7 +72,7 @@ func _physics_process(delta: float) -> void:
 
 				
 
-func powerUp(food: PackedScene):
+func powerUp(food):
 	powerup_active = true
 	match equipped.type:
 		"food":
