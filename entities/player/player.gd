@@ -67,6 +67,7 @@ func _physics_process(delta: float) -> void:
 		
 	if input.is_action_just_pressed("eat"):
 		if hasFood == true and powerup_active == false:
+			hasFood = false
 			equipped.eat()
 			powerUp(equipped)
 
@@ -76,7 +77,7 @@ func powerUp(food):
 	powerup_active = true
 	match equipped.type:
 		"food":
-			speed *= 2
+			speed *= 1.5
 			$PowerUpTimer.wait_time = equipped.time
 			$PowerUpTimer.start()
 		_:
