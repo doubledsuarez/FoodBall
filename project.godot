@@ -20,6 +20,7 @@ config/icon="res://ui/icon.svg"
 g="*res://globals/globals.gd"
 MultiplayerInput="*res://addons/multiplayer_input/multiplayer_input.gd"
 PlayerManager="*res://globals/player_manager.gd"
+Log="*res://addons/logger/logger.gd"
 
 [display]
 
@@ -34,7 +35,7 @@ project/assembly_name="Food Fight"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/multiplayer_input/plugin.cfg")
+enabled=PackedStringArray("res://addons/logger/plugin.cfg", "res://addons/multiplayer_input/plugin.cfg")
 
 [input]
 

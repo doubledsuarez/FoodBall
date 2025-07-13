@@ -1,16 +1,17 @@
 extends Node
 
-#@onready var player_scene : PackedScene = preload("res://entities/player/player.tscn")
 @onready var cafe_scene : PackedScene = preload("res://levels/cafeteria/cafeteria.tscn")
 
 # map from player integer to the player node
 var player_nodes = {}
 
+# load the cafe level and connect playermanager signals
 func _ready():
 	add_child(cafe_scene.instantiate())
 	PlayerManager.player_joined.connect(spawn_player)
 	PlayerManager.player_left.connect(delete_player)
 
+# read devices not joined for the join input
 func _process(_delta):
 	PlayerManager.handle_join_input()
 	
@@ -29,6 +30,7 @@ func spawn_player(player: int):
 	# add the player to the tree
 	add_child(player_node)
 	
+	# set the player color, position, and rotation based on the team they joined
 	if PlayerManager.get_player_data(player, "team") == "red":
 		player_node.set_rotation_degrees(Vector3(0, 90, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 270, 0))
@@ -47,7 +49,4 @@ func delete_player(player: int):
 	player_nodes.erase(player)
 
 func on_player_leave(player: int):
-	# just let the player manager know this player is leaving
-	# this will, through the player manager's "player_left" signal,
-	# indirectly call delete_player because it's connected in this file's _ready()
 	PlayerManager.leave(player)
