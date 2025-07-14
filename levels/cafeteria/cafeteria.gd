@@ -12,12 +12,12 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$"Red Points".text = "Red Points: %s" % g.red_points
 	$"Blue Points".text = "Blue Points: %s" % g.blue_points
 	if g.roundTimer.get_time_left() != 0.0:
 		$Countdown.text = "Time left: %s seconds" % ceili(g.roundTimer.get_time_left())
-		
+
 	if g.red_points == pointsToWin:
 		$Countdown.text = "Round Over! Red team wins!"
 		g.red_won.emit()
@@ -28,12 +28,12 @@ func _process(delta: float) -> void:
 		print("somehow both teams scored %s points on the same frame. crazy. it's a tie?" % pointsToWin)
 		$Countdown.text = "Round Over! It was a tie!"
 		g.tie.emit()
-		
+
 	clamp(g.red_points, 0, pointsToWin)
 	clamp(g.blue_points, 0, pointsToWin)
 
 
-func on_round_timer_timeout() -> void:		
+func on_round_timer_timeout() -> void:
 	if g.red_points > g.blue_points:
 		$Countdown.text = "Round Over! Red team wins!"
 		g.red_won.emit()

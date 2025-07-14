@@ -21,13 +21,13 @@ func init(player_num: int):
 	player = player_num
 	device = PlayerManager.get_player_device(player)
 	input = DeviceInput.new(device)
-	
+
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
-	
+
 	# We check for each move input and update the direction accordingly.
 	if input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -37,43 +37,43 @@ func _physics_process(delta: float) -> void:
 		direction.z -= 1
 	if input.is_action_pressed("move_back"):
 		direction.z += 1
-		
+
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 		# Setting the basis property will affect the rotation of the node.
 		$Pivot.basis = Basis.looking_at(direction)
-		
+
 	# Ground Velocity
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
-	
+
 	# Vertical Velocity
 	if not is_on_floor(): # if in the air, fall towards the floor. aka gravity
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
-		
+
 	# Moving the Character
 	velocity = target_velocity
-	var collision_count = move_and_slide()
-			
+	move_and_slide()
+
 	if input.is_action_just_pressed("throw"):
 		var forward_direction = global_transform.basis.z
 		if hasFood == true:
-			equipped.throw(forward_direction)
+			equipped.boomerang_throw(forward_direction)
 			equipped.reparent(get_parent())
 			hasFood = false
-			
+
 	if input.is_action_just_pressed("leave"):
 		PlayerManager.leave(player)
-		
+
 	if input.is_action_just_pressed("eat"):
 		if hasFood == true and powerup_active == false:
 			hasFood = false
 			equipped.eat()
-			powerUp(equipped)
+			powerUp()
 
-				
 
-func powerUp(food):
+
+func powerUp():
 	powerup_active = true
 	match equipped.type:
 		"food":
@@ -82,15 +82,15 @@ func powerUp(food):
 			$PowerUpTimer.start()
 		_:
 			print("Invalid food type %s passed" % equipped.type)
-			
-			
+
+
 func setDefaults() -> void:
 	powerup_active = false
 	speed = 14
-		
+
 func assignColor(team: String) -> void:
 	$Pivot/TeamColor.assignTeamColor(team)
-	
+
 
 func _on_power_up_timer_timeout() -> void:
 	setDefaults()
