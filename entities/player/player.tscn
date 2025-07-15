@@ -23,6 +23,7 @@ shape = SubResource("BoxShape3D_sfv1e")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="TeamColor" type="MeshInstance3D" parent="Pivot"]
+visible = false
 mesh = SubResource("BoxMesh_symyc")
 skeleton = NodePath("")
 script = ExtResource("2_abrql")
@@ -40,7 +41,7 @@ label_settings = SubResource("LabelSettings_symyc")
 horizontal_alignment = 1
 
 [node name="PlayerNumLabel" type="Sprite3D" parent="."]
-transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0)
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 1, 0)
 texture = SubResource("ViewportTexture_symyc")
 
 [node name="LeaveTimer" type="Timer" parent="."]

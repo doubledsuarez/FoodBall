@@ -3,7 +3,7 @@ extends RigidBody3D
 @onready var area = $Area3D		# Area3D I need to make collisions easier
 @onready var foodInstance = duplicate()
 
-@export var throw_force: float = 10.0
+#@export var throw_force: float = 10.0
 
 # properties
 var human
@@ -28,9 +28,9 @@ func _physics_process(delta: float) -> void:
 
 		# Start returning after the specified time
 		if boomerang_timer >= boomerang_return_time:
-			apply_boomerang_forces(delta)
+			apply_boomerang_forces(delta, 10.0)
 
-func throw(direction: Vector3) -> void:
+func throw(direction: Vector3, throw_force: int) -> void:
 	isEquipped = false
 	inAction = true
 	isBoomerang = false
@@ -55,7 +55,7 @@ func throw(direction: Vector3) -> void:
 
 	Log.dbg("Linear velocity after impulse: ", linear_velocity)
 
-func boomerang_throw(direction: Vector3) -> void:
+func boomerang_throw(direction: Vector3, throw_force: int) -> void:
 	isEquipped = false
 	inAction = true
 	isBoomerang = true
@@ -89,7 +89,7 @@ func eat() -> void:
 	isEquipped = false
 	queue_free()
 
-func apply_boomerang_forces(delta: float) -> void:
+func apply_boomerang_forces(delta: float, throw_force: int) -> void:
 	if not human:
 		return
 
