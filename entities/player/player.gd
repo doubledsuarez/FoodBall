@@ -15,9 +15,17 @@ var player : int
 var input
 var device
 
+var throwTimer = Timer.new()
+
 signal leave
 
-func init(player_num: int):
+func _ready() -> void:
+	throwTimer.connect("timeout", on_throw_timer_timeout)
+	throwTimer.set_wait_time(3.0)
+	throwTimer.set_one_shot(false)
+	add_child(throwTimer)
+
+func init(player_num: int):	
 	player = player_num
 	device = PlayerManager.get_player_device(player)
 	input = DeviceInput.new(device)
@@ -56,11 +64,19 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	if input.is_action_just_pressed("throw"):
-		var forward_direction = global_transform.basis.z
 		if hasFood == true:
-			equipped.boomerang_throw(forward_direction)
+			var forward_direction = global_transform.basis.z
+			#equipped.boomerang_throw(forward_direction)
+			equipped.throw(forward_direction, 10.0)
 			equipped.reparent(get_parent())
 			hasFood = false
+			
+	#if input.is_action_pressed("throw"):
+		#throwTimer.start()
+	#if input.is_action_just_released("throw"):
+		#if hasFood == true:
+			#throw(g.roundTimer.get_time_left())
+		#throwTimer.stop()
 
 	if input.is_action_just_pressed("leave"):
 		PlayerManager.leave(player)
@@ -71,9 +87,18 @@ func _physics_process(delta: float) -> void:
 			equipped.eat()
 			powerUp()
 
+func throw(throw_force: int) -> void:
+	Log.info("Throwing with a force of %s." % throw_force)
+	var forward_direction = global_transform.basis.z
+	#equipped.boomerang_throw(forward_direction)
+	equipped.throw(forward_direction, throw_force)
+	equipped.reparent(get_parent())
+	hasFood = false
+	
+func on_throw_timer_timeout() -> void:
+	throw(9.0)
 
-
-func powerUp():
+func powerUp() -> void:
 	powerup_active = true
 	match equipped.type:
 		"food":
