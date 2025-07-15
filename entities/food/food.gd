@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 		if boomerang_timer >= boomerang_return_time:
 			apply_boomerang_forces(delta, 10.0)
 
-func throw(direction: Vector3, throw_force: int) -> void:
+func throw(direction: Vector3, throw_force: float) -> void:
 	isEquipped = false
 	inAction = true
 	isBoomerang = false
@@ -45,7 +45,7 @@ func throw(direction: Vector3, throw_force: int) -> void:
 
 	# Create a more realistic throw with upward arc
 	var throw_direction = direction.normalized()
-	var upward_force = Vector3(0, 0.5, 0)  # Add upward component for arc
+	var upward_force = Vector3(0, 0.25, 0)  # Add upward component for arc
 	var final_force = (throw_direction + upward_force) * throw_force
 
 	Log.dbg("Final force being applied: ", final_force)

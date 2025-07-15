@@ -5,11 +5,15 @@ extends CharacterBody3D
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 
+@export var max_power : float = 15.0
+
 var target_velocity = Vector3.ZERO
 
 var hasFood : bool = false
 var equipped = null
 var powerup_active : bool = false
+var throw_power : float
+var isMaxPower : bool = false
 
 var player : int
 var input
@@ -23,6 +27,7 @@ func _ready() -> void:
 	throwTimer.connect("timeout", on_throw_timer_timeout)
 	throwTimer.set_wait_time(3.0)
 	throwTimer.set_one_shot(false)
+	throwTimer.set_autostart(false)
 	add_child(throwTimer)
 
 func init(player_num: int):	
@@ -63,20 +68,22 @@ func _physics_process(delta: float) -> void:
 	velocity = target_velocity
 	move_and_slide()
 
-	if input.is_action_just_pressed("throw"):
-		if hasFood == true:
-			var forward_direction = global_transform.basis.z
-			#equipped.boomerang_throw(forward_direction)
-			equipped.throw(forward_direction, 10.0)
-			equipped.reparent(get_parent())
-			hasFood = false
-			
-	#if input.is_action_pressed("throw"):
-		#throwTimer.start()
-	#if input.is_action_just_released("throw"):
+	#if input.is_action_just_pressed("throw"):
 		#if hasFood == true:
-			#throw(g.roundTimer.get_time_left())
-		#throwTimer.stop()
+			#var forward_direction = global_transform.basis.z
+			##equipped.boomerang_throw(forward_direction, 10.0)
+			#equipped.throw(forward_direction, 10.0)
+			#equipped.reparent(get_parent())
+			#hasFood = false
+	
+	if hasFood == true:		
+		if input.is_action_just_pressed("throw"):
+			throwTimer.start()
+		if input.is_action_just_released("throw"):
+			throw_power = (5.0 - throwTimer.get_time_left()) * 3
+			throw(throw_power)
+			#throw(clampf((5.0 - throwTimer.get_time_left() * 3), 6.0, 15.0))
+			throwTimer.stop()
 
 	if input.is_action_just_pressed("leave"):
 		PlayerManager.leave(player)
@@ -87,16 +94,19 @@ func _physics_process(delta: float) -> void:
 			equipped.eat()
 			powerUp()
 
-func throw(throw_force: int) -> void:
+func throw(throw_force: float) -> void:
+	if isMaxPower:
+		throw_force = max_power
 	Log.info("Throwing with a force of %s." % throw_force)
 	var forward_direction = global_transform.basis.z
-	#equipped.boomerang_throw(forward_direction)
+	#equipped.boomerang_throw(forward_direction, 9.0)
 	equipped.throw(forward_direction, throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
+	isMaxPower = false
 	
 func on_throw_timer_timeout() -> void:
-	throw(9.0)
+	isMaxPower = true
 
 func powerUp() -> void:
 	powerup_active = true
