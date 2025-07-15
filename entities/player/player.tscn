@@ -23,7 +23,6 @@ shape = SubResource("BoxShape3D_sfv1e")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="TeamColor" type="MeshInstance3D" parent="Pivot"]
-visible = false
 mesh = SubResource("BoxMesh_symyc")
 skeleton = NodePath("")
 script = ExtResource("2_abrql")
