@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4a0i5l1sb4bw"]
+[gd_scene load_steps=9 format=3 uid="uid://d4a0i5l1sb4bw"]
 
 [ext_resource type="PackedScene" uid="uid://cn8n0j2de43v4" path="res://entities/food/food.tscn" id="1_8cnld"]
 [ext_resource type="Script" uid="uid://da08bwmmr7m52" path="res://levels/cafeteria/cafeteria.gd" id="1_ogs0t"]
 [ext_resource type="PackedScene" uid="uid://d2tp6os6xeghj" path="res://entities/furniture/net.tscn" id="2_ogs0t"]
 [ext_resource type="PackedScene" uid="uid://dfuyuck0xgnya" path="res://entities/furniture/wall.tscn" id="3_fycxm"]
+[ext_resource type="PackedScene" uid="uid://ujuhui2i4hg8" path="res://utilities/food_spawn.tscn" id="5_ahiyj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oqph1"]
 size = Vector3(60, 1, 30)
@@ -87,7 +88,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -8)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 1)
 
 [node name="Food16" parent="Ammo" instance=ExtResource("1_8cnld")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
 
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
 
@@ -124,3 +125,8 @@ offset_right = 1182.0
 offset_bottom = 24.0
 text = "Timer"
 horizontal_alignment = 1
+
+[node name="FoodSpawns" type="Node3D" parent="."]
+
+[node name="FoodSpawn" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
