@@ -4,10 +4,14 @@ extends CharacterBody3D
 @export var speed = 8
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
+# Movement acceleration and drag
+@export var acceleration = 20.0
+@export var drag = 15.0
 
 @export var max_power : float = 16.5
 
 var target_velocity = Vector3.ZERO
+var current_velocity = Vector3.ZERO
 
 var hasFood : bool = false
 var equipped = null
@@ -31,7 +35,7 @@ func _ready() -> void:
 	throwTimer.set_autostart(false)
 	add_child(throwTimer)
 
-func init(player_num: int):	
+func init(player_num: int):
 	player = player_num
 	device = PlayerManager.get_player_device(player)
 	input = DeviceInput.new(device)
@@ -41,14 +45,14 @@ func init(player_num: int):
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
-	
+
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Idle_Holding")
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Walk_Holding")
 		set_rotation_degrees(Vector3(0, 0, 0))
-		
+
 	# We check for each move input and update the direction accordingly.
 	if input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -64,16 +68,28 @@ func _physics_process(delta: float) -> void:
 		# Setting the basis property will affect the rotation of the node.
 		$Pivot.basis = Basis.looking_at(direction)
 
-	# Ground Velocity
+	# Ground Velocity with acceleration and drag
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
+	# Apply acceleration towards target velocity
+	if direction.length() > 0:
+		# Accelerate towards target velocity
+		current_velocity.x = move_toward(current_velocity.x, target_velocity.x, acceleration * delta)
+		current_velocity.z = move_toward(current_velocity.z, target_velocity.z, acceleration * delta)
+	else:
+		# Apply drag when no input
+		current_velocity.x = move_toward(current_velocity.x, 0, drag * delta)
+		current_velocity.z = move_toward(current_velocity.z, 0, drag * delta)
+
 	# Vertical Velocity
 	if not is_on_floor(): # if in the air, fall towards the floor. aka gravity
-		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
+		current_velocity.y = current_velocity.y - (fall_acceleration * delta)
+	else:
+		current_velocity.y = 0
 
 	# Moving the Character
-	velocity = target_velocity
+	velocity = current_velocity
 	move_and_slide()
 
 	#if input.is_action_just_pressed("throw"):
@@ -84,7 +100,7 @@ func _physics_process(delta: float) -> void:
 			#equipped.reparent(get_parent())
 			#hasFood = false
 	#Log.info("throwTimer is : %s " % throwTimer.is_stopped())
-	if hasFood == true:		
+	if hasFood == true:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
@@ -107,16 +123,29 @@ func _physics_process(delta: float) -> void:
 func throw(throw_force: float) -> void:
 	if isMaxPower:
 		throw_force = max_power
-	Log.info("Throwing with a force of %s." % throw_force)
-	#var forward_direction = global_transform.basis.z
-	#var forward_direction = Vector3(1, 0, 0)
-	var forward_direction = global_transform.basis.x
-	#equipped.boomerang_throw(forward_direction, 9.0)
-	equipped.throw(forward_direction, throw_force)
+
+	# Get player's current momentum
+	var player_velocity = current_velocity
+	var throw_direction = global_transform.basis.x
+
+	# Calculate momentum bonus based on movement direction
+	var momentum_factor = player_velocity.dot(throw_direction.normalized())
+	var momentum_bonus = momentum_factor * 0.3  # Scale the momentum effect
+
+	# Add momentum to throw force
+	var final_throw_force = throw_force + momentum_bonus
+
+	Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
+
+	# Create throw direction with slight momentum influence
+	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
+
+	# Pass both momentum direction and final throw force
+	equipped.throw(momentum_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
 	isMaxPower = false
-	
+
 func on_throw_timer_timeout() -> void:
 	isMaxPower = true
 
@@ -125,6 +154,7 @@ func powerUp() -> void:
 	match equipped.type:
 		"food":
 			speed *= 1.5
+			acceleration *= 1.3  # Also boost acceleration for snappier movement
 			$PowerUpTimer.wait_time = equipped.time
 			$PowerUpTimer.start()
 		_:
@@ -134,6 +164,7 @@ func powerUp() -> void:
 func setDefaults() -> void:
 	powerup_active = false
 	speed = 14
+	acceleration = 20.0  # Reset acceleration too
 
 func assignColor(team: String) -> void:
 	$Pivot/TeamColor.assignTeamColor(team)
@@ -141,7 +172,7 @@ func assignColor(team: String) -> void:
 
 func _on_power_up_timer_timeout() -> void:
 	setDefaults()
-	
+
 
 func rotatePivot(degrees: Vector3) -> void:
 	$Pivot.set_rotation_degrees(degrees)
