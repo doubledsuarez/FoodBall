@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed = 14
+@export var speed = 8
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 
-@export var max_power : float = 15.0
+@export var max_power : float = 18.0
 
 var target_velocity = Vector3.ZERO
 
@@ -40,7 +40,14 @@ func init(player_num: int):
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
+	
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO:
+		$Pivot/Player_Model.animation_player.play("Idle_Holding")
 
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO:
+		$Pivot/Player_Model.animation_player.play("Walk_Holding")
+		set_rotation_degrees(Vector3(0, 0, 0))
+		
 	# We check for each move input and update the direction accordingly.
 	if input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -80,7 +87,7 @@ func _physics_process(delta: float) -> void:
 		if input.is_action_just_pressed("throw"):
 			throwTimer.start()
 		if input.is_action_just_released("throw"):
-			throw_power = (5.0 - throwTimer.get_time_left()) * 3
+			throw_power = (6.0 - throwTimer.get_time_left()) * 3
 			throw(throw_power)
 			#throw(clampf((5.0 - throwTimer.get_time_left() * 3), 6.0, 15.0))
 			throwTimer.stop()
@@ -98,7 +105,9 @@ func throw(throw_force: float) -> void:
 	if isMaxPower:
 		throw_force = max_power
 	Log.info("Throwing with a force of %s." % throw_force)
-	var forward_direction = global_transform.basis.z
+	#var forward_direction = global_transform.basis.z
+	#var forward_direction = Vector3(1, 0, 0)
+	var forward_direction = global_transform.basis.x
 	#equipped.boomerang_throw(forward_direction, 9.0)
 	equipped.throw(forward_direction, throw_force)
 	equipped.reparent(get_parent())
@@ -129,3 +138,7 @@ func assignColor(team: String) -> void:
 
 func _on_power_up_timer_timeout() -> void:
 	setDefaults()
+	
+
+func rotatePivot(degrees: Vector3) -> void:
+	$Pivot.set_rotation_degrees(degrees)

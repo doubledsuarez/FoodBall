@@ -45,7 +45,7 @@ func throw(direction: Vector3, throw_force: float) -> void:
 
 	# Create a more realistic throw with upward arc
 	var throw_direction = direction.normalized()
-	var upward_force = Vector3(0, 0.25, 0)  # Add upward component for arc
+	var upward_force = Vector3(0, 0.3, 0)  # Add upward component for arc
 	var final_force = (throw_direction + upward_force) * throw_force
 
 	Log.dbg("Final force being applied: ", final_force)
@@ -137,7 +137,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
-			foodInstance.position = body.global_transform.basis.z + Vector3(0, .5, 1)
+			foodInstance.position = body.global_transform.basis.x + Vector3(0, .5, 1)
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
 			queue_free()
