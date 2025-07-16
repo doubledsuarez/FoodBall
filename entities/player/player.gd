@@ -5,7 +5,7 @@ extends CharacterBody3D
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 
-@export var max_power : float = 18.0
+@export var max_power : float = 16.5
 
 var target_velocity = Vector3.ZERO
 
@@ -14,6 +14,7 @@ var equipped = null
 var powerup_active : bool = false
 var throw_power : float
 var isMaxPower : bool = false
+var throwStarted : bool = false
 
 var player : int
 var input
@@ -82,15 +83,17 @@ func _physics_process(delta: float) -> void:
 			#equipped.throw(forward_direction, 10.0)
 			#equipped.reparent(get_parent())
 			#hasFood = false
-	
+	#Log.info("throwTimer is : %s " % throwTimer.is_stopped())
 	if hasFood == true:		
 		if input.is_action_just_pressed("throw"):
+			throwStarted = true
 			throwTimer.start()
-		if input.is_action_just_released("throw"):
-			throw_power = (6.0 - throwTimer.get_time_left()) * 3
+		if input.is_action_just_released("throw") and throwStarted == true:
+			throw_power = (5.5 - throwTimer.get_time_left()) * 3
 			throw(throw_power)
 			#throw(clampf((5.0 - throwTimer.get_time_left() * 3), 6.0, 15.0))
 			throwTimer.stop()
+			throwStarted = false
 
 	if input.is_action_just_pressed("leave"):
 		PlayerManager.leave(player)
