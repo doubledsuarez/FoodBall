@@ -137,9 +137,10 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
-			foodInstance.position = body.global_transform.basis.x + Vector3(0, .5, 1)
+			foodInstance.position = body.global_transform.basis.x + Vector3(-0.5, 0.5, -0.5)
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
+			foodInstance.scale = Vector3(0.5,0.5,0.5)
 			queue_free()
 		# delete it once it hits the ground after being thrown (but not if it's a boomerang)
 		# delete it once it hits the ground after being thrown (but not if it's a boomerang)
