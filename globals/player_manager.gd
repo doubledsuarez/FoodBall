@@ -1,9 +1,9 @@
 extends Node
-
 # player is 0-3
 # device is -1 for keyboard/mouse, 0+ for joypads
 # these concepts seem similar but it is useful to separate them so for example, device 6 could control player 1.
 
+# Let the rest of the game know when players join or leave
 signal player_joined(player)
 signal player_left(player)
 
@@ -12,29 +12,35 @@ signal player_left(player)
 # use get_player_data() and set_player_data() to use this dictionary.
 var player_data: Dictionary = {}
 
-const MAX_PLAYERS = 8
+const MAX_PLAYERS = 4  #UI is limited to 4
 
-func join(device: int, team: String):
+# Called when a device wants to join the game
+func join(device: int):
 	var player = next_player()
 	if player >= 0:
-		# initialize default player data here
+		var team = "red" if player < 2 else "blue"
+		print("Assigning Player", player, "to", team, "team")  # DEBUG: announce team assignment
 		player_data[player] = {
 			"device": device,
 			"team": team
 		}
-		player_joined.emit(player)
+		player_joined.emit(player)  # Tell everyone a player joined
 
+# Remove a player from the game
 func leave(player: int):
 	if player_data.has(player):
 		player_data.erase(player)
 		player_left.emit(player)
 
+# How many players are currently in?
 func get_player_count():
 	return player_data.size()
 
+# Get a list of joined player indexes (e.g. [0, 1])
 func get_player_indexes():
 	return player_data.keys()
 
+# Get the device ID associated with a player
 func get_player_device(player: int) -> int:
 	return get_player_data(player, "device")
 
@@ -50,46 +56,43 @@ func set_player_data(player: int, key: StringName, value: Variant):
 	# if this player is not joined, don't do anything:
 	if !player_data.has(player):
 		return
-	
 	player_data[player][key] = value
 
-# call this from a loop in the main menu or anywhere they can join
-# this is an example of how to look for an action on all devices
+# Run this every frame in menus — handles controller "A" presses to join
 func handle_join_input():
 	for device in get_unjoined_devices():
-		if MultiplayerInput.is_action_pressed(device, "join") and MultiplayerInput.is_action_pressed(device, "throw"):
-			join(device, "red")
-		if MultiplayerInput.is_action_pressed(device, "join") and MultiplayerInput.is_action_pressed(device, "eat"):
-			join(device, "blue")
+		# If this device just pressed the "Connect" button (mapped to A), let them join
+		if MultiplayerInput.is_action_just_pressed(device, "Connect"):
+			print("Device", device, "pressed A — joining")
+			join(device)
 
-# to see if anybody is pressing the "start" action
-# this is an example of how to look for an action on all players
-# note the difference between this and handle_join_input(). players vs devices.
-func someone_wants_to_start() -> bool:
-	for player in player_data:
-		var device = get_player_device(player)
-		if MultiplayerInput.is_action_just_pressed(device, "join"):
+# Commenting out as not used here yet, logic exists on player select sscreen. 
+# Leaving here for later just incase.  
+# Check if anyone who's already joined is pressing Start
+#func someone_wants_to_start() -> bool:
+#	for player in player_data:
+#		var device = get_player_device(player)
+#		if MultiplayerInput.is_action_just_pressed(device, "Start"):
+#			return true  # Someone’s ready to go
+#	return false
+
+# Returns true if a device is already assigned to a player
+func is_device_joined(device: int) -> bool:
+	for player_id in player_data:
+		if get_player_device(player_id) == device:
 			return true
 	return false
 
-func is_device_joined(device: int) -> bool:
-	for player_id in player_data:
-		var d = get_player_device(player_id)
-		if device == d: return true
-	return false
-
-# returns a valid player integer for a new player.
-# returns -1 if there is no room for a new player.
+# Returns the next open player slot (0–7), or -1 if full
 func next_player() -> int:
 	for i in MAX_PLAYERS:
-		if !player_data.has(i): return i
+		if !player_data.has(i):
+			return i
 	return -1
 
-# returns an array of all valid devices that are *not* associated with a joined player
+# Returns all gamepads that *aren’t* joined yet
 func get_unjoined_devices():
 	var devices = Input.get_connected_joypads()
-	# also consider keyboard player
-	devices.append(-1)
-	
-	# filter out devices that are joined:
+	# Remove already-joined ones
+	# Ignoring keyboards for now to simplify things. 
 	return devices.filter(func(device): return !is_device_joined(device))

@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cq7yef5qym1vr"]
+
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="1_id2wv"]
+
+[resource]
+default_font = ExtResource("1_id2wv")
+default_font_size = 64
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.776471, 0.470588, 0.384314, 1)
+Button/colors/font_focus_color = Color(0.847059, 0.215686, 0.309804, 1)
+Button/colors/font_pressed_color = Color(0.847059, 0.215686, 0.309804, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/icon_max_width = 0
+Button/constants/line_spacing = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 64
+Button/fonts/font = ExtResource("1_id2wv")
+Label/colors/font_shadow_color = Color(0.596078, 0.145098, 0.407843, 1)
+Label/constants/shadow_offset_x = -1
+Label/constants/shadow_offset_y = 1
+Label/font_sizes/font_size = 52
+Label/fonts/font = ExtResource("1_id2wv")

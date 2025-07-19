@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf7m4fod556ed"]
+
+[ext_resource type="Script" uid="uid://baihcomhp3ruf" path="res://ui/options_menu/options_menu.gd" id="1_utl02"]
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="2_kx268"]
+[ext_resource type="Theme" uid="uid://cpljgmx452bm5" path="res://ui/options_menu/options_menu.tres" id="2_utl02"]
+[ext_resource type="PackedScene" uid="uid://xue6wjhmygmg" path="res://ui/graphics/button.tscn" id="3_tjtux"]
+
+[node name="Options" type="Node2D"]
+script = ExtResource("1_utl02")
+
+[node name="Options Menu" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="Options Menu"]
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_utl02")
+
+[node name="omvboxmain" type="VBoxContainer" parent="Options Menu/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_utl02")
+theme_override_constants/separation = 20
+
+[node name="optionstitle" type="Label" parent="Options Menu/PanelContainer/omvboxmain"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.847059, 0.215686, 0.309804, 1)
+theme_override_colors/font_outline_color = Color(0.596078, 0.145098, 0.407843, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_kx268")
+theme_override_font_sizes/font_size = 128
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hboxmv" type="HBoxContainer" parent="Options Menu/PanelContainer/omvboxmain"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="mvlabel" type="Label" parent="Options Menu/PanelContainer/omvboxmain/hboxmv"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="mvslider" type="HSlider" parent="Options Menu/PanelContainer/omvboxmain/hboxmv"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme = ExtResource("2_utl02")
+min_value = -50.0
+max_value = 0.0
+
+[node name="hboxmuv" type="HBoxContainer" parent="Options Menu/PanelContainer/omvboxmain"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="muvlabel" type="Label" parent="Options Menu/PanelContainer/omvboxmain/hboxmuv"]
+layout_mode = 2
+text = "Music Volume  "
+
+[node name="muvslider" type="HSlider" parent="Options Menu/PanelContainer/omvboxmain/hboxmuv"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme = ExtResource("2_utl02")
+min_value = -50.0
+max_value = 0.0
+
+[node name="hboxsfxv" type="HBoxContainer" parent="Options Menu/PanelContainer/omvboxmain"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="sfxlabel" type="Label" parent="Options Menu/PanelContainer/omvboxmain/hboxsfxv"]
+layout_mode = 2
+text = "Effects Volume"
+
+[node name="sfxslider" type="HSlider" parent="Options Menu/PanelContainer/omvboxmain/hboxsfxv"]
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme = ExtResource("2_utl02")
+min_value = -50.0
+max_value = 0.0
+
+[node name="hboxwm" type="HBoxContainer" parent="Options Menu/PanelContainer/omvboxmain"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="wmlabel" type="Label" parent="Options Menu/PanelContainer/omvboxmain/hboxwm"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="OptionButton" type="OptionButton" parent="Options Menu/PanelContainer/omvboxmain/hboxwm"]
+layout_mode = 2
+theme = ExtResource("2_utl02")
+selected = 1
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 1
+popup/item_2/text = "Boarderless"
+popup/item_2/id = 2
+
+[node name="backbutton" parent="Options Menu/PanelContainer/omvboxmain" instance=ExtResource("3_tjtux")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" parent="Options Menu/PanelContainer/omvboxmain/backbutton" index="0"]
+text = "Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[editable path="Options Menu/PanelContainer/omvboxmain/backbutton"]

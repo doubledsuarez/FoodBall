@@ -7,6 +7,7 @@ var player_nodes = {}
 
 # load the cafe level and connect playermanager signals
 func _ready():
+	config_helper.init_config_if_missing()
 	add_child(cafe_scene.instantiate())
 	PlayerManager.player_joined.connect(spawn_player)
 	PlayerManager.player_left.connect(delete_player)

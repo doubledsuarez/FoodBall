@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://s7vjk7wpxkuw"]
+
+[ext_resource type="Script" uid="uid://weypjb7bumsf" path="res://ui/main_menu/main_menu.gd" id="1_3c04x"]
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="2_joh67"]
+[ext_resource type="PackedScene" uid="uid://xue6wjhmygmg" path="res://ui/graphics/button.tscn" id="3_omy8q"]
+[ext_resource type="AudioStream" uid="uid://bpbewmown4k2l" path="res://audio/combat-last-minute.mp3" id="4_i5wg5"]
+
+[node name="Menus" type="Node2D"]
+script = ExtResource("1_3c04x")
+
+[node name="Main Menu" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Main Menu"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.0
+offset_top = 100.0
+offset_right = 204.0
+offset_bottom = 211.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.847059, 0.215686, 0.309804, 1)
+theme_override_colors/font_outline_color = Color(0.596078, 0.145098, 0.407843, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_joh67")
+theme_override_font_sizes/font_size = 128
+text = "Foodball!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mmhbox" type="HBoxContainer" parent="Main Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="mmvbox" type="VBoxContainer" parent="Main Menu/mmhbox"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="mmstart" parent="Main Menu/mmhbox/mmvbox" instance=ExtResource("3_omy8q")]
+layout_mode = 2
+
+[node name="Label" parent="Main Menu/mmhbox/mmvbox/mmstart" index="0"]
+text = "Start Game"
+
+[node name="mmcollection" parent="Main Menu/mmhbox/mmvbox" instance=ExtResource("3_omy8q")]
+visible = false
+layout_mode = 2
+
+[node name="Label" parent="Main Menu/mmhbox/mmvbox/mmcollection" index="0"]
+text = "Unlocks"
+
+[node name="mmoptions" parent="Main Menu/mmhbox/mmvbox" instance=ExtResource("3_omy8q")]
+layout_mode = 2
+
+[node name="Label" parent="Main Menu/mmhbox/mmvbox/mmoptions" index="0"]
+text = "Options"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_i5wg5")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[connection signal="pressed" from="Main Menu/mmhbox/mmvbox/mmstart" to="." method="_on_mmstart_pressed"]
+[connection signal="pressed" from="Main Menu/mmhbox/mmvbox/mmoptions" to="." method="_on_mmoptions_pressed"]
+
+[editable path="Main Menu/mmhbox/mmvbox/mmstart"]
+[editable path="Main Menu/mmhbox/mmvbox/mmcollection"]
+[editable path="Main Menu/mmhbox/mmvbox/mmoptions"]
