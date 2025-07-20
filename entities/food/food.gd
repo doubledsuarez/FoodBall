@@ -132,12 +132,13 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 					g.red_points += 1
 		# if a player walks over the food to pick it up
 		["Player", false] when !body.hasFood:
-			body.add_child(foodInstance)
+			body.find_child("Pivot").add_child(foodInstance)
 			body.hasFood = true
 			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
-			foodInstance.position = body.global_transform.basis.x + Vector3(-0.5, 0.5, -0.5)
+			#foodInstance.position = body.global_transform.basis.x + Vector3(-0.5, 0.5, -0.5)
+			foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
 			foodInstance.scale = Vector3(0.5,0.5,0.5)
