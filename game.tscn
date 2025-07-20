@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4ejbhsvcm1fe"]
+[gd_scene load_steps=3 format=3 uid="uid://c4ejbhsvcm1fe"]
 
 [ext_resource type="Script" uid="uid://dj2bbrrv1b72b" path="res://game.gd" id="1_feb5d"]
+[ext_resource type="PackedScene" uid="uid://cn8n0j2de43v4" path="res://entities/food/food.tscn" id="2_e2o6t"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_feb5d")
+foods = Array[PackedScene]([ExtResource("2_e2o6t")])
