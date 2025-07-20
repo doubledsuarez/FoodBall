@@ -30,32 +30,39 @@ material_override = SubResource("StandardMaterial3D_jbq2m")
 mesh = SubResource("BoxMesh_obwsy")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
 shadow_enabled = true
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866026, 0, 10, 12)
+transform = Transform3D(2, 0, 0, 0, 1.73205, 1, 0, -1, 1.73205, 0, 10, 10)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 projection = 1
 current = true
-size = 25.0
+size = 30.0
 
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
 
 [node name="Walls" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Wall" parent="Walls" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+visible = false
 
 [node name="Wall2" parent="Walls" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+visible = false
 
 [node name="Wall3" parent="Walls" instance=ExtResource("3_fycxm")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -15)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0, -15)
+
+[node name="Wall5" parent="Walls" instance=ExtResource("3_fycxm")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15, 0, -15)
 
 [node name="Wall4" parent="Walls" instance=ExtResource("3_fycxm")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 15)
+visible = false
 
 [node name="Red Points" type="Label" parent="."]
 offset_left = 8.0
@@ -115,8 +122,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
 [node name="FoodSpawn12" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -11)
 
-[node name="BTable" parent="." instance=ExtResource("5_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.5, -14)
+[node name="Furtniture" type="Node3D" parent="."]
 
-[node name="Table" parent="." instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.5, -6)
+[node name="Table" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -12)
+
+[node name="Table2" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -6)
+
+[node name="Table3" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 0)
+
+[node name="Table4" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 6)
+
+[node name="Table5" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 12)
+
+[node name="Table6" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -12)
+
+[node name="Table7" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -6)
+
+[node name="Table8" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 0)
+
+[node name="Table9" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 6)
+
+[node name="Table10" parent="Furtniture" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 12)
+
+[node name="BTable" parent="Furtniture" instance=ExtResource("5_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.5, -14)
