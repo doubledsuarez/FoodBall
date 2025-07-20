@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c2dv7fqmu8f80" path="res://entities/player/player_model.tscn" id="2_sglur"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
+size = Vector3(1, 1.75, 1.25049)
 
 [sub_resource type="BoxMesh" id="BoxMesh_symyc"]
 
@@ -21,6 +22,7 @@ collision_mask = 3
 script = ExtResource("1_symyc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, -0.125244)
 shape = SubResource("BoxShape3D_sfv1e")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -49,7 +51,7 @@ size = Vector2i(256, 256)
 custom_minimum_size = Vector2(256, 256)
 offset_right = 40.0
 offset_bottom = 23.0
-text = "test"
+text = "Player #"
 label_settings = SubResource("LabelSettings_symyc")
 horizontal_alignment = 1
 

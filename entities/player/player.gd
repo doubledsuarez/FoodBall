@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
@@ -20,7 +21,7 @@ var throw_power : float
 var isMaxPower : bool = false
 var throwStarted : bool = false
 var team : String = ""
-var invuln : bool = false
+var isInvuln : bool = false
 
 var player : int
 var input
@@ -162,7 +163,7 @@ func powerUp() -> void:
 	acceleration *= 1.3  # Also boost acceleration for snappier movement
 	
 	if equipped == g.secret_ingredient:
-		invuln = true
+		isInvuln = true
 		
 	$PowerUpTimer.wait_time = equipped.time
 	$PowerUpTimer.start()
@@ -170,7 +171,7 @@ func powerUp() -> void:
 
 func setDefaults() -> void:
 	powerup_active = false
-	invuln = false
+	isInvuln = false
 	speed = 14
 	acceleration = 20.0
 

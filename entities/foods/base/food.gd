@@ -1,9 +1,8 @@
+class_name Food
 extends RigidBody3D
 
 @onready var area = $Area3D		# Area3D I need to make collisions easier
 @onready var foodInstance = duplicate()
-
-#@export var throw_force: float = 10.0
 
 # properties
 var human
@@ -55,38 +54,13 @@ func throw(direction: Vector3, throw_force: float) -> void:
 
 	Log.dbg("Linear velocity after impulse: ", linear_velocity)
 
-func boomerang_throw(direction: Vector3, throw_force: int) -> void:
-	isEquipped = false
-	inAction = true
-	isBoomerang = true
-	boomerang_timer = 0.0
-
-	gravity_scale = 0.3  # Less gravity for boomerang
-
-	Log.dbg("Throwing boomerang with direction: ", direction)
-	Log.dbg("Gravity scale: ", gravity_scale)
-	Log.dbg("Mass: ", mass)
-	Log.dbg("Freeze mode: ", freeze_mode)
-
-	# Boomerang throw - straight across, no upward arc
-	var throw_direction = direction.normalized()
-	var final_force = throw_direction * throw_force
-
-	Log.dbg("Final force being applied: ", final_force)
-
-	# Store information for boomerang return
-	if human:
-		thrower_position = human.global_position
-		original_throw_direction = throw_direction
-
-	# Apply the impulse to create projectile motion
-	apply_central_impulse(final_force)
-
-	Log.dbg("Linear velocity after impulse: ", linear_velocity)
-
 
 func eat() -> void:
 	isEquipped = false
+	queue_free()
+	
+
+func hit(player : Player) -> void:
 	queue_free()
 
 func apply_boomerang_forces(delta: float, throw_force: int) -> void:
@@ -121,14 +95,14 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	# reminder: inAction means the food is mid-throw
 	match [body.name, inAction]:
 		# if it hits a player
-		["Player", true] when !body.is_invuln:
+		["Player", true] when !body.isInvuln:
 			var opp = PlayerManager.get_player_data(body.player, "team")
 			match [opp, team]:
 				["red", "blue"]:
-					queue_free()
+					hit(body)
 					g.blue_points += 1
 				["blue", "red"]:
-					queue_free()
+					hit(body)
 					g.red_points += 1
 		# if a player walks over the food to pick it up
 		["Player", false] when !body.hasFood:
