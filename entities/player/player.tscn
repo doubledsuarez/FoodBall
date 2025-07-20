@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Script" uid="uid://cqbpu4vebvpg2" path="res://entities/player/team_color.gd" id="2_abrql"]
-[ext_resource type="PackedScene" uid="uid://c2dv7fqmu8f80" path="res://entities/player/player_model.tscn" id="2_sglur"]
+[ext_resource type="PackedScene" uid="uid://carv6h6jf2het" path="res://entities/player/player_model.tscn" id="2_sglur"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
 size = Vector3(1, 1.75, 1.25049)
@@ -18,6 +18,7 @@ font_size = 60
 viewport_path = NodePath("SubViewport")
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_mask = 3
 script = ExtResource("1_symyc")
 

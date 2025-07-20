@@ -22,6 +22,7 @@ var isMaxPower : bool = false
 var throwStarted : bool = false
 var team : String = ""
 var isInvuln : bool = false
+var isDebuffed : bool = false
 
 var player : int
 var input
@@ -142,7 +143,7 @@ func throw(throw_force: float) -> void:
 	# Add momentum to throw force
 	var final_throw_force = throw_force + momentum_bonus
 
-	Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
+	#Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
 
 	# Create throw direction with slight momentum influence
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
@@ -160,10 +161,12 @@ func on_throw_timer_timeout() -> void:
 func powerUp() -> void:
 	powerup_active = true
 	speed *= 1.5
-	acceleration *= 1.3  # Also boost acceleration for snappier movement
+	acceleration *= 1.3
 	
 	if equipped == g.secret_ingredient:
 		isInvuln = true
+		
+	Log.info("Player activated powerup. Current speed is %s" % speed)
 		
 	$PowerUpTimer.wait_time = equipped.time
 	$PowerUpTimer.start()
@@ -180,8 +183,11 @@ func assignColor(team: String) -> void:
 
 
 func _on_power_up_timer_timeout() -> void:
-	setDefaults()
-
+	#setDefaults()
+	powerup_active = false
+	isInvuln = false
+	speed /= 1.5
+	acceleration /= 1.3
 
 func rotatePivot(degrees: Vector3) -> void:
 	$Pivot.set_rotation_degrees(degrees)
