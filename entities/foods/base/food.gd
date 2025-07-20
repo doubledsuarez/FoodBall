@@ -28,6 +28,10 @@ func _physics_process(delta: float) -> void:
 		# Start returning after the specified time
 		if boomerang_timer >= boomerang_return_time:
 			apply_boomerang_forces(delta, 10.0)
+	
+	if (isEquipped):
+		position = human.find_child("Hand").position
+
 
 func throw(direction: Vector3, throw_force: float) -> void:
 	isEquipped = false
@@ -66,27 +70,26 @@ func hit(player : Player) -> void:
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Player:
-		match inAction:
-			true when !body.isInvuln:
-				var opp = PlayerManager.get_player_data(body.player, "team")
-				match [opp, team]:
-					["red", "blue"]:
-						hit(body)
-						g.blue_points += 1
-					["blue", "red"]:
-						hit(body)
-						g.red_points += 1
-			false when !body.hasFood:
-				body.hasFood = true
-				body.equipped = foodInstance
-				foodInstance.human = body
-				foodInstance.team = PlayerManager.get_player_data(body.player, "team")
-				foodInstance.position = body.find_child("Hand").position
-				foodInstance.isEquipped = true
-				foodInstance.gravity_scale = 0
-				#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
-				body.find_child("Pivot").add_child(foodInstance)
-				queue_free()
+		if (inAction and !body.isInvuln):
+			var opp = PlayerManager.get_player_data(body.player, "team")
+			match [opp, team]:
+				["red", "blue"]:
+					hit(body)
+					g.blue_points += 1
+				["blue", "red"]:
+					hit(body)
+					g.red_points += 1
+		elif (!inAction and !body.hasFood and !isEquipped):
+			body.hasFood = true
+			body.equipped = foodInstance
+			foodInstance.human = body
+			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
+			foodInstance.position = body.find_child("Hand").position
+			foodInstance.isEquipped = true
+			foodInstance.gravity_scale = 0
+			#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
+			body.find_child("Pivot").add_child(foodInstance)
+			queue_free()
 	elif body.name == "Ground":
 		if not isBoomerang:
 			queue_free()
@@ -106,7 +109,7 @@ func auto_pickup_by_thrower() -> void:
 			human.equipped = pickup_food
 			pickup_food.human = human
 			pickup_food.team = PlayerManager.get_player_data(human.player, "team")
-			pickup_food.position = human.global_transform.basis.z + Vector3(0, .5, 1)
+			pickup_food.position = human.find_child("Hand").position
 			pickup_food.isEquipped = true
 			pickup_food.gravity_scale = 0
 			queue_free()

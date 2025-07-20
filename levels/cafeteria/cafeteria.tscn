@@ -66,21 +66,24 @@ visible = false
 
 [node name="Red Points" type="Label" parent="."]
 offset_left = 8.0
-offset_right = 230.0
-offset_bottom = 24.0
+offset_right = 320.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 40
 text = "Lorem"
 
 [node name="Blue Points" type="Label" parent="."]
-offset_left = 1696.0
+offset_left = 1600.0
 offset_right = 1918.0
-offset_bottom = 24.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 40
 text = "Ipsum"
 horizontal_alignment = 2
 
 [node name="Countdown" type="Label" parent="."]
-offset_left = 960.0
-offset_right = 1182.0
-offset_bottom = 24.0
+offset_left = 800.0
+offset_right = 1248.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 40
 text = "Timer"
 horizontal_alignment = 1
 
