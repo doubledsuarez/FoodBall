@@ -63,6 +63,55 @@ func eat() -> void:
 func hit(player : Player) -> void:
 	queue_free()
 
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body is Player:
+		match inAction:
+			true when !body.isInvuln:
+				var opp = PlayerManager.get_player_data(body.player, "team")
+				match [opp, team]:
+					["red", "blue"]:
+						hit(body)
+						g.blue_points += 1
+					["blue", "red"]:
+						hit(body)
+						g.red_points += 1
+			false when !body.hasFood:
+				body.hasFood = true
+				body.equipped = foodInstance
+				foodInstance.human = body
+				foodInstance.team = PlayerManager.get_player_data(body.player, "team")
+				foodInstance.position = body.find_child("Hand").position
+				foodInstance.isEquipped = true
+				foodInstance.gravity_scale = 0
+				#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
+				body.find_child("Pivot").add_child(foodInstance)
+				queue_free()
+	elif body.name == "Ground":
+		if not isBoomerang:
+			queue_free()
+		else:
+			# Boomerang bounces off ground
+			linear_velocity.y = abs(linear_velocity.y) * 0.5
+
+func auto_pickup_by_thrower() -> void:
+	if human and human.has_method("pickup_food"):
+		human.pickup_food(self)
+	else:
+		# Fallback: just add as child like normal pickup
+		if human and not human.hasFood:
+			var pickup_food = duplicate()
+			human.add_child(pickup_food)
+			human.hasFood = true
+			human.equipped = pickup_food
+			pickup_food.human = human
+			pickup_food.team = PlayerManager.get_player_data(human.player, "team")
+			pickup_food.position = human.global_transform.basis.z + Vector3(0, .5, 1)
+			pickup_food.isEquipped = true
+			pickup_food.gravity_scale = 0
+			queue_free()
+			
+			
 func apply_boomerang_forces(delta: float, throw_force: int) -> void:
 	if not human:
 		return
@@ -89,55 +138,4 @@ func apply_boomerang_forces(delta: float, throw_force: int) -> void:
 	# Auto-pickup if close to thrower
 	if global_position.distance_to(thrower_position) < 2.0 and return_time > 0.5:
 		auto_pickup_by_thrower()
-
-
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	# reminder: inAction means the food is mid-throw
-	match [body.name, inAction]:
-		# if it hits a player
-		["Player", true] when !body.isInvuln:
-			var opp = PlayerManager.get_player_data(body.player, "team")
-			match [opp, team]:
-				["red", "blue"]:
-					hit(body)
-					g.blue_points += 1
-				["blue", "red"]:
-					hit(body)
-					g.red_points += 1
-		# if a player walks over the food to pick it up
-		["Player", false] when !body.hasFood:
-			body.find_child("Pivot").add_child(foodInstance)
-			body.hasFood = true
-			body.equipped = foodInstance
-			foodInstance.human = body
-			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
-			#foodInstance.position = body.global_transform.basis.x + Vector3(-0.5, 0.5, -0.5)
-			foodInstance.position = body.find_child("Hand").position
-			foodInstance.isEquipped = true
-			foodInstance.gravity_scale = 0
-			foodInstance.scale = Vector3(0.5,0.5,0.5)
-			queue_free()
-		# delete it once it hits the ground after being thrown (but not if it's a boomerang)
-		["Ground", true]:
-			if not isBoomerang:
-				queue_free()
-			else:
-				# Boomerang bounces off ground
-				linear_velocity.y = abs(linear_velocity.y) * 0.5
-
-func auto_pickup_by_thrower() -> void:
-	if human and human.has_method("pickup_food"):
-		human.pickup_food(self)
-	else:
-		# Fallback: just add as child like normal pickup
-		if human and not human.hasFood:
-			var pickup_food = duplicate()
-			human.add_child(pickup_food)
-			human.hasFood = true
-			human.equipped = pickup_food
-			pickup_food.human = human
-			pickup_food.team = PlayerManager.get_player_data(human.player, "team")
-			pickup_food.position = human.global_transform.basis.z + Vector3(0, .5, 1)
-			pickup_food.isEquipped = true
-			pickup_food.gravity_scale = 0
-			queue_free()
+		

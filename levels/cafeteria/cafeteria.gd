@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 		$Countdown.text = "Round Over! Blue team wins!"
 		g.blue_won.emit()
 	if g.blue_points == g.red_points and g.blue_points == pointsToWin and g.red_points == pointsToWin:
-		print("somehow both teams scored %s points on the same frame. crazy. it's a tie?" % pointsToWin)
+		Log.info("somehow both teams scored %s points on the same frame. crazy. it's a tie?" % pointsToWin)
 		$Countdown.text = "Round Over! It was a tie!"
 		g.tie.emit()
 
@@ -36,11 +36,13 @@ func _process(_delta: float) -> void:
 func on_round_timer_timeout() -> void:
 	if g.red_points > g.blue_points:
 		$Countdown.text = "Round Over! Red team wins!"
+		Log.info("red team wins!")
 		g.red_won.emit()
 	elif g.blue_points < g.red_points:
 		$Countdown.text = "Round Over! Blue team wins!"
-		print("blue team wins!")
+		Log.info("blue team wins!")
 		g.blue_won.emit()
 	else:
 		$Countdown.text = "Round Over! It was a tie!"
+		Log.info("it's a tie!")
 		g.tie.emit()

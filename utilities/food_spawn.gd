@@ -6,6 +6,7 @@ var isOverlapping : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	spawnTimer.set_wait_time(randi() % 5 + 1)
 	add_child(g.foods[randi() % g.foods.size()].instantiate())
 
 
@@ -20,7 +21,7 @@ func _on_spawn_timer_timeout() -> void:
 			return
 			
 	var foodToSpawn = g.foods[randi() % g.foods.size()].instantiate()
-	Log.info("Spawning food " + foodToSpawn.name)
+	#Log.info("Spawning food " + foodToSpawn.name)
 	add_child(foodToSpawn)
 	#add_child(g.foods[1].instantiate())
 

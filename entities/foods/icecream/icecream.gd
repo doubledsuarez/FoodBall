@@ -14,11 +14,16 @@ func _process(delta: float) -> void:
 	pass
 
 func hit(player : Player) -> void:
-	debuffedPlayer = player
-	player.speed /= 1.5
-	DebuffTimer.start()
+	if !player.isDebuffed:
+		player.isDebuffed = true
+		debuffedPlayer = player
+		player.speed /= 1.5
+		DebuffTimer.start()
+		Log.info("Player debuffed. Current speed is %s" % debuffedPlayer.speed)
 	queue_free()
 
 
 func _on_debuff_timer_timeout() -> void:
 	debuffedPlayer.speed *= 1.5
+	debuffedPlayer.isDebuffed = false
+	Log.info("Player debuff removed. Current speed is %s" % debuffedPlayer.speed)
