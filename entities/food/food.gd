@@ -121,7 +121,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	# reminder: inAction means the food is mid-throw
 	match [body.name, inAction]:
 		# if it hits a player
-		["Player", true]:
+		["Player", true] when !body.is_invuln:
 			var opp = PlayerManager.get_player_data(body.player, "team")
 			match [opp, team]:
 				["red", "blue"]:
@@ -143,7 +143,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			foodInstance.gravity_scale = 0
 			foodInstance.scale = Vector3(0.5,0.5,0.5)
 			queue_free()
-		# delete it once it hits the ground after being thrown (but not if it's a boomerang)
 		# delete it once it hits the ground after being thrown (but not if it's a boomerang)
 		["Ground", true]:
 			if not isBoomerang:

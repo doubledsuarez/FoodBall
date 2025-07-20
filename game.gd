@@ -2,12 +2,18 @@ extends Node
 
 @onready var cafe_scene : PackedScene = preload("res://levels/cafeteria/cafeteria.tscn")
 
+@export var foods:Array[PackedScene]
+
 # map from player integer to the player node
 var player_nodes = {}
 
 # load the cafe level and connect playermanager signals
 func _ready():
+	g.foods = foods
+	g.secret_ingredient = g.foods[randi() % g.foods.size()]
+	
 	add_child(cafe_scene.instantiate())
+	
 	PlayerManager.player_joined.connect(spawn_player)
 	PlayerManager.player_left.connect(delete_player)
 

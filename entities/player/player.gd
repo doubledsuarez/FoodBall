@@ -20,6 +20,7 @@ var throw_power : float
 var isMaxPower : bool = false
 var throwStarted : bool = false
 var team : String = ""
+var invuln : bool = false
 
 var player : int
 var input
@@ -122,8 +123,8 @@ func _physics_process(delta: float) -> void:
 	if input.is_action_just_pressed("eat"):
 		if hasFood == true and powerup_active == false:
 			hasFood = false
-			equipped.eat()
 			powerUp()
+			equipped.eat()
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:
@@ -157,20 +158,21 @@ func on_throw_timer_timeout() -> void:
 
 func powerUp() -> void:
 	powerup_active = true
-	match equipped.type:
-		"food":
-			speed *= 1.5
-			acceleration *= 1.3  # Also boost acceleration for snappier movement
-			$PowerUpTimer.wait_time = equipped.time
-			$PowerUpTimer.start()
-		_:
-			print("Invalid food type %s passed" % equipped.type)
+	speed *= 1.5
+	acceleration *= 1.3  # Also boost acceleration for snappier movement
+	
+	if equipped == g.secret_ingredient:
+		invuln = true
+		
+	$PowerUpTimer.wait_time = equipped.time
+	$PowerUpTimer.start()
 
 
 func setDefaults() -> void:
 	powerup_active = false
+	invuln = false
 	speed = 14
-	acceleration = 20.0  # Reset acceleration too
+	acceleration = 20.0
 
 func assignColor(team: String) -> void:
 	$Pivot/TeamColor.assignTeamColor(team)

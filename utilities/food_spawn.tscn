@@ -7,7 +7,6 @@
 
 [node name="FoodSpawn" type="Node3D"]
 script = ExtResource("1_sa0e7")
-foods = Array[PackedScene]([ExtResource("2_1vh0c")])
 
 [node name="Area3D" type="Area3D" parent="."]
 
