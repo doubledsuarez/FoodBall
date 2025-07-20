@@ -2,12 +2,12 @@ class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed = 8
+@export var speed = 10
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 # Movement acceleration and drag
 @export var acceleration = 20.0
-@export var drag = 15.0
+@export var drag = 30.0
 
 @export var max_power : float = 16.5
 
@@ -45,6 +45,7 @@ func init(player_num: int):
 	input = DeviceInput.new(device)
 
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
+	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
 
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
