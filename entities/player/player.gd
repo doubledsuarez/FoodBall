@@ -48,10 +48,11 @@ func _physics_process(delta: float) -> void:
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Idle_Holding")
+		rotatePivot(Vector3(0, 270, 0))
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Walk_Holding")
-		set_rotation_degrees(Vector3(0, 0, 0))
+		rotatePivot(Vector3(0, 0, 0))
 
 	# We check for each move input and update the direction accordingly.
 	if input.is_action_pressed("move_right"):
@@ -142,6 +143,7 @@ func throw(throw_force: float) -> void:
 
 	# Pass both momentum direction and final throw force
 	equipped.throw(momentum_direction, final_throw_force)
+	#equipped.boomerang_throw(momentum_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
 	isMaxPower = false

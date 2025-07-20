@@ -20,6 +20,8 @@ func _on_spawn_timer_timeout() -> void:
 	if (!get_node("Food")):
 		Log.info("Spawning food")
 		add_child(foods[randi() % foods.size()].instantiate())
+		# some % chance to create secret ingredient
+		# or decide on game spawn which food is the secret ingredient
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
