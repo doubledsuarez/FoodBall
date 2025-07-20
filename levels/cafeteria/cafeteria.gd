@@ -1,7 +1,7 @@
 extends Node3D
 
-var roundTimer : float = 20.0
-var pointsToWin : int = 5
+var roundTimer : float = 95.0
+var pointsToWin : int = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

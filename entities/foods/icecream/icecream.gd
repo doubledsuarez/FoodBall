@@ -1,7 +1,5 @@
 extends Food
 
-@onready var DebuffTimer = $DebuffTimer
-
 var debuffedPlayer : Player
 
 # Called when the node enters the scene tree for the first time.
@@ -15,15 +13,10 @@ func _process(delta: float) -> void:
 
 func hit(player : Player) -> void:
 	if !player.isDebuffed:
+		Log.info("Player %s hit with ice cream. Current speed is %s" % [player.player + 1, player.speed])
 		player.isDebuffed = true
-		debuffedPlayer = player
-		player.speed /= 1.5
-		DebuffTimer.start()
-		Log.info("Player debuffed. Current speed is %s" % debuffedPlayer.speed)
+		#debuffedPlayer = player
+		player.speed /= 2
+		player.DebuffTimer.start()
+		Log.info("Player debuffed. Current speed is %s" % player.speed)
 	queue_free()
-
-
-func _on_debuff_timer_timeout() -> void:
-	debuffedPlayer.speed *= 1.5
-	debuffedPlayer.isDebuffed = false
-	Log.info("Player debuff removed. Current speed is %s" % debuffedPlayer.speed)
