@@ -1,12 +1,13 @@
+class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed = 8
+@export var speed = 10
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 # Movement acceleration and drag
 @export var acceleration = 20.0
-@export var drag = 15.0
+@export var drag = 30.0
 
 @export var max_power : float = 16.5
 
@@ -19,6 +20,9 @@ var powerup_active : bool = false
 var throw_power : float
 var isMaxPower : bool = false
 var throwStarted : bool = false
+var team : String = ""
+var isInvuln : bool = false
+var isDebuffed : bool = false
 
 var player : int
 var input
@@ -41,6 +45,7 @@ func init(player_num: int):
 	input = DeviceInput.new(device)
 
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
+	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
 
 func _physics_process(delta: float) -> void:
 	# We create a local variable to store the input direction.
@@ -48,10 +53,11 @@ func _physics_process(delta: float) -> void:
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Idle_Holding")
+		rotatePivot(Vector3(0, 270, 0))
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO:
 		$Pivot/Player_Model.animation_player.play("Walk_Holding")
-		set_rotation_degrees(Vector3(0, 0, 0))
+		rotatePivot(Vector3(0, 270, 0))
 
 	# We check for each move input and update the direction accordingly.
 	if input.is_action_pressed("move_right"):
@@ -66,7 +72,10 @@ func _physics_process(delta: float) -> void:
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 		# Setting the basis property will affect the rotation of the node.
-		$Pivot.basis = Basis.looking_at(direction)
+		if (team == "red"):
+			$Pivot.basis = Basis.looking_at(direction)
+		elif (team == "blue"):
+			$Pivot.basis = Basis.looking_at(-direction)
 
 	# Ground Velocity with acceleration and drag
 	target_velocity.x = direction.x * speed
@@ -117,8 +126,8 @@ func _physics_process(delta: float) -> void:
 	if input.is_action_just_pressed("eat"):
 		if hasFood == true and powerup_active == false:
 			hasFood = false
-			equipped.eat()
 			powerUp()
+			equipped.eat()
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:
@@ -135,13 +144,14 @@ func throw(throw_force: float) -> void:
 	# Add momentum to throw force
 	var final_throw_force = throw_force + momentum_bonus
 
-	Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
+	#Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
 
 	# Create throw direction with slight momentum influence
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
 
 	# Pass both momentum direction and final throw force
 	equipped.throw(momentum_direction, final_throw_force)
+	#equipped.boomerang_throw(momentum_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
 	isMaxPower = false
@@ -151,28 +161,34 @@ func on_throw_timer_timeout() -> void:
 
 func powerUp() -> void:
 	powerup_active = true
-	match equipped.type:
-		"food":
-			speed *= 1.5
-			acceleration *= 1.3  # Also boost acceleration for snappier movement
-			$PowerUpTimer.wait_time = equipped.time
-			$PowerUpTimer.start()
-		_:
-			print("Invalid food type %s passed" % equipped.type)
+	speed *= 1.5
+	acceleration *= 1.3
+	
+	if equipped == g.secret_ingredient:
+		isInvuln = true
+		
+	Log.info("Player activated powerup. Current speed is %s" % speed)
+		
+	$PowerUpTimer.wait_time = equipped.time
+	$PowerUpTimer.start()
 
 
 func setDefaults() -> void:
 	powerup_active = false
+	isInvuln = false
 	speed = 14
-	acceleration = 20.0  # Reset acceleration too
+	acceleration = 20.0
 
 func assignColor(team: String) -> void:
 	$Pivot/TeamColor.assignTeamColor(team)
 
 
 func _on_power_up_timer_timeout() -> void:
-	setDefaults()
-
+	#setDefaults()
+	powerup_active = false
+	isInvuln = false
+	speed /= 1.5
+	acceleration /= 1.3
 
 func rotatePivot(degrees: Vector3) -> void:
 	$Pivot.set_rotation_degrees(degrees)

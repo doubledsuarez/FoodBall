@@ -1,12 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://wu14x6pdx8fq"]
+[gd_scene load_steps=9 format=3 uid="uid://wu14x6pdx8fq"]
 
 [ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Script" uid="uid://cqbpu4vebvpg2" path="res://entities/player/team_color.gd" id="2_abrql"]
-[ext_resource type="PackedScene" uid="uid://c2dv7fqmu8f80" path="res://entities/player/player_model.tscn" id="2_sglur"]
+[ext_resource type="PackedScene" uid="uid://carv6h6jf2het" path="res://entities/player/player_model.tscn" id="2_sglur"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
+size = Vector3(1, 1.75, 1.25049)
 
 [sub_resource type="BoxMesh" id="BoxMesh_symyc"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_sglur"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_symyc"]
 font_size = 60
@@ -15,10 +18,12 @@ font_size = 60
 viewport_path = NodePath("SubViewport")
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_mask = 3
 script = ExtResource("1_symyc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, -0.125244)
 shape = SubResource("BoxShape3D_sfv1e")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -31,6 +36,14 @@ mesh = SubResource("BoxMesh_symyc")
 skeleton = NodePath("")
 script = ExtResource("2_abrql")
 
+[node name="Hand" type="Node3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0279134, 0.88669, -0.554928)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot/Hand"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_sglur")
+
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
 size = Vector2i(256, 256)
@@ -39,7 +52,7 @@ size = Vector2i(256, 256)
 custom_minimum_size = Vector2(256, 256)
 offset_right = 40.0
 offset_bottom = 23.0
-text = "test"
+text = "Player #"
 label_settings = SubResource("LabelSettings_symyc")
 horizontal_alignment = 1
 

@@ -2,12 +2,18 @@ extends Node
 
 @onready var cafe_scene : PackedScene = preload("res://levels/cafeteria/cafeteria.tscn")
 
+@export var foods:Array[PackedScene]
+
 # map from player integer to the player node
 var player_nodes = {}
 
 # load the cafe level and connect playermanager signals
 func _ready():
+	g.foods = foods
+	g.secret_ingredient = g.foods[randi() % g.foods.size()]
+	
 	add_child(cafe_scene.instantiate())
+	
 	PlayerManager.player_joined.connect(spawn_player)
 	PlayerManager.player_left.connect(delete_player)
 
@@ -32,15 +38,19 @@ func spawn_player(player: int):
 
 	# set the player color, position, and rotation based on the team they joined
 	if PlayerManager.get_player_data(player, "team") == "red":
-		player_node.rotatePivot(Vector3(0, 270, 0))
+		player_node.team = "red"
+		player_node.rotatePivot(Vector3(0, 0, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
+		player_node.find_child("PlayerNum").label_settings.font_color = Color.RED
 		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
-		player_node.assignColor("red")
+		#player_node.assignColor("red")
 	elif PlayerManager.get_player_data(player, "team") == "blue":
-		player_node.set_rotation_degrees(Vector3(0, 90, 0))
-		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
+		player_node.team = "blue"
+		player_node.set_rotation_degrees(Vector3(0, 180, 0))
+		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 180, 0))
+		player_node.find_child("PlayerNum").label_settings.font_color = Color.BLUE
 		player_node.position = Vector3(randf_range(2, 13), 0, randf_range(-13, 13))
-		player_node.assignColor("blue")
+		#player_node.assignColor("blue")
 
 
 
