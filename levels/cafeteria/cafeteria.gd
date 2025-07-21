@@ -3,7 +3,7 @@ extends Node3D
 var player_scene = preload("res://entities/player/player.tscn")
 
 var roundTimer : float = 95.0
-var pointsToWin : int = 10
+var pointsToWin : int = 15
 
 # map from player integer to the player node
 var player_nodes = {}
@@ -15,6 +15,9 @@ func _ready() -> void:
 	g.roundTimer.set_one_shot(true)
 	g.roundTimer.start()
 	
+	g.red_won.connect(red_won)
+	g.blue_won.connect(blue_won)
+	
 	ps.player_joined.connect(spawn_player)
 	ps.player_left.connect(delete_player)
 	
@@ -22,6 +25,12 @@ func _ready() -> void:
 		if ps.player_data.has(i):
 			spawn_player(i)
 
+
+func red_won() -> void:
+	pass
+	
+func blue_won() -> void:
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -43,8 +52,8 @@ func _process(_delta: float) -> void:
 		$Countdown.text = "Round Over! It was a tie!"
 		g.tie.emit()
 
-	clamp(g.red_points, 0, pointsToWin)
-	clamp(g.blue_points, 0, pointsToWin)
+	#clamp(g.red_points, 0, pointsToWin)
+	#clamp(g.blue_points, 0, pointsToWin)
 	
 
 
@@ -81,7 +90,7 @@ func spawn_player(player: int):
 		player_node.rotatePivot(Vector3(0, 0, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.RED
-		player_node.setLabelColor()
+		#player_node.setLabelColor()
 		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
 		#player_node.assignColor("red")
 	elif ps.get_player_data(player, "team") == "blue":
@@ -89,9 +98,20 @@ func spawn_player(player: int):
 		player_node.set_rotation_degrees(Vector3(0, 180, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 180, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.BLUE
-		player_node.setLabelColor()
+		#player_node.setLabelColor()
 		player_node.position = Vector3(randf_range(2, 13), 0, randf_range(-13, 13))
 		#player_node.assignColor("blue")
+		
+	#var model = load(ps.PLAYER_MODELS[player]).instantiate()
+	#var mesh = player_node.get_node_or_null("Rig_Human/Skeleton3D/Cube")
+	#
+	#if mesh and mesh is MeshInstance3D:
+		#var color = ps.PLAYER_COLORS[player]
+		#var original_mat = mesh.get_active_material(0)
+		#if original_mat and original_mat is StandardMaterial3D:
+			#var mat = original_mat.duplicate()
+			#mat.albedo_color = color
+			#mesh.set_surface_override_material(0, mat)
 
 
 
