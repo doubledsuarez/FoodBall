@@ -189,6 +189,8 @@ func _start_game_countdown():
 	print("Countdown started")
 	countdown_time = 5
 	countdown_active = true  # prevent label from being reset
+	
+	$CombatMusic.play()
 
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if label:

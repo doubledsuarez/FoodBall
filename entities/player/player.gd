@@ -2,7 +2,8 @@ class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed = 14
+@export var speed : float = 15.0
+@export var powerExp : float = 1.5
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 # Movement acceleration and drag
@@ -104,7 +105,7 @@ func _physics_process(delta: float) -> void:
 		elif (team == "blue"):
 			$Pivot.basis = Basis.looking_at(-direction)
 
-	# Ground Velocity with acceleration and drag
+	# Ground Velocity
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
@@ -144,11 +145,11 @@ func _physics_process(delta: float) -> void:
 			#equipped.reparent(get_parent())
 			#hasFood = false
 	#Log.info("throwTimer is : %s " % throwTimer.is_stopped())
-	if hasFood == true:
+	if hasFood and !inThrowAni:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
-			speed /= 2
+			speed /= powerExp
 		if input.is_action_just_released("throw") and throwStarted == true:
 			throw_power = (8.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
@@ -156,12 +157,12 @@ func _physics_process(delta: float) -> void:
 			inThrowAni = true
 			#throw(throw_power)
 			throwStarted = false
-			speed *= 2
+			speed *= powerExp
 
 	if input.is_action_just_pressed("leave"):
 		ps.leave(player)
 
-	if input.is_action_just_pressed("eat"):
+	if input.is_action_just_pressed("eat") and !inThrowAni:
 		if hasFood == true and powerup_active == false:
 			hasFood = false
 			powerUp()
@@ -205,7 +206,7 @@ func on_throw_timer_timeout() -> void:
 func powerUp() -> void:
 	Log.info("Player %s ate. Current speed is %s" % [player + 1, speed])
 	powerup_active = true
-	speed *= 2
+	speed *= powerExp
 	#acceleration *= 1.3
 	
 	if equipped == g.secret_ingredient:
@@ -231,7 +232,7 @@ func _on_power_up_timer_timeout() -> void:
 	#setDefaults()
 	powerup_active = false
 	isInvuln = false
-	speed /= 2
+	speed /= powerExp
 	#acceleration /= 1.3
 	
 	Log.info("Player %s powerup timed out. Current speed is %s" % [player + 1, speed])
@@ -249,6 +250,6 @@ func on_animation_finished(anim_name: String) -> void:
 
 
 func _on_debuff_timer_timeout() -> void:
-	speed *= 2
+	speed *= powerExp
 	isDebuffed = false
 	Log.info("Player debuff removed. Current speed is %s" % speed)

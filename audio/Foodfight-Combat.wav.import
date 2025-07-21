@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://87n83fxr5mmi"
-path="res://.godot/imported/Foodfight-Combat.wav-b5e8665f86251cbba3816215d9373248.sample"
+path="res://.godot/imported/Foodfight-Combat.wav-9d89ee68f44ba90bef0c096dfff00895.sample"
 
 [deps]
 
-source_file="res://music/Foodfight-Combat.wav"
-dest_files=["res://.godot/imported/Foodfight-Combat.wav-b5e8665f86251cbba3816215d9373248.sample"]
+source_file="res://audio/Foodfight-Combat.wav"
+dest_files=["res://.godot/imported/Foodfight-Combat.wav-9d89ee68f44ba90bef0c096dfff00895.sample"]
 
 [params]
 
