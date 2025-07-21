@@ -19,7 +19,7 @@ func join(device: int):
 	var player = next_player()
 	if player >= 0:
 		var team = "red" if player < 2 else "blue"
-		print("Assigning Player", player, "to", team, "team")  # DEBUG: announce team assignment
+		Log.info("Assigning Player %s to %s team" % [player, team])  # DEBUG: announce team assignment
 		player_data[player] = {
 			"device": device,
 			"team": team
@@ -73,7 +73,7 @@ func handle_join_input():
 	for device in get_unjoined_devices():
 		# If this device just pressed the "Connect" button (mapped to A), let them join
 		if MultiplayerInput.is_action_just_pressed(device, "Connect"):
-			print("Device", device, "pressed A — joining")
+			Log.info("Device %s pressed A — joining" % device)
 			join(device)
 		#if MultiplayerInput.is_action_pressed(device, "join") and MultiplayerInput.is_action_pressed(device, "throw"):
 			#join_team(device, "red")

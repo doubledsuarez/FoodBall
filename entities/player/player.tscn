@@ -69,5 +69,9 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="StickyTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="PowerUpTimer" to="." method="_on_power_up_timer_timeout"]
 [connection signal="timeout" from="DebuffTimer" to="." method="_on_debuff_timer_timeout"]
+[connection signal="timeout" from="StickyTimer" to="." method="_on_sticky_timer_timeout"]

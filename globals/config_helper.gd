@@ -16,7 +16,7 @@ func init_config_if_missing() -> void:
 	var config := ConfigFile.new()
 	var err := config.load(CONFIG_PATH)
 	if err != OK:
-		print("Config not found. Writing defaults.")
+		Log.info("Config not found. Writing defaults.")
 		# Defaults: 0 is full volume, -10 is a bit quieter, -80 would be silent
 		config.set_value(SECTION_AUDIO, "master", 0.0)
 		config.set_value(SECTION_AUDIO, "music", -10.0)
@@ -26,9 +26,9 @@ func init_config_if_missing() -> void:
 		# Try to save config to file
 		var save_err := config.save(CONFIG_PATH)
 		if save_err != OK:
-			print("Failed to save default config. Error code: %s" % save_err)
+			Log.info("Failed to save default config. Error code: %s" % save_err)
 	else:
-		print("Config loaded successfully.")
+		Log.info("Config loaded successfully.")
 
 # Save values and verify everything actually stuck, might not need all the extra debug crap later, but it wasn't working so I added a ton of it. 
 func save_settings(master: float, music: float, sfx: float, window_mode: int) -> void:
@@ -49,22 +49,22 @@ func save_settings(master: float, music: float, sfx: float, window_mode: int) ->
 		return
 
 	# Debug info: what we *tried* to save
-	print("\n--- DEBUG: SAVING SETTINGS ---")
-	print("Saving master slider:", master)
-	print("Saving music slider:", music)
-	print("Saving sfx slider:", sfx)
-	print("Saving window mode:", window_mode)
+	Log.info("\n--- DEBUG: SAVING SETTINGS ---")
+	Log.info("Saving master slider:", master)
+	Log.info("Saving music slider:", music)
+	Log.info("Saving sfx slider:", sfx)
+	Log.info("Saving window mode:", window_mode)
 
 	# Load it again to confirm it's actually saved
 	var verify_config := ConfigFile.new()
 	var verify_err := verify_config.load(CONFIG_PATH)
 	if verify_err == OK:
-		print("File check - master:", verify_config.get_value(SECTION_AUDIO, "master"))
-		print("File check - music:", verify_config.get_value(SECTION_AUDIO, "music"))
-		print("File check - sfx:", verify_config.get_value(SECTION_AUDIO, "sfx"))
-		print("File check - window_mode:", verify_config.get_value(SECTION_DISPLAY, "window_mode"))
+		Log.info("File check - master:", verify_config.get_value(SECTION_AUDIO, "master"))
+		Log.info("File check - music:", verify_config.get_value(SECTION_AUDIO, "music"))
+		Log.info("File check - sfx:", verify_config.get_value(SECTION_AUDIO, "sfx"))
+		Log.info("File check - window_mode:", verify_config.get_value(SECTION_DISPLAY, "window_mode"))
 	else:
-		print("Couldn’t reload config to verify. Error code: %s" % verify_err)
+		Log.info("Couldn’t reload config to verify. Error code: %s" % verify_err)
 
 	# Apply to system (this actually changes the audio levels and window mode)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), master)
@@ -73,11 +73,11 @@ func save_settings(master: float, music: float, sfx: float, window_mode: int) ->
 	DisplayServer.window_set_mode(window_mode)
 
 	# Confirm the system got the update
-	print("System check - master:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")))
-	print("System check - music:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music")))
-	print("System check - sfx:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
-	print("System check - window mode:", DisplayServer.window_get_mode())
-	print("--- DEBUG END ---\n")
+	Log.info("System check - master:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")))
+	Log.info("System check - music:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music")))
+	Log.info("System check - sfx:", AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX")))
+	Log.info("System check - window mode:", DisplayServer.window_get_mode())
+	Log.info("--- DEBUG END ---\n")
 
 # Grab current settings from file and hand them off
 func load_settings() -> void:
@@ -97,4 +97,4 @@ func load_settings() -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), sfx)
 	DisplayServer.window_set_mode(window_mode)
 
-	print("Config loaded.")
+	Log.info("Config loaded.")

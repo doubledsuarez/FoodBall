@@ -9,7 +9,9 @@ extends Node
 func _ready():
 	config_helper.init_config_if_missing()
 	g.foods = foods
-	g.secret_ingredient = g.foods[randi() % g.foods.size()]
+	g.secret_ingredient = g.foods[randi() % g.foods.size()].instantiate().name
+	
+	Log.dbg("Secret ingredient is %s " % g.secret_ingredient)
 	
 	add_child(main_menu_scene.instantiate())
 	
@@ -20,3 +22,6 @@ func _ready():
 func _process(_delta):
 	#ps.handle_join_input()
 	pass
+
+func restart():
+	get_tree().reload_current_scene()

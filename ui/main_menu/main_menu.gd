@@ -21,7 +21,7 @@ func _on_mmstart_pressed():
 	# get_node("/root/Game/CameraPivot/AnimationPlayer").play("StartGamePan")
 
 	# Instance the player select scene
-	var select_instance = player_select_scene.instantiate()
+	#var select_instance = player_select_scene.instantiate()
 
 	# Add to parent scene tree
 	#g.game.add_child(select_instance)
@@ -31,7 +31,7 @@ func _on_mmstart_pressed():
 	
 	ps.unHide()
 
-	print("Opened Player Select")
+	Log.info("Opened Player Select")
 
 
 func _on_mmoptions_pressed():
@@ -48,4 +48,4 @@ func _on_mmoptions_pressed():
 	# Add to parent scene tree
 	get_parent().add_child(options_instance)
 
-	print("Opened Options Menu")
+	Log.info("Opened Options Menu")

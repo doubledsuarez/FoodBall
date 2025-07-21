@@ -29,6 +29,9 @@ var player_panels = []
 func unHide():
 	$"Player Select".show()
 	set_process(true)
+	
+func restart():
+	get_tree().reload_current_scene()
 
 func _ready():
 	$"Player Select".hide()
@@ -40,7 +43,7 @@ func _ready():
 		$"Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3",
 		$"Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4",
 	]
-	print("Panel Index Loaded")
+	Log.info("Panel Index Loaded")
 
 func _process(_delta):
 	_check_start_conditions()
@@ -48,7 +51,7 @@ func _process(_delta):
 	# Check for new joins
 	for device in Input.get_connected_joypads():
 		if not _device_joined(device) and MultiplayerInput.is_action_just_pressed(device, "Connect"):
-			print("Device", device, "pressed Connect")
+			Log.info("Device %s pressed Connect" % device)
 			_join_player(device)
 
 	# Debug output
@@ -58,43 +61,43 @@ func _process(_delta):
 		var label = "Device %d" % device
 		label += " (joined as player %d)" % joined_index if joined_index >= 0 else " (not joined)"
 		status.append(label)
-	#print("Connected devices:\n" + "\n".join(status))
+	#Log.info("Connected devices:\n" + "\n".join(status))
 
 func _join_player(device: int):
-	print("Player Joining")
+	Log.info("Player Joining")
 	for i in MAX_PLAYERS:
 		if not player_data.has(i):
 			var team = "red" if i < 2 else "blue"
-			print("Assigning Player", i, "to", team, "team")  # DEBUG: announce team assignment
+			Log.info("Assigning Player %s to %s team" % [i, team])  # DEBUG: announce team assignment
 			player_data[i] = {
 				"device": device,
 				"team": team
 			}
 			_show_player(i)
 			player_joined.emit(i)
-			print("Player", i, "joined using device", device)
+			Log.info("Player %s joined using device %s" % [i, device])
 			return
-	print("No free slots for device", device)
+	Log.info("No free slots for device", device)
 
 func _remove_player(index: int):
-	print("Removing Player")
+	Log.info("Removing Player")
 	if player_data.has(index):
 		_clear_panel(index)
 		player_data.erase(index)
 		player_left.emit(index)
-		print("Player", index, "removed")
+		Log.info("Player %s removed" % index)
 
 func _show_player(index: int):
-	print("Showing Player %d" % index)
+	Log.info("Showing Player %d" % index)
 
 	if index >= player_panels.size():
-		print("Invalid player index:", index)
+		Log.info("Invalid player index:", index)
 		return
 
 	var panel = player_panels[index]
 	var viewport = panel.get_node_or_null("PJVBox/PJSVPContainer/PJSVP")
 	if viewport == null:
-		print("Missing viewport for player", index)
+		Log.info("Missing viewport for player", index)
 		return
 
 	viewport.world_3d = World3D.new()
@@ -124,11 +127,11 @@ func _show_player(index: int):
 		label.text = "READY!"
 
 func _clear_panel(index: int):
-	print("Panel Cleared")
+	Log.info("Panel Cleared")
 	var panel_path = "Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin%d" % (index + 1)
 	var panel = get_node_or_null(panel_path)
 	if panel == null:
-		print("Missing panel to clear for player", index)
+		Log.info("Missing panel to clear for player", index)
 		return
 
 	var viewport = panel.get_node_or_null("PJVBox/PJSVPContainer/PJSVP")
@@ -155,7 +158,7 @@ func _get_player_index_for_device(device: int) -> int:
 func _start_game_immediately():
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	label.text = "Starting Now!"
-	print("Starting game now!")
+	Log.info("Starting game now!")
 	_start_game_countdown()
 
 # Countdown Variables
@@ -186,7 +189,7 @@ func _check_start_conditions():
 
 # Start countdown to launch game
 func _start_game_countdown():
-	print("Countdown started")
+	Log.info("Countdown started")
 	countdown_time = 5
 	countdown_active = true  # prevent label from being reset
 	
@@ -255,5 +258,5 @@ func set_player_data(player: int, key: StringName, value: Variant):
 
 func _start_game():
 	$"Player Select".hide()
-	print("TODO: Hook in main game start logic here (Danny's domain)")
+	Log.info("Starting Game")
 	get_parent().add_child(cafe_scene.instantiate())

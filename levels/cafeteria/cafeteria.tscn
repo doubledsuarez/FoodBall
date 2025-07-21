@@ -21,6 +21,8 @@ script = ExtResource("1_ogs0t")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 2
+collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_oqph1")
@@ -42,6 +44,8 @@ current = true
 size = 30.0
 
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
+collision_layer = 4
+collision_mask = 15
 
 [node name="Walls" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

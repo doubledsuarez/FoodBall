@@ -1,19 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqfmcnq8s7cts"]
+[gd_scene load_steps=5 format=3 uid="uid://ngfgv56f58w7"]
 
-[ext_resource type="Script" uid="uid://cvb0m1ed8dd0d" path="res://entities/foods/bananna/bananna.gd" id="1_frb2j"]
+[ext_resource type="Script" uid="uid://dp1sjgmtsx5v4" path="res://entities/foods/cake/cake.gd" id="1_tuppd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6vg"]
-albedo_color = Color(1, 0.976471, 0, 1)
+albedo_color = Color(0.338518, 0.251391, 0.158515, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_bw6vg"]
 
-[node name="Bananna" type="RigidBody3D"]
+[node name="Cake" type="RigidBody3D"]
 collision_layer = 0
-collision_mask = 0
-gravity_scale = 0.0
-script = ExtResource("1_frb2j")
+collision_mask = 2
+script = ExtResource("1_tuppd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

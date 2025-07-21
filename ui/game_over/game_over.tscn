@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://boe0l6mvvosqc"]
+
+[ext_resource type="Script" uid="uid://d3t3tdky3f8j7" path="res://ui/game_over/game_over.gd" id="1_4cp6t"]
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="2_iojxx"]
+[ext_resource type="PackedScene" uid="uid://xue6wjhmygmg" path="res://ui/graphics/button.tscn" id="3_ktka2"]
+
+[node name="Menus" type="Node2D"]
+script = ExtResource("1_4cp6t")
+
+[node name="Round Over" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Round Over"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.0
+offset_top = 100.0
+offset_right = 204.0
+offset_bottom = 211.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.847059, 0.215686, 0.309804, 1)
+theme_override_colors/font_outline_color = Color(0.596078, 0.145098, 0.407843, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_iojxx")
+theme_override_font_sizes/font_size = 128
+text = "Round Over!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="rohbox" type="HBoxContainer" parent="Round Over"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="rovbox" type="VBoxContainer" parent="Round Over/rohbox"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="rorestart" parent="Round Over/rohbox/rovbox" instance=ExtResource("3_ktka2")]
+layout_mode = 2
+
+[node name="Label" parent="Round Over/rohbox/rovbox/rorestart" index="0"]
+text = "Restart"
+
+[node name="rocollection" parent="Round Over/rohbox/rovbox" instance=ExtResource("3_ktka2")]
+visible = false
+layout_mode = 2
+
+[node name="Label" parent="Round Over/rohbox/rovbox/rocollection" index="0"]
+text = "Unlocks"
+
+[node name="rooptions" parent="Round Over/rohbox/rovbox" instance=ExtResource("3_ktka2")]
+layout_mode = 2
+
+[node name="Label" parent="Round Over/rohbox/rovbox/rooptions" index="0"]
+text = "Options"
+
+[connection signal="pressed" from="Round Over/rohbox/rovbox/rorestart" to="." method="_on_rorestart_pressed"]
+[connection signal="pressed" from="Round Over/rohbox/rovbox/rooptions" to="." method="_on_rooptions_pressed"]
+
+[editable path="Round Over/rohbox/rovbox/rorestart"]
+[editable path="Round Over/rohbox/rovbox/rocollection"]
+[editable path="Round Over/rohbox/rovbox/rooptions"]

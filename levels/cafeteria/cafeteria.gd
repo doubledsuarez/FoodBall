@@ -1,8 +1,10 @@
 extends Node3D
 
-var player_scene = preload("res://entities/player/player.tscn")
+@onready var player_scene = preload("res://entities/player/player.tscn")
+@onready var game_over_scene = preload("res://ui/game_over/game_over.tscn")
 
-var roundTimer : float = 95.0
+
+var roundTimer : float = 90.0
 var pointsToWin : int = 15
 
 # map from player integer to the player node
@@ -27,10 +29,12 @@ func _ready() -> void:
 
 
 func red_won() -> void:
-	pass
+	queue_free()
+	g.game.add_child(game_over_scene.instantiate())
 	
 func blue_won() -> void:
-	pass
+	queue_free()
+	g.game.add_child(game_over_scene.instantiate())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
