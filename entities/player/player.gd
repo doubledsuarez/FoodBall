@@ -29,6 +29,8 @@ var inThrowAni : bool = false
 
 var AniPlayer
 
+var PlayerLabel
+
 var player : int
 var input
 var device
@@ -46,6 +48,8 @@ func _ready() -> void:
 	
 	AniPlayer = $Pivot/Player_Model.animation_player
 	
+	PlayerLabel = $SubViewport/PlayerNum
+	
 	AniPlayer.connect("animation_finished", on_animation_finished)
 
 func init(player_num: int):
@@ -55,13 +59,21 @@ func init(player_num: int):
 
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
-	if (PlayerManager.get_player_data(player, "team") == "red"):
-		$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	elif (PlayerManager.get_player_data(player, "team") == "blue"):
-		$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
+	#if (PlayerManager.get_player_data(player, "team") == "red"):
+		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
+	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
+
+func setLabelColor() -> void:
+	if team == "red":
+		PlayerLabel.label_settings.font_color = Color.RED
+	elif team == "blue":
+		PlayerLabel.label_settings.font_color = Color.BLUE
 
 func _physics_process(delta: float) -> void:
+	setLabelColor()
+	
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
 	
@@ -154,6 +166,11 @@ func _physics_process(delta: float) -> void:
 			hasFood = false
 			powerUp()
 			equipped.eat()
+	
+	#if (PlayerManager.get_player_data(player, "team") == "red"):
+		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
+	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:

@@ -43,6 +43,7 @@ func spawn_player(player: int):
 		player_node.rotatePivot(Vector3(0, 0, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.RED
+		player_node.setLabelColor()
 		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
 		#player_node.assignColor("red")
 	elif PlayerManager.get_player_data(player, "team") == "blue":
@@ -50,6 +51,7 @@ func spawn_player(player: int):
 		player_node.set_rotation_degrees(Vector3(0, 180, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 180, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.BLUE
+		player_node.setLabelColor()
 		player_node.position = Vector3(randf_range(2, 13), 0, randf_range(-13, 13))
 		#player_node.assignColor("blue")
 
