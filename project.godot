@@ -22,6 +22,7 @@ MultiplayerInput="*res://addons/multiplayer_input/multiplayer_input.gd"
 PlayerManager="*res://globals/player_manager.gd"
 Log="*res://addons/logger/logger.gd"
 config_helper="*res://globals/config_helper.gd"
+ps="*res://ui/player_menu/player_select.tscn"
 
 [display]
 

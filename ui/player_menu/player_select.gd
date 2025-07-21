@@ -1,5 +1,7 @@
 extends Node2D
 
+var cafe_scene = preload("res://levels/cafeteria/cafeteria.tscn")
+
 # Signals to notify when a player joins or leaves
 signal player_joined(player)
 signal player_left(player)
@@ -24,7 +26,13 @@ const PLAYER_COLORS = [
 var player_data: Dictionary = {}
 var player_panels = []
 
+func unHide():
+	$"Player Select".show()
+	set_process(true)
+
 func _ready():
+	$"Player Select".hide()
+	set_process(false)
 	# Cache references to each player panel node using full paths
 	player_panels = [
 		$"Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1",
@@ -41,7 +49,7 @@ func _process(_delta):
 	for device in Input.get_connected_joypads():
 		if not _device_joined(device) and MultiplayerInput.is_action_just_pressed(device, "Connect"):
 			print("Device", device, "pressed Connect")
-			_join_player(device, "neutral")
+			_join_player(device)
 
 	# Debug output
 	var status := []
@@ -50,13 +58,18 @@ func _process(_delta):
 		var label = "Device %d" % device
 		label += " (joined as player %d)" % joined_index if joined_index >= 0 else " (not joined)"
 		status.append(label)
-	print("Connected devices:\n" + "\n".join(status))
+	#print("Connected devices:\n" + "\n".join(status))
 
-func _join_player(device: int, team: String):
+func _join_player(device: int):
 	print("Player Joining")
 	for i in MAX_PLAYERS:
 		if not player_data.has(i):
-			player_data[i] = { "device": device, "team": team }
+			var team = "red" if i < 2 else "blue"
+			print("Assigning Player", i, "to", team, "team")  # DEBUG: announce team assignment
+			player_data[i] = {
+				"device": device,
+				"team": team
+			}
 			_show_player(i)
 			player_joined.emit(i)
 			print("Player", i, "joined using device", device)
@@ -146,7 +159,7 @@ func _start_game_immediately():
 	_start_game_countdown()
 
 # Countdown Variables
-var countdown_time := 3
+var countdown_time := 5
 var countdown_timer: Timer
 var countdown_active := false
 
@@ -174,12 +187,12 @@ func _check_start_conditions():
 # Start countdown to launch game
 func _start_game_countdown():
 	print("Countdown started")
-	countdown_time = 3
+	countdown_time = 5
 	countdown_active = true  # prevent label from being reset
 
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if label:
-		label.text = "Starting in 3..."
+		label.text = "Starting in 5..."
 
 	if countdown_timer == null:
 		countdown_timer = Timer.new()
@@ -203,8 +216,42 @@ func _on_countdown_tick():
 			label.text = "Starting!"
 			countdown_timer.stop()
 			_start_game()
+			
+			
+# Remove a player from the game
+func leave(player: int):
+	if player_data.has(player):
+		player_data.erase(player)
+		player_left.emit(player)
+
+# How many players are currently in?
+func get_player_count():
+	return player_data.size()
+
+# Get a list of joined player indexes (e.g. [0, 1])
+func get_player_indexes():
+	return player_data.keys()
+
+# Get the device ID associated with a player
+func get_player_device(player: int) -> int:
+	return get_player_data(player, "device")
+
+# get player data.
+# null means it doesn't exist.
+func get_player_data(player: int, key: StringName):
+	if player_data.has(player) and player_data[player].has(key):
+		return player_data[player][key]
+	return null
+
+# set player data to get later
+func set_player_data(player: int, key: StringName, value: Variant):
+	# if this player is not joined, don't do anything:
+	if !player_data.has(player):
+		return
+	player_data[player][key] = value
 
 
 func _start_game():
 	$"Player Select".hide()
 	print("TODO: Hook in main game start logic here (Danny's domain)")
+	get_parent().add_child(cafe_scene.instantiate())

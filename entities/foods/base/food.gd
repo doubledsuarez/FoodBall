@@ -71,7 +71,7 @@ func hit(player : Player) -> void:
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Player:
 		if (inAction and !body.isInvuln):
-			var opp = PlayerManager.get_player_data(body.player, "team")
+			var opp = ps.get_player_data(body.player, "team")
 			match [opp, team]:
 				["red", "blue"]:
 					hit(body)
@@ -83,7 +83,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.hasFood = true
 			body.equipped = foodInstance
 			foodInstance.human = body
-			foodInstance.team = PlayerManager.get_player_data(body.player, "team")
+			foodInstance.team = ps.get_player_data(body.player, "team")
 			foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
@@ -108,7 +108,7 @@ func auto_pickup_by_thrower() -> void:
 			human.hasFood = true
 			human.equipped = pickup_food
 			pickup_food.human = human
-			pickup_food.team = PlayerManager.get_player_data(human.player, "team")
+			pickup_food.team = ps.get_player_data(human.player, "team")
 			pickup_food.position = human.find_child("Hand").position
 			pickup_food.isEquipped = true
 			pickup_food.gravity_scale = 0

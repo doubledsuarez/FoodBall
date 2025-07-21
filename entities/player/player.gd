@@ -54,14 +54,14 @@ func _ready() -> void:
 
 func init(player_num: int):
 	player = player_num
-	device = PlayerManager.get_player_device(player)
+	device = ps.get_player_device(player)
 	input = DeviceInput.new(device)
 
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
-	#if (PlayerManager.get_player_data(player, "team") == "red"):
+	#if (ps.get_player_data(player, "team") == "red"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+	#if (ps.get_player_data(player, "team") == "blue"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
 
@@ -159,7 +159,7 @@ func _physics_process(delta: float) -> void:
 			speed *= 2
 
 	if input.is_action_just_pressed("leave"):
-		PlayerManager.leave(player)
+		ps.leave(player)
 
 	if input.is_action_just_pressed("eat"):
 		if hasFood == true and powerup_active == false:
@@ -167,9 +167,9 @@ func _physics_process(delta: float) -> void:
 			powerUp()
 			equipped.eat()
 	
-	#if (PlayerManager.get_player_data(player, "team") == "red"):
+	#if (ps.get_player_data(player, "team") == "red"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+	#if (ps.get_player_data(player, "team") == "blue"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
 func throw(throw_force: float) -> void:

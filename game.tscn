@@ -10,4 +10,5 @@ script = ExtResource("1_feb5d")
 foods = Array[PackedScene]([ExtResource("2_fc0e3"), ExtResource("4_fc0e3")])
 
 [node name="CombatMusic" parent="." instance=ExtResource("4_7jktm")]
+autoplay = false
 stream_paused = false

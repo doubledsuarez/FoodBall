@@ -3,6 +3,8 @@ extends Node2D
 # Preload required scenes
 var options_menu_scene = preload("res://ui/options_menu/options_menu.tscn")
 var player_select_scene = preload("res://ui/player_menu/player_select.tscn")
+var main_menu_scene = preload("res://ui/main_menu/main_menu.tscn")
+var cafe_scene = preload("res://levels/cafeteria/cafeteria.tscn")
 
 func _ready():
 	config_helper.init_config_if_missing()
@@ -22,7 +24,12 @@ func _on_mmstart_pressed():
 	var select_instance = player_select_scene.instantiate()
 
 	# Add to parent scene tree
-	get_parent().add_child(select_instance)
+	#g.game.add_child(select_instance)
+	#select_instance.unHide()
+	#g.game.find_child("Player Select").show()
+	#g.game.get_node("Player Select").unHide()
+	
+	ps.unHide()
 
 	print("Opened Player Select")
 

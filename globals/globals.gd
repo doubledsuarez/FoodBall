@@ -1,5 +1,7 @@
 extends Node
 
+var game
+
 var red_points : int = 0
 var blue_points : int = 0
 
