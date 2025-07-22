@@ -9,18 +9,18 @@ signal player_left(player)
 # Constants
 const MAX_PLAYERS = 4
 const PLAYER_MODELS = [
-	"res://entities/player/player1.glb",
-	"res://entities/player/player2.glb",
-	"res://entities/player/player3.glb",
-	"res://entities/player/player4.glb"
+	"res://entities/player/FoodBall_Char_Red_1.glb",
+	"res://entities/player/FoodBall_Char_Red_2.glb",
+	"res://entities/player/FoodBall_Char_Blue_3.glb",
+	"res://entities/player/FoodBall_Char_Blue_4.glb"
 ]
 
-const PLAYER_COLORS = [
-	Color(0.5, 0, 0),     # Dark red
-	Color(1, 0.3, 0.3),   # Light red
-	Color(0, 0, 0.5),     # Dark blue
-	Color(0.4, 0.6, 1.0)  # Light blue
-]
+#const PLAYER_COLORS = [
+#	Color(0.5, 0, 0),     # Dark red
+#	Color(1, 0.3, 0.3),   # Light red
+#	Color(0, 0, 0.5),     # Dark blue
+#	Color(0.4, 0.6, 1.0)  # Light blue
+#]
 
 # Tracks which devices are in which slots
 var player_data: Dictionary = {}
@@ -150,11 +150,11 @@ func _show_player(index: int):
 
 	var mesh = model.get_node_or_null("Rig_Human/Skeleton3D/Cube")
 	if mesh and mesh is MeshInstance3D:
-		var color = PLAYER_COLORS[index]
+		#var color = PLAYER_COLORS[index]
 		var original_mat = mesh.get_active_material(0)
 		if original_mat and original_mat is StandardMaterial3D:
 			var mat = original_mat.duplicate()
-			mat.albedo_color = color
+			#mat.albedo_color = color
 			mesh.set_surface_override_material(0, mat)
 
 	var anim = model.get_node_or_null("AnimationPlayer")

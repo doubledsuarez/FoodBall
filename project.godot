@@ -13,6 +13,7 @@ config_version=5
 config/name="FoodBall"
 run/main_scene="uid://c4ejbhsvcm1fe"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/image="uid://rpa1b0bx16e5"
 config/icon="res://graphics/icon.svg"
 
 [autoload]
