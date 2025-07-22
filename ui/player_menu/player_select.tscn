@@ -82,9 +82,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138888, -0.595936, 1.2701
 current = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox/PJSVPContainer/PJSVP"]
-light_energy = 2.0
-omni_range = 10.0
-omni_attenuation = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.5, 0.5)
+light_energy = 1.835
+omni_range = 5.978
+omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox"]
 layout_mode = 2
@@ -133,10 +134,11 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138888, -0.595936, 1.27016)
 current = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox/PJSVPContainer/PJSVP"]
-light_energy = 2.0
-omni_range = 10.0
-omni_attenuation = 3.0
+[node name="OmniLight3D2" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox/PJSVPContainer/PJSVP"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.5, 0.5)
+light_energy = 1.835
+omni_range = 5.978
+omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox"]
 layout_mode = 2
@@ -185,10 +187,11 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138888, -0.595936, 1.27016)
 current = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox/PJSVPContainer/PJSVP"]
-light_energy = 2.0
-omni_range = 10.0
-omni_attenuation = 3.0
+[node name="OmniLight3D3" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox/PJSVPContainer/PJSVP/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0861112, 0.095936, -0.77016)
+light_energy = 1.835
+omni_range = 5.978
+omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
 layout_mode = 2
@@ -237,10 +240,11 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138888, -0.595936, 1.27016)
 current = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox/PJSVPContainer/PJSVP"]
-light_energy = 2.0
-omni_range = 10.0
-omni_attenuation = 3.0
+[node name="OmniLight3D4" type="OmniLight3D" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox/PJSVPContainer/PJSVP"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.5, 0.5)
+light_energy = 1.835
+omni_range = 5.978
+omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]
 layout_mode = 2
@@ -254,4 +258,3 @@ size_flags_vertical = 4
 
 [node name="CombatMusic" parent="." instance=ExtResource("5_5rgwa")]
 autoplay = false
-stream_paused = false

@@ -5,4 +5,3 @@
 [node name="CombatMusic" type="AudioStreamPlayer"]
 stream = ExtResource("1_m8if4")
 autoplay = true
-stream_paused = true
