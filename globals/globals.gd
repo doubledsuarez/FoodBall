@@ -1,6 +1,9 @@
 extends Node
 
-var red_points : int = 0
+var game
+
+var red_points : int = 1
+
 var blue_points : int = 0
 
 var foods:Array[PackedScene]

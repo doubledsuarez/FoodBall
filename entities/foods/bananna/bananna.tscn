@@ -12,6 +12,7 @@ albedo_color = Color(1, 0.976471, 0, 1)
 [node name="Bananna" type="RigidBody3D"]
 collision_layer = 0
 collision_mask = 0
+gravity_scale = 0.0
 script = ExtResource("1_frb2j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -27,6 +28,7 @@ mesh = SubResource("SphereMesh_bw6vg")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8
+collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)

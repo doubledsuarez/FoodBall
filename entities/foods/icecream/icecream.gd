@@ -16,7 +16,7 @@ func hit(player : Player) -> void:
 		Log.info("Player %s hit with ice cream. Current speed is %s" % [player.player + 1, player.speed])
 		player.isDebuffed = true
 		#debuffedPlayer = player
-		player.speed /= 2
+		player.speed /= player.powerExp
 		player.DebuffTimer.start()
 		Log.info("Player debuffed. Current speed is %s" % player.speed)
 	queue_free()

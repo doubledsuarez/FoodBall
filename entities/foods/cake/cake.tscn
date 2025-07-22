@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://ngfgv56f58w7"]
+
+[ext_resource type="Script" uid="uid://dp1sjgmtsx5v4" path="res://entities/foods/cake/cake.gd" id="1_tuppd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6vg"]
+albedo_color = Color(0.338518, 0.251391, 0.158515, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bw6vg"]
+
+[node name="Cake" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_tuppd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_ylt38")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_bw6vg")
+mesh = SubResource("SphereMesh_bw6vg")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+shape = SubResource("SphereShape3D_ylt38")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

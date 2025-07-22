@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bbgah5sofxvrg"]
+
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="1_bp0d3"]
+[ext_resource type="StyleBox" uid="uid://c2h1ov74aorl4" path="res://ui/player_menu/player_menu_style_box.tres" id="1_opvkp"]
+
+[resource]
+default_font = ExtResource("1_bp0d3")
+default_font_size = 32
+Panel/styles/panel = null
+PanelContainer/styles/panel = ExtResource("1_opvkp")
+VBoxContainer/constants/separation = 4

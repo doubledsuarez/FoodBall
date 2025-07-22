@@ -19,7 +19,9 @@ viewport_path = NodePath("SubViewport")
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-collision_mask = 3
+
+collision_mask = 15
+
 script = ExtResource("1_symyc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -69,5 +71,9 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="StickyTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="PowerUpTimer" to="." method="_on_power_up_timer_timeout"]
 [connection signal="timeout" from="DebuffTimer" to="." method="_on_debuff_timer_timeout"]
+[connection signal="timeout" from="StickyTimer" to="." method="_on_sticky_timer_timeout"]

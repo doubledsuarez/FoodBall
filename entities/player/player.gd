@@ -2,7 +2,8 @@ class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed = 14
+@export var speed : float = 15.0
+@export var powerExp : float = 1.5
 # The downward acceleration when in the air, in meters per second squared.
 @export var fall_acceleration = 75
 # Movement acceleration and drag
@@ -26,6 +27,7 @@ var team : String = ""
 var isInvuln : bool = false
 var isDebuffed : bool = false
 var inThrowAni : bool = false
+var isSticky : bool = false
 
 var AniPlayer
 
@@ -37,6 +39,7 @@ var device
 
 var throwTimer = Timer.new()
 
+var currDirection = Vector3.ZERO
 signal leave
 
 func _ready() -> void:
@@ -45,25 +48,24 @@ func _ready() -> void:
 	throwTimer.set_one_shot(false)
 	throwTimer.set_autostart(false)
 	add_child(throwTimer)
-	
+
 	AniPlayer = $Pivot/Player_Model.animation_player
-	
+
 	PlayerLabel = $SubViewport/PlayerNum
-	
+
 	AniPlayer.connect("animation_finished", on_animation_finished)
 
 func init(player_num: int):
 	player = player_num
-	device = PlayerManager.get_player_device(player)
+	device = ps.get_player_device(player)
 	input = DeviceInput.new(device)
 
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
-	#if (PlayerManager.get_player_data(player, "team") == "red"):
+	#if (ps.get_player_data(player, "team") == "red"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+	#if (ps.get_player_data(player, "team") == "blue"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
-
 
 func setLabelColor() -> void:
 	if team == "red":
@@ -74,9 +76,7 @@ func setLabelColor() -> void:
 func _physics_process(delta: float) -> void:
 	setLabelColor()
 	
-	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
-	
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
@@ -85,7 +85,7 @@ func _physics_process(delta: float) -> void:
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if !inThrowAni:
+	if !inThrowAni and !isSticky:
 		# We check for each move input and update the direction accordingly.
 		if input.is_action_pressed("move_right"):
 			direction.x += 1
@@ -130,10 +130,10 @@ func _physics_process(delta: float) -> void:
 	# Moving the Character
 	# velocity = current_velocity
 	velocity = target_velocity
-	
+  
 	if throwStarted:
 		rotatePivot(Vector3(0, 270, 0))
-		
+
 	move_and_slide()
 
 	#if input.is_action_just_pressed("throw"):
@@ -144,11 +144,11 @@ func _physics_process(delta: float) -> void:
 			#equipped.reparent(get_parent())
 			#hasFood = false
 	#Log.info("throwTimer is : %s " % throwTimer.is_stopped())
-	if hasFood == true:
+	if hasFood and !inThrowAni:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
-			speed /= 2
+			speed /= powerExp
 		if input.is_action_just_released("throw") and throwStarted == true:
 			throw_power = (8.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
@@ -156,20 +156,20 @@ func _physics_process(delta: float) -> void:
 			inThrowAni = true
 			#throw(throw_power)
 			throwStarted = false
-			speed *= 2
+			speed *= powerExp
 
 	if input.is_action_just_pressed("leave"):
-		PlayerManager.leave(player)
+		ps.leave(player)
 
-	if input.is_action_just_pressed("eat"):
+	if input.is_action_just_pressed("eat") and !inThrowAni:
 		if hasFood == true and powerup_active == false:
 			hasFood = false
 			powerUp()
 			equipped.eat()
-	
-	#if (PlayerManager.get_player_data(player, "team") == "red"):
+
+	#if (ps.get_player_data(player, "team") == "red"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (PlayerManager.get_player_data(player, "team") == "blue"):
+	#if (ps.get_player_data(player, "team") == "blue"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
 func throw(throw_force: float) -> void:
@@ -178,7 +178,9 @@ func throw(throw_force: float) -> void:
 
 	# Get player's current momentum
 	var player_velocity = current_velocity
-	var throw_direction = global_transform.basis.x
+	var throw_direction
+	
+	throw_direction = global_transform.basis.x + Vector3(0, 0, input.get_vector("move_left","move_right","move_forward","move_back").y)
 
 	# Calculate momentum bonus based on movement direction
 	var momentum_factor = player_velocity.dot(throw_direction.normalized())
@@ -188,7 +190,6 @@ func throw(throw_force: float) -> void:
 	var final_throw_force = throw_force + momentum_bonus
 
 	#Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
-
 	# Create throw direction with slight momentum influence
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
 
@@ -205,14 +206,14 @@ func on_throw_timer_timeout() -> void:
 func powerUp() -> void:
 	Log.info("Player %s ate. Current speed is %s" % [player + 1, speed])
 	powerup_active = true
-	speed *= 2
+	speed *= powerExp
 	#acceleration *= 1.3
-	
-	if equipped == g.secret_ingredient:
+
+	if equipped.name == g.secret_ingredient:
+		Log.info("Player % ate the secret ingredient %s!" % [player + 1, g.secret_ingredient])
 		isInvuln = true
-		
+
 	Log.info("Player %s activated powerup. Current speed is %s" % [player + 1, speed])
-		
 	$PowerUpTimer.wait_time = equipped.time
 	$PowerUpTimer.start()
 
@@ -231,15 +232,14 @@ func _on_power_up_timer_timeout() -> void:
 	#setDefaults()
 	powerup_active = false
 	isInvuln = false
-	speed /= 2
+	speed /= powerExp
 	#acceleration /= 1.3
-	
 	Log.info("Player %s powerup timed out. Current speed is %s" % [player + 1, speed])
 
 
 func rotatePivot(degrees: Vector3) -> void:
 	$Pivot.set_rotation_degrees(degrees)
-	
+
 func on_animation_finished(anim_name: String) -> void:
 	if anim_name == "Throwing":
 		inThrowAni = false
@@ -247,8 +247,18 @@ func on_animation_finished(anim_name: String) -> void:
 		#throwStarted = false
 		#AniPlayer.stop()
 
+func set_sticky() -> void:
+	isSticky = true
+	$StickyTimer.start()
+	Log.info("Soda stickiness trap triggered.")
+
 
 func _on_debuff_timer_timeout() -> void:
-	speed *= 2
+	speed *= powerExp
 	isDebuffed = false
 	Log.info("Player debuff removed. Current speed is %s" % speed)
+
+
+func _on_sticky_timer_timeout() -> void:
+	isSticky = false
+	Log.info("Soda stickiness removed.")

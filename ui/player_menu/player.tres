@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d3p2ie3xlw22q"]
+
+[ext_resource type="FontFile" uid="uid://bg0bxxvt0m7q" path="res://ui/fonts/Obrazec-2.ttf" id="1_alv73"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alv73"]
+bg_color = Color(0.776471, 0.470588, 0.384314, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.878431, 0.447059, 0.309804, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[resource]
+default_font = ExtResource("1_alv73")
+default_font_size = 32
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_alv73")
+VBoxContainer/constants/separation = 4
