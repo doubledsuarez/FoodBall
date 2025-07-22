@@ -4,7 +4,7 @@ extends Node3D
 @onready var game_over_scene = preload("res://ui/game_over/game_over.tscn")
 
 
-var roundTimer : float = 90.0
+var roundTimer : float = 5.0
 var pointsToWin : int = 15
 
 # map from player integer to the player node

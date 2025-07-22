@@ -16,44 +16,26 @@ func _ready():
 		
 	# Make sure the Restart button is focused
 	$"Round Over/rohbox/rovbox/rorestart".grab_focus()
+	
+	#stop music
+	ps.get_node("CombatMusic").stop()
 
 func _on_rorestart_pressed():
-	## Hide the main menu
-	#$"Round Over".hide()
-#
-	## Play the camera animation (yet to be made)
-	## get_node("/root/Game/CameraPivot/AnimationPlayer").play("StartGamePan")
-#
-	## Instance the player select scene
-	#var select_instance = player_select_scene.instantiate()
-#
-	## Add to parent scene tree
-	##g.game.add_child(select_instance)
-	##select_instance.unHide()
-	##g.game.find_child("Player Select").show()
-	##g.game.get_node("Player Select").unHide()
-	#
-	#ps.unHide()
+	# Clear everything. 
+	self.queue_free()
 	
-	g.game.restart()
+	# Return to player select
 	ps.restart()
-
+	
 	Log.info("Opened Player Select")
 
 
-func _on_rooptions_pressed():
-	# Hide the main menu
-	$"Round Over".hide()
+func _on_rtm_pressed():
+	# Clear everything
+	self.queue_free
 
-	# Instance the options menu
-	var options_instance = options_menu_scene.instantiate()
+	# Return to main menu
+	get_tree().change_scene_to_file("res://game.tscn")
 
-	# Used for back button
-	if options_instance.has_method("set_previous_menu"):
-		options_instance.set_previous_menu($"Round Over")
-
-	# Add to parent scene tree
-	get_parent().add_child(options_instance)
-
-	Log.info("Opened Options Menu")
+	Log.info("Opened Main Menu")
 	

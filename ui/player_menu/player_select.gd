@@ -31,7 +31,43 @@ func unHide():
 	set_process(true)
 	
 func restart():
-	get_tree().reload_current_scene()
+	print_tree_pretty()
+	
+	# Hide any menus left over like the game over UI
+	for child in get_parent().get_children():
+		if child != self and child is CanvasItem and child.visible:
+			Log.info("Hiding leftover UI: %s" % child.name)
+			child.hide()
+	
+	var main_menu = get_parent().get_node_or_null("MainMenu")
+	print(main_menu)
+	Log.info("Restarting Player Select Screen")
+
+	# Kick out all joined players and clear their panels
+	for i in player_data.keys():
+		_clear_panel(i)
+		player_left.emit(i)
+	player_data.clear()
+
+	# Make sure all panels are back to 'Press A to Join'
+	for i in player_panels.size():
+		_clear_panel(i)
+
+	# Reset the main label back to default
+	var connect_label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
+	if connect_label:
+		connect_label.text = "PRESS A TO JOIN"
+
+	# Kill any countdowns that might be running
+	countdown_active = false
+	if countdown_timer and !countdown_timer.is_stopped():
+		countdown_timer.stop()
+
+	# Just in case the screen was hidden, show it again and resume input checks
+	$"Player Select".show()
+	set_process(true)
+
+	Log.info("Player Select screen reset — waiting for input.")
 
 func _ready():
 	$"Player Select".hide()
@@ -99,9 +135,12 @@ func _show_player(index: int):
 	if viewport == null:
 		Log.info("Missing viewport for player", index)
 		return
-
-	viewport.world_3d = World3D.new()
+	
+	# Need this if for the restart to work. 
+	if viewport.world_3d == null:
+		viewport.world_3d = World3D.new()
 	var model = load(PLAYER_MODELS[index]).instantiate()
+	model.name = "PlayerModel" #This let's us clear them later.
 	viewport.add_child(model)
 
 	var rig = model.get_node_or_null("Rig_Human")
@@ -136,8 +175,9 @@ func _clear_panel(index: int):
 
 	var viewport = panel.get_node_or_null("PJVBox/PJSVPContainer/PJSVP")
 	if viewport:
-		for child in viewport.get_children():
-			child.queue_free()
+		var model = viewport.get_node_or_null("PlayerModel")
+		if model:
+				model.queue_free()
 
 	var label = panel.get_node_or_null("PJVBox/PJStatusLabel")
 	if label:
@@ -154,8 +194,12 @@ func _get_player_index_for_device(device: int) -> int:
 		if player_data[i].device == device:
 			return i
 	return -1
-
+# Starts the game early if at least 1 player has joined. 
 func _start_game_immediately():
+	if player_data.size() == 0:
+		Log.info("No players have joined, can't start game yet.")
+		return	
+	
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	label.text = "Starting Now!"
 	Log.info("Starting game now!")

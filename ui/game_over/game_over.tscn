@@ -57,10 +57,10 @@ text = "Unlocks"
 layout_mode = 2
 
 [node name="Label" parent="Round Over/rohbox/rovbox/rooptions" index="0"]
-text = "Options"
+text = "Return to Start"
 
 [connection signal="pressed" from="Round Over/rohbox/rovbox/rorestart" to="." method="_on_rorestart_pressed"]
-[connection signal="pressed" from="Round Over/rohbox/rovbox/rooptions" to="." method="_on_rooptions_pressed"]
+[connection signal="pressed" from="Round Over/rohbox/rovbox/rooptions" to="." method="_on_rtm_pressed"]
 
 [editable path="Round Over/rohbox/rovbox/rorestart"]
 [editable path="Round Over/rohbox/rovbox/rocollection"]
