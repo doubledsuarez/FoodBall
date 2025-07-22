@@ -40,7 +40,7 @@ func restart():
 			child.hide()
 	
 	var main_menu = get_parent().get_node_or_null("MainMenu")
-	print(main_menu)
+	#print(main_menu)
 	Log.info("Restarting Player Select Screen")
 
 	# Kick out all joined players and clear their panels

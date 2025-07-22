@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 				var speedup_force = -initial_direction * return_progress * 4.0
 				apply_central_force(curve_force + speedup_force)
 
-				if flight_timer >= 1:  # Return phase lasts 0.5 seconds
+				if flight_timer >= 1.5:
 					boomerang_phase = "done"
 					# Now fly off screen smoothly
 					linear_velocity = -initial_direction * return_throw_force

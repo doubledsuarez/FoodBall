@@ -17,8 +17,8 @@ func hit_ground() -> void:
 	if not has_bounced and inAction:
 		# First bounce - apply upward impulse
 		has_bounced = true
-		#var bounce_force = Vector3(randi() % 12, 12, randi() % 12)  # Upward bounce
-		var bounce_force = Vector3(0, 12, 0)  # Upward bounce
+		var bounce_force = Vector3(0, 12, randi_range(-12, 12))
+		#var bounce_force = Vector3(0, 12, 0)
 		apply_central_impulse(bounce_force)
 		Log.dbg("Pizza bounced!")
 	else:
