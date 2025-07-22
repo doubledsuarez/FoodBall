@@ -7,7 +7,6 @@ var main_menu_scene = preload("res://ui/main_menu/main_menu.tscn")
 var cafe_scene = preload("res://levels/cafeteria/cafeteria.tscn")
 
 func _ready():
-	config_helper.init_config_if_missing()
 	# For testing only, can be removed after game startup has been properly coded. 
 	config_helper.load_settings()
 	# Make sure the Start button is focused
@@ -29,7 +28,7 @@ func _on_mmstart_pressed():
 	#g.game.find_child("Player Select").show()
 	#g.game.get_node("Player Select").unHide()
 	
-	ps.unHide()
+	ps.restart()
 
 	Log.info("Opened Player Select")
 

@@ -31,7 +31,7 @@ func unHide():
 	set_process(true)
 	
 func restart():
-	print_tree_pretty()
+	#print_tree_pretty()
 	
 	# Hide any menus left over like the game over UI
 	for child in get_parent().get_children():

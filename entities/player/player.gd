@@ -4,13 +4,8 @@ extends CharacterBody3D
 # How fast the player moves in meters per second.
 @export var speed : float = 15.0
 @export var powerExp : float = 1.5
-# The downward acceleration when in the air, in meters per second squared.
-@export var fall_acceleration = 75
-# Movement acceleration and drag
-@export var acceleration = 30.0
-@export var drag = 100.0
 
-@export var max_power : float = 24.0
+@export var max_power : float = 21.0
 
 @onready var DebuffTimer = $DebuffTimer
 
@@ -59,13 +54,8 @@ func init(player_num: int):
 	player = player_num
 	device = ps.get_player_device(player)
 	input = DeviceInput.new(device)
-
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
-	#$SubViewport/PlayerNum.set("theme_override_colors/font_color", Color.RED)
-	#if (ps.get_player_data(player, "team") == "red"):
-		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (ps.get_player_data(player, "team") == "blue"):
-		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
+
 
 func setLabelColor() -> void:
 	if team == "red":
@@ -74,7 +64,7 @@ func setLabelColor() -> void:
 		PlayerLabel.label_settings.font_color = Color.BLUE
 
 func _physics_process(delta: float) -> void:
-	setLabelColor()
+	#setLabelColor()
 	
 	var direction = Vector3.ZERO
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
@@ -104,31 +94,10 @@ func _physics_process(delta: float) -> void:
 		elif (team == "blue"):
 			$Pivot.basis = Basis.looking_at(-direction)
 
-	# Ground Velocity with acceleration and drag
+	# Ground Velocity
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
-	# Apply acceleration towards target velocity
-	if direction.length() > 0:
-		# Accelerate towards target velocity
-		current_velocity.x = move_toward(current_velocity.x, target_velocity.x, speed * delta)
-		current_velocity.z = move_toward(current_velocity.z, target_velocity.z, speed * delta)
-	else:
-		# Apply drag when no input
-		current_velocity.x = move_toward(current_velocity.x, 0, drag * delta)
-		current_velocity.z = move_toward(current_velocity.z, 0, drag * delta)
-
-	# Vertical Velocity
-	if not is_on_floor(): # if in the air, fall towards the floor. aka gravity
-		current_velocity.y = current_velocity.y - (fall_acceleration * delta)
-	else:
-		current_velocity.y = 0
-		
-	target_velocity.x = direction.x * speed
-	target_velocity.z = direction.z * speed
-
-	# Moving the Character
-	# velocity = current_velocity
 	velocity = target_velocity
   
 	if throwStarted:
@@ -136,21 +105,13 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	#if input.is_action_just_pressed("throw"):
-		#if hasFood == true:
-			#var forward_direction = global_transform.basis.z
-			##equipped.boomerang_throw(forward_direction, 10.0)
-			#equipped.throw(forward_direction, 10.0)
-			#equipped.reparent(get_parent())
-			#hasFood = false
-	#Log.info("throwTimer is : %s " % throwTimer.is_stopped())
 	if hasFood and !inThrowAni:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
 			speed /= powerExp
 		if input.is_action_just_released("throw") and throwStarted == true:
-			throw_power = (8.0 - throwTimer.get_time_left()) * 3
+			throw_power = (7.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
 			AniPlayer.play("Throwing")
 			inThrowAni = true
@@ -166,11 +127,7 @@ func _physics_process(delta: float) -> void:
 			hasFood = false
 			powerUp()
 			equipped.eat()
-
-	#if (ps.get_player_data(player, "team") == "red"):
-		#$SubViewport/PlayerNum.label_settings.font_color = Color.RED
-	#if (ps.get_player_data(player, "team") == "blue"):
-		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
+			
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:
@@ -180,7 +137,7 @@ func throw(throw_force: float) -> void:
 	var player_velocity = current_velocity
 	var throw_direction
 	
-	throw_direction = global_transform.basis.x + Vector3(0, 0, input.get_vector("move_left","move_right","move_forward","move_back").y)
+	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 0.5, input.get_vector("move_left","move_right","move_forward","move_back").y)
 
 	# Calculate momentum bonus based on movement direction
 	var momentum_factor = player_velocity.dot(throw_direction.normalized())
@@ -194,7 +151,7 @@ func throw(throw_force: float) -> void:
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
 
 	# Pass both momentum direction and final throw force
-	equipped.throw(momentum_direction, final_throw_force)
+	equipped.throw(throw_direction, final_throw_force)
 	#equipped.boomerang_throw(momentum_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
