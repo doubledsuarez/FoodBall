@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://byxi2va266ux8" path="res://ui/player_menu/player_select.gd" id="1_vvkid"]
 [ext_resource type="Theme" uid="uid://bi36aqas10egu" path="res://ui/player_menu/redteamplayer.tres" id="3_ek8va"]
 [ext_resource type="Theme" uid="uid://drs1aeord7pgx" path="res://ui/player_menu/blueteamplayer.tres" id="4_5rgwa"]
-[ext_resource type="PackedScene" path="res://audio/combat_music.tscn" id="5_5rgwa"]
+[ext_resource type="PackedScene" uid="uid://b7tii7f7rm4yl" path="res://audio/combat_music.tscn" id="5_5rgwa"]
 
 [node name="PlayerSelect" type="Node2D"]
 script = ExtResource("1_vvkid")

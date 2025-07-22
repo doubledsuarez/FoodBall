@@ -39,6 +39,8 @@ var device
 
 var throwTimer = Timer.new()
 
+var currDirection = Vector3.ZERO
+
 signal leave
 
 func _ready() -> void:
@@ -75,8 +77,7 @@ func setLabelColor() -> void:
 
 func _physics_process(delta: float) -> void:
 	setLabelColor()
-
-	# We create a local variable to store the input direction.
+	
 	var direction = Vector3.ZERO
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
@@ -125,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		current_velocity.y = current_velocity.y - (fall_acceleration * delta)
 	else:
 		current_velocity.y = 0
-
+		
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
@@ -180,7 +181,9 @@ func throw(throw_force: float) -> void:
 
 	# Get player's current momentum
 	var player_velocity = current_velocity
-	var throw_direction = global_transform.basis.x
+	var throw_direction
+	
+	throw_direction = global_transform.basis.x + Vector3(0, 0, input.get_vector("move_left","move_right","move_forward","move_back").y)
 
 	# Calculate momentum bonus based on movement direction
 	var momentum_factor = player_velocity.dot(throw_direction.normalized())
