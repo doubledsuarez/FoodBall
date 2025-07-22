@@ -9,10 +9,10 @@ signal player_left(player)
 # Constants
 const MAX_PLAYERS = 4
 const PLAYER_MODELS = [
-	"res://entities/player/FoodBall_Char_Red_1.glb",
-	"res://entities/player/FoodBall_Char_Red_2.glb",
-	"res://entities/player/FoodBall_Char_Blue_3.glb",
-	"res://entities/player/FoodBall_Char_Blue_4.glb"
+	"res://entities/player/player1.glb",
+	"res://entities/player/player2.glb",
+	"res://entities/player/player3.glb",
+	"res://entities/player/player4.glb"
 ]
 
 #const PLAYER_COLORS = [
