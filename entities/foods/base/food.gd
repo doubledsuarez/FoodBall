@@ -7,6 +7,7 @@ extends RigidBody3D
 # properties
 var human
 var team: String
+
 var type: String
 var time: int = 5
 var isEquipped: bool = false
@@ -52,7 +53,6 @@ func eat() -> void:
 
 func hit(player : Player) -> void:
 	queue_free()
-	
 
 func hit_ground() -> void:
 	queue_free()
@@ -62,6 +62,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Player:
 		if (inAction and !body.isInvuln):
 			var opp = ps.get_player_data(body.player, "team")
+
 			match [opp, team]:
 				["red", "blue"]:
 					hit(body)
@@ -74,6 +75,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = ps.get_player_data(body.player, "team")
+
 			foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0

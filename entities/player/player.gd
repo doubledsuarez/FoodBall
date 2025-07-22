@@ -40,7 +40,6 @@ var device
 var throwTimer = Timer.new()
 
 var currDirection = Vector3.ZERO
-
 signal leave
 
 func _ready() -> void:
@@ -68,7 +67,6 @@ func init(player_num: int):
 	#if (ps.get_player_data(player, "team") == "blue"):
 		#$SubViewport/PlayerNum.label_settings.font_color = Color.BLUE
 
-
 func setLabelColor() -> void:
 	if team == "red":
 		PlayerLabel.label_settings.font_color = Color.RED
@@ -79,7 +77,6 @@ func _physics_process(delta: float) -> void:
 	setLabelColor()
 	
 	var direction = Vector3.ZERO
-
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
@@ -107,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		elif (team == "blue"):
 			$Pivot.basis = Basis.looking_at(-direction)
 
-	# Ground Velocity
+	# Ground Velocity with acceleration and drag
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
@@ -133,7 +130,7 @@ func _physics_process(delta: float) -> void:
 	# Moving the Character
 	# velocity = current_velocity
 	velocity = target_velocity
-
+  
 	if throwStarted:
 		rotatePivot(Vector3(0, 270, 0))
 
@@ -193,7 +190,6 @@ func throw(throw_force: float) -> void:
 	var final_throw_force = throw_force + momentum_bonus
 
 	#Log.info("Throwing with base force: %s, momentum bonus: %s, final: %s" % [throw_force, momentum_bonus, final_throw_force])
-
 	# Create throw direction with slight momentum influence
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
 
@@ -218,7 +214,6 @@ func powerUp() -> void:
 		isInvuln = true
 
 	Log.info("Player %s activated powerup. Current speed is %s" % [player + 1, speed])
-
 	$PowerUpTimer.wait_time = equipped.time
 	$PowerUpTimer.start()
 
@@ -239,7 +234,6 @@ func _on_power_up_timer_timeout() -> void:
 	isInvuln = false
 	speed /= powerExp
 	#acceleration /= 1.3
-
 	Log.info("Player %s powerup timed out. Current speed is %s" % [player + 1, speed])
 
 
@@ -252,7 +246,7 @@ func on_animation_finished(anim_name: String) -> void:
 		throw(throw_power)
 		#throwStarted = false
 		#AniPlayer.stop()
-		
+
 func set_sticky() -> void:
 	isSticky = true
 	$StickyTimer.start()
