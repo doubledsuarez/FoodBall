@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djeygyxap4uwl"
-path="res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"
+uid="uid://c4x0r41gw2mkx"
+path="res://.godot/imported/Sandwich.glb-93eb2ad3b38460569bc291c30113f5c0.scn"
 
 [deps]
 
-source_file="res://entities/player/Player.glb"
-dest_files=["res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"]
+source_file="res://entities/foods/sandwich/Sandwich.glb"
+dest_files=["res://.godot/imported/Sandwich.glb-93eb2ad3b38460569bc291c30113f5c0.scn"]
 
 [params]
 

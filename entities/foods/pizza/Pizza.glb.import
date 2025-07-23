@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djeygyxap4uwl"
-path="res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"
+uid="uid://c5rfrdqyo1go3"
+path="res://.godot/imported/Pizza.glb-034a45bb995c874bc9c517bfb7a36662.scn"
 
 [deps]
 
-source_file="res://entities/player/Player.glb"
-dest_files=["res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"]
+source_file="res://entities/foods/pizza/Pizza.glb"
+dest_files=["res://.godot/imported/Pizza.glb-034a45bb995c874bc9c517bfb7a36662.scn"]
 
 [params]
 

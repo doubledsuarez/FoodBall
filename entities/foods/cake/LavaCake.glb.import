@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djeygyxap4uwl"
-path="res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"
+uid="uid://oeop6lta4br3"
+path="res://.godot/imported/LavaCake.glb-eb20e77db4d5c7c65453e4a1b44eb9be.scn"
 
 [deps]
 
-source_file="res://entities/player/Player.glb"
-dest_files=["res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"]
+source_file="res://entities/foods/cake/LavaCake.glb"
+dest_files=["res://.godot/imported/LavaCake.glb-eb20e77db4d5c7c65453e4a1b44eb9be.scn"]
 
 [params]
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ngfgv56f58w7"]
+[gd_scene load_steps=6 format=3 uid="uid://ngfgv56f58w7"]
 
 [ext_resource type="Script" uid="uid://dp1sjgmtsx5v4" path="res://entities/foods/cake/cake.gd" id="1_tuppd"]
+[ext_resource type="PackedScene" uid="uid://oeop6lta4br3" path="res://entities/foods/cake/LavaCake.glb" id="2_alc5b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -32,5 +33,7 @@ collision_mask = 15
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
+
+[node name="LavaCake2" parent="." instance=ExtResource("2_alc5b")]
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

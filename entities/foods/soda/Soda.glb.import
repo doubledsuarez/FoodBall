@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djeygyxap4uwl"
-path="res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"
+uid="uid://b2q6v3t5hop0e"
+path="res://.godot/imported/Soda.glb-a10e85886d64b64a3642555c5ac257c1.scn"
 
 [deps]
 
-source_file="res://entities/player/Player.glb"
-dest_files=["res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"]
+source_file="res://entities/foods/soda/Soda.glb"
+dest_files=["res://.godot/imported/Soda.glb-a10e85886d64b64a3642555c5ac257c1.scn"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://djeygyxap4uwl"
-path="res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"
+uid="uid://6suhsip5v6e2"
+path="res://.godot/imported/IceCream.glb-789b5f3c6891b9ccf2a38e7e89aa7123.scn"
 
 [deps]
 
-source_file="res://entities/player/Player.glb"
-dest_files=["res://.godot/imported/Player.glb-efe76d7ae4a5664f15c1da97ddac97d4.scn"]
+source_file="res://entities/foods/icecream/IceCream.glb"
+dest_files=["res://.godot/imported/IceCream.glb-789b5f3c6891b9ccf2a38e7e89aa7123.scn"]
 
 [params]
 

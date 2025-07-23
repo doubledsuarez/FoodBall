@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqfmcnq8s7cts"]
+[gd_scene load_steps=6 format=3 uid="uid://dqfmcnq8s7cts"]
 
 [ext_resource type="Script" uid="uid://cvb0m1ed8dd0d" path="res://entities/foods/bananna/bananna.gd" id="1_frb2j"]
+[ext_resource type="PackedScene" uid="uid://t0xbm25pet7i" path="res://entities/foods/bananna/Banana.glb" id="2_4kegv"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -21,8 +22,11 @@ shape = SubResource("SphereShape3D_ylt38")
 
 [node name="Pivot" type="Node3D" parent="."]
 
+[node name="Banana2" parent="Pivot" instance=ExtResource("2_4kegv")]
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_bw6vg")
 mesh = SubResource("SphereMesh_bw6vg")
 

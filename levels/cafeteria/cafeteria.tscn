@@ -240,13 +240,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -11)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -12)
 
 [node name="Table2" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.15, -0.5, -6)
 
 [node name="Table3" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8001, -0.5, 0)
 
 [node name="Table4" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6003, -0.5, 6)
 
 [node name="Table5" parent="Furtniture" instance=ExtResource("6_h2u8y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 12)
@@ -255,13 +255,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 12)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -12)
 
 [node name="Table7" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6, -0.5, -6)
 
 [node name="Table8" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8, -0.5, 0)
 
 [node name="Table9" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.15, -0.5, 6)
 
 [node name="Table10" parent="Furtniture" instance=ExtResource("6_h2u8y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 12)
