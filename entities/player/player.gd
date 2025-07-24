@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var max_power : float = 21.0
 
 @onready var DebuffTimer = $DebuffTimer
+@onready var SlipTimer = $SlipTimer
 
 var target_velocity = Vector3.ZERO
 var current_velocity = Vector3.ZERO
@@ -26,6 +27,9 @@ var throwStarted : bool = false
 var inThrowAni : bool = false
 var inHitAni : bool = false
 
+var isSlippery: bool = false
+var slip_direction: Vector3 = Vector3.ZERO
+
 var AniPlayer
 
 var PlayerLabel
@@ -36,7 +40,6 @@ var device
 
 var throwTimer = Timer.new()
 
-var currDirection = Vector3.ZERO
 signal leave
 
 func _ready() -> void:
@@ -67,17 +70,17 @@ func setLabelColor() -> void:
 
 func _physics_process(delta: float) -> void:
 	#setLabelColor()
-	
+
 	var direction = Vector3.ZERO
-	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if !inThrowAni and !isSticky and !inHitAni:
+	if !inThrowAni and !isSticky and !inHitAni and !isSlippery:
 		# We check for each move input and update the direction accordingly.
 		if input.is_action_pressed("move_right"):
 			direction.x += 1
@@ -97,16 +100,21 @@ func _physics_process(delta: float) -> void:
 			#$Pivot.basis = Basis.looking_at(-direction)
 
 	# Ground Velocity
-	target_velocity.x = direction.x * speed
-	target_velocity.z = direction.z * speed
+	if isSlippery:
+		# Force movement in slip direction, ignore input
+		target_velocity.x = slip_direction.x * speed
+		target_velocity.z = slip_direction.z * speed
+	else:
+		target_velocity.x = direction.x * speed
+		target_velocity.z = direction.z * speed
 
 	velocity = target_velocity
-  
+
 	if throwStarted:
 		rotatePivot(Vector3(0, 270, 0))
 
 	move_and_slide()
-	
+
 	if hasFood and !inThrowAni:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
@@ -125,7 +133,7 @@ func _physics_process(delta: float) -> void:
 			hasFood = false
 			powerUp()
 			equipped.eat()
-			
+
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:
@@ -134,7 +142,7 @@ func throw(throw_force: float) -> void:
 	# Get player's current momentum
 	var player_velocity = current_velocity
 	var throw_direction
-	
+
 	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 0.5, input.get_vector("move_left","move_right","move_forward","move_back").y)
 
 	# Calculate momentum bonus based on movement direction
@@ -222,3 +230,17 @@ func _on_debuff_timer_timeout() -> void:
 func _on_sticky_timer_timeout() -> void:
 	isSticky = false
 	Log.info("Soda stickiness removed.")
+
+func set_slippery(duration: float):
+	isSlippery = true
+	# slip_direction should be set by the peas before calling this
+	if slip_direction == Vector3.ZERO:
+		slip_direction = Vector3(1, 0, 0)  # Default forward if no direction set
+	SlipTimer.wait_time = duration
+	SlipTimer.start()
+	Log.info("Player is slipping in direction: %s for %s seconds" % [slip_direction, duration])
+
+func _on_slip_timer_timeout():
+	isSlippery = false
+	slip_direction = Vector3.ZERO
+	Log.info("Player slip ended")

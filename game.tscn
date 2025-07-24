@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4ejbhsvcm1fe"]
+[gd_scene load_steps=10 format=3 uid="uid://c4ejbhsvcm1fe"]
 
 [ext_resource type="Script" uid="uid://dj2bbrrv1b72b" path="res://game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://cuh3jcs72b7hr" path="res://entities/foods/apple/apple.tscn" id="2_fc0e3"]
@@ -8,7 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dxm5jecu4msvh" path="res://entities/foods/pizza/pizza.tscn" id="6_ryrav"]
 [ext_resource type="PackedScene" uid="uid://4yfyoa35vlo4" path="res://entities/foods/soda/soda.tscn" id="7_eow3j"]
 [ext_resource type="PackedScene" uid="uid://dj2sy2w8wbksa" path="res://entities/foods/sandwich/sandwich.tscn" id="8_j5wjh"]
+[ext_resource type="PackedScene" uid="uid://b0o0qj8jjim4h" path="res://entities/foods/peas/peas.tscn" id="9_vef74"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_feb5d")
-foods = Array[PackedScene]([ExtResource("2_fc0e3"), ExtResource("4_fc0e3"), ExtResource("4_7jktm"), ExtResource("5_7jktm"), ExtResource("6_ryrav"), ExtResource("7_eow3j"), ExtResource("8_j5wjh")])
+foods = Array[PackedScene]([ExtResource("2_fc0e3"), ExtResource("4_fc0e3"), ExtResource("4_7jktm"), ExtResource("5_7jktm"), ExtResource("6_ryrav"), ExtResource("7_eow3j"), ExtResource("8_j5wjh"), ExtResource("9_vef74")])
