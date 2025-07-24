@@ -33,7 +33,7 @@ func unHide():
 	$"Player Select".show()
 	set_process(true)
 	
-func restart():
+func _restart():
 	#print_tree_pretty()
 	
 	# Hide any menus left over like the game over UI
@@ -88,7 +88,7 @@ func _process(_delta):
 	_check_start_conditions()
 
 	# Check for new joins
-	for device in get_unjoined_devices():
+	for device in _get_unjoined_devices():
 		if not _device_joined(device):
 			if MultiplayerInput.is_action_just_pressed(device, "join_red"):
 				Log.info("Device %s pressed join_red" % device)
@@ -97,9 +97,9 @@ func _process(_delta):
 				Log.info("Device %s pressed join_blue" % device)
 				_join_team(device, "blue")
 				
-	for joinedDevice in get_joined_devices():
+	for joinedDevice in _get_joined_devices():
 		if MultiplayerInput.is_action_just_pressed(joinedDevice, "leave"):
-			leave(_get_player_index_for_device(joinedDevice))
+			_remove_player(_get_player_index_for_device(joinedDevice))
 
 	# Debug output
 	var status := []
@@ -261,7 +261,7 @@ func _check_start_conditions():
 
 	var total_players = player_data.size()
 
-	for device in get_joined_devices():
+	for device in _get_joined_devices():
 		if MultiplayerInput.is_action_just_pressed(device, "Start"):
 			_start_game_immediately()
 			return
@@ -310,36 +310,29 @@ func _on_countdown_tick():
 			countdown_timer.stop()
 			_start_game()
 			
-			
-# Remove a player from the game
-func leave(player: int):
-	if player_data.has(player):
-		player_data.erase(player)
-		player_left.emit(player)
-		_clear_panel(player)
 		
 
 # How many players are currently in?
-func get_player_count():
+func _get_player_count():
 	return player_data.size()
 
 # Get a list of joined player indexes (e.g. [0, 1])
-func get_player_indexes():
+func _get_player_indexes():
 	return player_data.keys()
 
 # Get the device ID associated with a player
-func get_player_device(player: int) -> int:
-	return get_player_data(player, "device")
+func _get_player_device(player: int) -> int:
+	return _get_player_data(player, "device")
 
 # get player data.
 # null means it doesn't exist.
-func get_player_data(player: int, key: StringName):
+func _get_player_data(player: int, key: StringName):
 	if player_data.has(player) and player_data[player].has(key):
 		return player_data[player][key]
 	return null
 
 # set player data to get later
-func set_player_data(player: int, key: StringName, value: Variant):
+func _set_player_data(player: int, key: StringName, value: Variant):
 	# if this player is not joined, don't do anything:
 	if !player_data.has(player):
 		return
@@ -347,26 +340,26 @@ func set_player_data(player: int, key: StringName, value: Variant):
 
 
 # Returns true if a device is already assigned to a player
-func is_device_joined(device: int) -> bool:
+func _is_device_joined(device: int) -> bool:
 	for player_id in player_data:
-		if get_player_device(player_id) == device:
+		if _get_player_device(player_id) == device:
 			return true
 	return false
 
 # Returns all gamepads that *aren’t* joined yet
-func get_unjoined_devices() -> Array:
+func _get_unjoined_devices() -> Array:
 	var devices = Input.get_connected_joypads()
 	# Remove already-joined ones
 	devices.append(-1)
 	
-	return devices.filter(func(device): return !is_device_joined(device))
+	return devices.filter(func(device): return !_is_device_joined(device))
 	
 	
 # Returns all gamepads that are joined yet
-func get_joined_devices() -> Array:
+func _get_joined_devices() -> Array:
 	var devices = Input.get_connected_joypads()
 	
-	if is_device_joined(-1):
+	if _is_device_joined(-1):
 		devices.append(-1)
 	
 	return devices

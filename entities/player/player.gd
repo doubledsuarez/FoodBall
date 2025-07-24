@@ -54,7 +54,7 @@ func _ready() -> void:
 
 func init(player_num: int):
 	player = player_num
-	device = ps.get_player_device(player)
+	device = ps._get_player_device(player)
 	input = DeviceInput.new(device)
 	$SubViewport/PlayerNum.text = "Player %s" % (player_num + 1)
 

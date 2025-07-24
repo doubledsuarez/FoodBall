@@ -28,7 +28,7 @@ func _on_mmstart_pressed():
 	#g.game.find_child("Player Select").show()
 	#g.game.get_node("Player Select").unHide()
 	
-	ps.restart()
+	ps._restart()
 
 	Log.info("Opened Player Select")
 

@@ -73,21 +73,21 @@ func spawn_player(player: int):
 	player_nodes[player] = player_node
 
 	# let the player know which device controls it
-	var device = ps.get_player_device(player)
+	var device = ps._get_player_device(player)
 	player_node.init(player)
 
 	# add the player to the tree
 	add_child(player_node)
 
 	# set the player color, position, and rotation based on the team they joined
-	if ps.get_player_data(player, "team") == "red":
+	if ps._get_player_data(player, "team") == "red":
 		player_node.team = "red"
 		player_node.rotatePivot(Vector3(0, 0, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.RED
 		#player_node.setLabelColor()
 		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
-	elif ps.get_player_data(player, "team") == "blue":
+	elif ps._get_player_data(player, "team") == "blue":
 		player_node.team = "blue"
 		player_node.set_rotation_degrees(Vector3(0, 180, 0))
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 180, 0))
@@ -101,4 +101,4 @@ func delete_player(player: int):
 	player_nodes.erase(player)
 
 func on_player_leave(player: int):
-	ps.leave(player)
+	ps._leave(player)

@@ -25,7 +25,7 @@ func _on_rorestart_pressed():
 	self.queue_free()
 	
 	# Return to player select
-	ps.restart()
+	ps._restart()
 	
 	Log.info("Opened Player Select")
 

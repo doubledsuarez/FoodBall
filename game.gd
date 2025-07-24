@@ -20,7 +20,7 @@ func _ready():
 
 # read devices not joined for the join input
 func _process(_delta):
-	#ps.handle_join_input()
+	#ps._handle_join_input()
 	pass
 
 func restart():
