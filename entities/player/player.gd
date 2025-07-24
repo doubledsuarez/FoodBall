@@ -17,12 +17,13 @@ var equipped = null
 var powerup_active : bool = false
 var throw_power : float
 var isMaxPower : bool = false
-var throwStarted : bool = false
 var team : String = ""
 var isInvuln : bool = false
 var isDebuffed : bool = false
-var inThrowAni : bool = false
 var isSticky : bool = false
+var inThrowWindUpAni : bool = false
+var inThrowReleaseAni : bool = false
+var isThrowReady : bool = false
 
 var AniPlayer
 
@@ -67,15 +68,15 @@ func _physics_process(delta: float) -> void:
 	#setLabelColor()
 	
 	var direction = Vector3.ZERO
-	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !(inThrowWindUpAni or inThrowReleaseAni or isThrowReady):
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !(inThrowWindUpAni or inThrowReleaseAni or isThrowReady):
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if !inThrowAni and !isSticky:
+	if !inThrowReleaseAni and !isSticky:
 		# We check for each move input and update the direction accordingly.
 		if input.is_action_pressed("move_right"):
 			direction.x += 1
@@ -86,13 +87,13 @@ func _physics_process(delta: float) -> void:
 		if input.is_action_pressed("move_back"):
 			direction.z += 1
 
-	if direction != Vector3.ZERO:
-		direction = direction.normalized()
-		# Setting the basis property will affect the rotation of the node.
-		if (team == "red"):
-			$Pivot.basis = Basis.looking_at(direction)
-		elif (team == "blue"):
-			$Pivot.basis = Basis.looking_at(-direction)
+	#if direction != Vector3.ZERO:
+		#direction = direction.normalized()
+		## Setting the basis property will affect the rotation of the node.
+		#if (team == "red"):
+			#$Pivot.basis = Basis.looking_at(direction)
+		#elif (team == "blue"):
+			#$Pivot.basis = Basis.looking_at(-direction)
 
 	# Ground Velocity
 	target_velocity.x = direction.x * speed
@@ -100,29 +101,35 @@ func _physics_process(delta: float) -> void:
 
 	velocity = target_velocity
   
-	if throwStarted:
-		rotatePivot(Vector3(0, 270, 0))
+	#if throwStarted:
+		#rotatePivot(Vector3(0, 270, 0))
 
 	move_and_slide()
-
-	if hasFood and !inThrowAni:
-		if input.is_action_just_pressed("throw"):
-			throwStarted = true
+	
+	if hasFood and !inThrowWindUpAni and !inThrowReleaseAni:
+		if input.is_action_just_pressed("throw") and !(inThrowWindUpAni or inThrowReleaseAni or isThrowReady):
 			throwTimer.start()
 			speed /= powerExp
-		if input.is_action_just_released("throw") and throwStarted == true:
+			inThrowWindUpAni = true
+			#AniPlayer.play("Throwing_WindUp")
+			Log.dbg("Throw started")
+		if input.is_action_just_released("throw"):
 			throw_power = (7.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
-			AniPlayer.play("Throwing")
-			inThrowAni = true
+			AniPlayer.play("Throwing_Release")
+			inThrowReleaseAni = true
+			isThrowReady = false
 			#throw(throw_power)
-			throwStarted = false
 			speed *= powerExp
+			Log.dbg("Throw completed")
+			
+	if inThrowWindUpAni:
+		AniPlayer.play("Throwing_WindUp")
 
 	if input.is_action_just_pressed("leave"):
 		ps.leave(player)
 
-	if input.is_action_just_pressed("eat") and !inThrowAni:
+	if input.is_action_just_pressed("eat") and !inThrowReleaseAni:
 		if hasFood == true and powerup_active == false:
 			hasFood = false
 			powerUp()
@@ -198,11 +205,16 @@ func rotatePivot(degrees: Vector3) -> void:
 	$Pivot.set_rotation_degrees(degrees)
 
 func on_animation_finished(anim_name: String) -> void:
-	if anim_name == "Throwing":
-		inThrowAni = false
+	if anim_name == "Throwing_WindUp":
+		inThrowWindUpAni = false
+		#isThrowReady = !throwTimer.is_stopped()
+		isThrowReady = true
+		Log.dbg("Throw windup finished. isThrowReady is %s" % throwTimer.is_stopped())
+	elif anim_name == "Throwing_Release":
+		inThrowReleaseAni = false
 		throw(throw_power)
-		#throwStarted = false
-		#AniPlayer.stop()
+		isThrowReady = false
+		Log.dbg("Throw release finished")
 
 func set_sticky() -> void:
 	isSticky = true

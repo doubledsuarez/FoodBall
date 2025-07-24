@@ -19,7 +19,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:	
 	if (isEquipped):
-		position = human.find_child("Hand").position
+		position = human.find_child("Player_Model").position
 
 
 func throw(direction: Vector3, throw_force: float) -> void:

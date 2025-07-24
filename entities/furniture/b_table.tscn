@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqaa0jxi4ifyi"]
 
-[ext_resource type="PackedScene" uid="uid://1pgi2o8mpb5x" path="res://entities/furniture/Buffet_Table.glb" id="1_lw4to"]
+[ext_resource type="PackedScene" uid="uid://d3nimw2iy2j23" path="res://entities/furniture/Buffet_Table.glb" id="1_lw4to"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lw4to"]
 size = Vector3(1.5, 2, 1)

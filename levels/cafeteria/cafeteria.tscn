@@ -47,7 +47,7 @@ size = 30.0
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
 
 [node name="Back Wall" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 12, 4, 15)
 
 [node name="Wall" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 2, 1.25, -15.25)
@@ -73,44 +73,14 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -16, 1.2
 [node name="Wall17" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -19, 1.25, -15.25)
 
-[node name="Wall18" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -22, 1.25, -15.25)
-
-[node name="Wall19" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -25, 1.25, -15.25)
-
-[node name="Wall20" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -28, 1.25, -15.25)
-
 [node name="Wall2" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5, 1.25, -15.25)
 
 [node name="Wall3" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 8, 1.25, -15.25)
 
-[node name="Wall4" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 11, 1.25, -15.25)
-
-[node name="Wall5" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 14, 1.25, -15.25)
-
-[node name="Wall6" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 17, 1.25, -15.25)
-
-[node name="Wall7" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 20, 1.25, -15.25)
-
-[node name="Wall8" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 23, 1.25, -15.25)
-
-[node name="Wall9" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 26, 1.25, -15.25)
-
-[node name="Wall10" parent="Back Wall" instance=ExtResource("3_fycxm")]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29, 1.25, -15.25)
-
 [node name="Front Wall" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 30)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 4, 46)
 visible = false
 
 [node name="Wall" parent="Front Wall" instance=ExtResource("3_fycxm")]
@@ -235,36 +205,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -11)
 
 [node name="Furtniture" type="Node3D" parent="."]
-
-[node name="Table" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, -12)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.5, 0)
 
 [node name="Table2" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.15, -0.5, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.15, -0.5, -4)
 
 [node name="Table3" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8001, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8001, -0.5, 1)
 
 [node name="Table4" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6003, -0.5, 6)
-
-[node name="Table5" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5, 12)
-
-[node name="Table6" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, -12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6003, -0.5, 5)
 
 [node name="Table7" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6, -0.5, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6, -0.5, -5)
 
 [node name="Table8" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8, -0.5, 5)
 
 [node name="Table9" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.15, -0.5, 6)
-
-[node name="Table10" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.5, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.15, -0.5, 0)
 
 [node name="BTable" parent="Furtniture" instance=ExtResource("5_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.5, -14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.5, -6)
