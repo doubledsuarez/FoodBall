@@ -119,9 +119,6 @@ func _physics_process(delta: float) -> void:
 			inThrowAni = true
 			speed *= powerExp
 
-	if input.is_action_just_pressed("leave"):
-		ps.leave(player)
-
 	if input.is_action_just_pressed("eat") and !inThrowAni:
 		if hasFood == true and powerup_active == false:
 			hasFood = false

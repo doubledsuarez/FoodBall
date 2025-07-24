@@ -26,6 +26,9 @@ const PLAYER_MODELS = [
 var player_data: Dictionary = {}
 var player_panels = []
 
+var blue_team = 0
+var red_team = 0
+
 func unHide():
 	$"Player Select".show()
 	set_process(true)
@@ -56,7 +59,7 @@ func restart():
 	# Reset the main label back to default
 	var connect_label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if connect_label:
-		connect_label.text = "PRESS A TO JOIN"
+		connect_label.text = "PRESS A/B TO JOIN"
 
 	# Kill any countdowns that might be running
 	countdown_active = false
@@ -86,9 +89,15 @@ func _process(_delta):
 
 	# Check for new joins
 	for device in Input.get_connected_joypads():
-		if not _device_joined(device) and MultiplayerInput.is_action_just_pressed(device, "Connect"):
-			Log.info("Device %s pressed Connect" % device)
-			_join_player(device)
+		if not _device_joined(device):
+			if MultiplayerInput.is_action_just_pressed(device, "join_red"):
+				Log.info("Device %s pressed join_red" % device)
+				_join_team(device, "red")
+			if MultiplayerInput.is_action_just_pressed(device, "join_blue"):
+				Log.info("Device %s pressed join_blue" % device)
+				_join_team(device, "blue")
+		elif MultiplayerInput.is_action_just_pressed(device, "leave"):
+			leave(_get_player_index_for_device(device))
 
 	# Debug output
 	var status := []
@@ -114,6 +123,39 @@ func _join_player(device: int):
 			Log.info("Player %s joined using device %s" % [i, device])
 			return
 	Log.info("No free slots for device", device)
+	
+
+func _join_team(device: int, team: String):
+	Log.info("Player Joining Team %s " % team)
+	for i in MAX_PLAYERS:
+		if not player_data.has(i):
+			Log.info("Assigning Player %s to %s team" % [i, team])  # DEBUG: announce team assignment
+			player_data[i] = {
+				"device": device,
+				"team": team
+			}
+			
+			if team == "red":
+				red_team += 1
+				if red_team == 2:
+					_show_player(1)
+				elif red_team == 1:
+					_show_player(0)
+			elif team == "blue":		
+				blue_team += 1
+				if blue_team == 2:
+					_show_player(3)
+				elif blue_team == 1:
+					_show_player(2)
+			else:
+				Log.err("Invalid team %s passed to _join_team." % team)
+				
+			#_show_player(i)
+			player_joined.emit(i)
+			Log.info("Player %s joined using device %s" % [i, device])
+			return
+	Log.info("No free slots for device", device)
+	
 
 func _remove_player(index: int):
 	Log.info("Removing Player")
@@ -222,7 +264,7 @@ func _check_start_conditions():
 			_start_game_immediately()
 			return
 
-		if total_players >= MAX_PLAYERS and MultiplayerInput.is_action_just_pressed(device, "Connect"):
+		if total_players >= MAX_PLAYERS and (MultiplayerInput.is_action_just_pressed(device, "join_red") or MultiplayerInput.is_action_just_pressed(device, "join_blue")):
 			_start_game_countdown()
 			return
 
@@ -272,6 +314,8 @@ func leave(player: int):
 	if player_data.has(player):
 		player_data.erase(player)
 		player_left.emit(player)
+		_clear_panel(player)
+		
 
 # How many players are currently in?
 func get_player_count():

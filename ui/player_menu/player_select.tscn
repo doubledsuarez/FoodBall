@@ -62,7 +62,7 @@ size_flags_vertical = 4
 
 [node name="PJTitleLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox"]
 layout_mode = 2
-text = "Player 1"
+text = "Red 1"
 horizontal_alignment = 1
 
 [node name="PJSVPContainer" type="SubViewportContainer" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox"]
@@ -115,7 +115,7 @@ size_flags_vertical = 4
 
 [node name="PJTitleLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox"]
 layout_mode = 2
-text = "Player 2"
+text = "Red 2"
 horizontal_alignment = 1
 
 [node name="PJSVPContainer" type="SubViewportContainer" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox"]
@@ -168,7 +168,7 @@ size_flags_vertical = 4
 
 [node name="PJTitleLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
 layout_mode = 2
-text = "Player 3"
+text = "Blue 1"
 horizontal_alignment = 1
 
 [node name="PJSVPContainer" type="SubViewportContainer" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
@@ -195,7 +195,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
 layout_mode = 2
-text = "Press A to Join"
+text = "Press B to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
@@ -221,7 +221,7 @@ size_flags_vertical = 4
 
 [node name="PJTitleLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]
 layout_mode = 2
-text = "Player 4"
+text = "Blue 2"
 horizontal_alignment = 1
 
 [node name="PJSVPContainer" type="SubViewportContainer" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]
@@ -248,7 +248,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]
 layout_mode = 2
-text = "Press A to Join"
+text = "Press B to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]

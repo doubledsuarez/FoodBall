@@ -72,7 +72,7 @@ func set_player_data(player: int, key: StringName, value: Variant):
 func handle_join_input():
 	for device in get_unjoined_devices():
 		# If this device just pressed the "Connect" button (mapped to A), let them join
-		if MultiplayerInput.is_action_just_pressed(device, "Connect"):
+		if MultiplayerInput.is_action_just_pressed(device, "join_red"):
 			Log.info("Device %s pressed A — joining" % device)
 			join(device)
 		#if MultiplayerInput.is_action_pressed(device, "join") and MultiplayerInput.is_action_pressed(device, "throw"):
