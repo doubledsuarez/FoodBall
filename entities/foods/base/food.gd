@@ -20,6 +20,9 @@ func _ready():
 func _physics_process(delta: float) -> void:	
 	if (isEquipped):
 		position = human.find_child("Hand").position
+		#position = human.find_child("Hand_Holds").position
+		#position = $"../Player_Model/Rig_Human/Skeleton3D/Hand_Holds".position
+		#position = get_parent().get_node("Hand_Holds").position
 
 
 func throw(direction: Vector3, throw_force: float) -> void:
@@ -75,8 +78,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = ps.get_player_data(body.player, "team")
-
-			foodInstance.position = body.find_child("Hand").position
+			#foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
 			#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
