@@ -88,7 +88,7 @@ func _process(_delta):
 	_check_start_conditions()
 
 	# Check for new joins
-	for device in Input.get_connected_joypads():
+	for device in get_unjoined_devices():
 		if not _device_joined(device):
 			if MultiplayerInput.is_action_just_pressed(device, "join_red"):
 				Log.info("Device %s pressed join_red" % device)
@@ -96,8 +96,10 @@ func _process(_delta):
 			if MultiplayerInput.is_action_just_pressed(device, "join_blue"):
 				Log.info("Device %s pressed join_blue" % device)
 				_join_team(device, "blue")
-		elif MultiplayerInput.is_action_just_pressed(device, "leave"):
-			leave(_get_player_index_for_device(device))
+				
+	for joinedDevice in get_joined_devices():
+		if MultiplayerInput.is_action_just_pressed(joinedDevice, "leave"):
+			leave(_get_player_index_for_device(joinedDevice))
 
 	# Debug output
 	var status := []
@@ -126,7 +128,7 @@ func _join_player(device: int):
 	
 
 func _join_team(device: int, team: String):
-	Log.info("Player Joining Team %s " % team)
+	Log.info("Player %s Joining Team %s " % [device + 1, team])
 	for i in MAX_PLAYERS:
 		if not player_data.has(i):
 			Log.info("Assigning Player %s to %s team" % [i, team])  # DEBUG: announce team assignment
@@ -259,7 +261,7 @@ func _check_start_conditions():
 
 	var total_players = player_data.size()
 
-	for device in Input.get_connected_joypads():
+	for device in get_joined_devices():
 		if MultiplayerInput.is_action_just_pressed(device, "Start"):
 			_start_game_immediately()
 			return
@@ -342,6 +344,32 @@ func set_player_data(player: int, key: StringName, value: Variant):
 	if !player_data.has(player):
 		return
 	player_data[player][key] = value
+
+
+# Returns true if a device is already assigned to a player
+func is_device_joined(device: int) -> bool:
+	for player_id in player_data:
+		if get_player_device(player_id) == device:
+			return true
+	return false
+
+# Returns all gamepads that *aren’t* joined yet
+func get_unjoined_devices() -> Array:
+	var devices = Input.get_connected_joypads()
+	# Remove already-joined ones
+	devices.append(-1)
+	
+	return devices.filter(func(device): return !is_device_joined(device))
+	
+	
+# Returns all gamepads that are joined yet
+func get_joined_devices() -> Array:
+	var devices = Input.get_connected_joypads()
+	
+	if is_device_joined(-1):
+		devices.append(-1)
+	
+	return devices
 
 
 func _start_game():
