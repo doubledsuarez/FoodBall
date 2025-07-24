@@ -21,9 +21,6 @@ var team : String = ""
 var isInvuln : bool = false
 var isDebuffed : bool = false
 var isSticky : bool = false
-var inThrowWindUpAni : bool = false
-var inThrowReleaseAni : bool = false
-var isThrowReady : bool = false
 
 var throwStarted : bool = false
 var inThrowAni : bool = false
@@ -71,11 +68,11 @@ func _physics_process(delta: float) -> void:
 	#setLabelColor()
 	
 	var direction = Vector3.ZERO
-	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted:
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni:
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted:
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
@@ -114,36 +111,13 @@ func _physics_process(delta: float) -> void:
 			throwStarted = true
 			throwTimer.start()
 			speed /= powerExp
+			AniPlayer.play("Throwing_WindUp")
 		if input.is_action_just_released("throw") and throwStarted:
 			throw_power = (7.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
-			AniPlayer.play("Throwing")
+			AniPlayer.play("Throwing_Release")
 			inThrowAni = true
-			#throw(throw_power)
-			throwStarted = false
 			speed *= powerExp
-	
-	#if hasFood and !inThrowWindUpAni and !inThrowReleaseAni:
-		#if input.is_action_just_pressed("throw") and !isThrowReady:
-			#throwTimer.start()
-			#speed /= powerExp
-			##inThrowWindUpAni = true
-			##AniPlayer.play("Throwing_WindUp")
-			#Log.dbg("Throw started")
-			#isThrowReady = true
-		#if input.is_action_just_released("throw") and isThrowReady:
-			#throw_power = (7.0 - throwTimer.get_time_left()) * 3
-			#throwTimer.stop()
-			#AniPlayer.play("Throwing")
-			##AniPlayer.play("Throwing_Release")
-			##inThrowReleaseAni = true
-			##isThrowReady = false
-			##throw(throw_power)
-			#speed *= powerExp
-			#Log.dbg("Throw completed")
-			
-	#if inThrowWindUpAni:
-		#AniPlayer.play("Throwing_WindUp")
 
 	if input.is_action_just_pressed("leave"):
 		ps.leave(player)
@@ -178,7 +152,6 @@ func throw(throw_force: float) -> void:
 
 	# Pass both momentum direction and final throw force
 	equipped.throw(throw_direction, final_throw_force)
-	#equipped.boomerang_throw(momentum_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
 	isMaxPower = false
@@ -216,7 +189,6 @@ func _on_power_up_timer_timeout() -> void:
 	powerup_active = false
 	isInvuln = false
 	speed /= powerExp
-	#acceleration /= 1.3
 	Log.info("Player %s powerup timed out. Current speed is %s" % [player + 1, speed])
 
 
@@ -227,18 +199,13 @@ func on_animation_finished(anim_name: String) -> void:
 	if anim_name == "Throwing":
 		inThrowAni = false
 		throw(throw_power)
-		#throwStarted = false
-		#AniPlayer.stop()
-	#if anim_name == "Throwing_WindUp":
-		#inThrowWindUpAni = false
-		##isThrowReady = !throwTimer.is_stopped()
-		#isThrowReady = true
-		#Log.dbg("Throw windup finished. isThrowReady is %s" % throwTimer.is_stopped())
-	#elif anim_name == "Throwing_Release":
-		#inThrowReleaseAni = false
+	#elif anim_name == "Throwing_WindUp":
+		#inThrowAni = false
 		#throw(throw_power)
-		#isThrowReady = false
-		#Log.dbg("Throw release finished")
+	elif anim_name == "Throwing_Release":
+		throwStarted = false
+		inThrowAni = false
+		throw(throw_power)
 
 func set_sticky() -> void:
 	isSticky = true
