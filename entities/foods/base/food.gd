@@ -55,6 +55,8 @@ func eat() -> void:
 	
 
 func hit(player : Player) -> void:
+	player.AniPlayer.play("Getting_Hit")
+	player.inHitAni = true
 	queue_free()
 
 func hit_ground() -> void:

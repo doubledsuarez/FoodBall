@@ -24,6 +24,7 @@ var isSticky : bool = false
 
 var throwStarted : bool = false
 var inThrowAni : bool = false
+var inHitAni : bool = false
 
 var AniPlayer
 
@@ -68,15 +69,15 @@ func _physics_process(delta: float) -> void:
 	#setLabelColor()
 	
 	var direction = Vector3.ZERO
-	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted:
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni:
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted:
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni:
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if !inThrowAni and !isSticky:
+	if !inThrowAni and !isSticky and !inHitAni:
 		# We check for each move input and update the direction accordingly.
 		if input.is_action_pressed("move_right"):
 			direction.x += 1
@@ -163,7 +164,7 @@ func powerUp() -> void:
 	#acceleration *= 1.3
 
 	if equipped.name == g.secret_ingredient:
-		Log.info("Player % ate the secret ingredient %s!" % [player + 1, g.secret_ingredient])
+		Log.info("Player %s ate the secret ingredient %s!" % [player + 1, g.secret_ingredient])
 		isInvuln = true
 
 	Log.info("Player %s activated powerup. Current speed is %s" % [player + 1, speed])
@@ -203,6 +204,8 @@ func on_animation_finished(anim_name: String) -> void:
 		throwStarted = false
 		inThrowAni = false
 		throw(throw_power)
+	elif anim_name == "Getting_Hit":
+		inHitAni = false
 
 func set_sticky() -> void:
 	isSticky = true
