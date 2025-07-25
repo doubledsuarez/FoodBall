@@ -18,7 +18,7 @@ font_size = 30
 viewport_path = NodePath("SubViewport")
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 collision_mask = 15
 script = ExtResource("1_symyc")
 

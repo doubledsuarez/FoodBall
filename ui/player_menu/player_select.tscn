@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://q5w4vldubngn"]
+[gd_scene load_steps=5 format=3 uid="uid://q5w4vldubngn"]
 
 [ext_resource type="Theme" uid="uid://cpljgmx452bm5" path="res://ui/options_menu/options_menu.tres" id="1_au0xv"]
 [ext_resource type="Script" uid="uid://byxi2va266ux8" path="res://ui/player_menu/player_select.gd" id="1_vvkid"]
 [ext_resource type="Theme" uid="uid://bi36aqas10egu" path="res://ui/player_menu/redteamplayer.tres" id="3_ek8va"]
 [ext_resource type="Theme" uid="uid://drs1aeord7pgx" path="res://ui/player_menu/blueteamplayer.tres" id="4_5rgwa"]
-[ext_resource type="PackedScene" uid="uid://b7tii7f7rm4yl" path="res://music/combat_music.tscn" id="5_5rgwa"]
 
 [node name="PlayerSelect" type="Node2D"]
 script = ExtResource("1_vvkid")
@@ -255,6 +254,3 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-
-[node name="CombatMusic" parent="." instance=ExtResource("5_5rgwa")]
-autoplay = false

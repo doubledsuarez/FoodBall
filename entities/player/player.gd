@@ -202,6 +202,9 @@ func powerUp() -> void:
 
 	if equipped.name == g.secret_ingredient:
 		Log.info("Player %s ate the secret ingredient %s!" % [player + 1, g.secret_ingredient])
+		if !g.secret_found:
+			g.secret_found = true
+			get_parent().setFoundLabel("Player %s has eaten and found the secret ingredient %s!\nEat one for 10 seconds of invulnerability." % [ps._get_player_data(player, "player_num"), g.secret_ingredient])
 		isInvuln = true
 
 	Log.info("Player %s activated powerup. Current speed is %s" % [player + 1, speed])

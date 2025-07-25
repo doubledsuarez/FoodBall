@@ -2,12 +2,19 @@ extends Node
 
 var game
 
+var MenuMusic
+var CombatMusic
+
+var roundTimeLimit : float = 180.0
+var pointsToWin : int = 20 
+
 var red_points : int = 0
 var blue_points : int = 0
 
 var foods:Array[PackedScene]
 
 var secret_ingredient
+var secret_found : bool = false
 
 signal round_over
 
