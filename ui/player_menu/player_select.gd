@@ -258,9 +258,9 @@ func _clear_panel(index: int):
 	var label = panel.get_node_or_null("PJVBox/PJStatusLabel")
 	if label:
 		if index < 2:
-			label.text = "PRESS A|X|LC TO JOIN"
+			label.text = "PRESS A/X/LC TO JOIN"
 		elif index >= 2:
-			label.text = "PRESS B|O|RC TO JOIN"
+			label.text = "PRESS B/O/RC TO JOIN"
 
 func _device_joined(device: int) -> bool:
 	for entry in player_data.values():
