@@ -62,6 +62,8 @@ func hit(player : Player) -> void:
 func hit_ground() -> void:
 	queue_free()
 
+func rotatePivot(degrees: Vector3) -> void:
+	$Pivot.set_rotation_degrees(degrees)
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body is Player:
@@ -81,6 +83,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			#foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
+			foodInstance.rotatePivot(Vector3(0, 90, 0))
 			#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
 			#body.find_child("Pivot").add_child(foodInstance)
 			body.hasFood = true

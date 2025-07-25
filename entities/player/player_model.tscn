@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b6rlrih3x40yb" path="res://entities/player/cube.gd" id="3_0xji7"]
 
 [node name="Player Model" instance=ExtResource("1_hwc0q")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 script = ExtResource("2_58iv5")
 
 [node name="Skeleton3D" parent="Rig_Human" index="0"]
@@ -414,6 +414,10 @@ bones/917/rotation = Quaternion(0.00160312, 0.951958, -0.306184, -0.00498439)
 
 [node name="Hand_Holds" parent="Rig_Human/Skeleton3D" index="0"]
 transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 2.08616e-07, -1.49012e-08, 5.96046e-08, 1, -6.70552e-07, 4.17233e-07, 1.78814e-07)
+
+[node name="Hand_Holds" parent="Rig_Human/Skeleton3D/Hand_Holds" index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+layers = 0
 
 [node name="Cube" parent="Rig_Human/Skeleton3D" index="1"]
 script = ExtResource("3_0xji7")

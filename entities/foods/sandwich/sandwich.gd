@@ -22,9 +22,12 @@ func throw(direction: Vector3, throw_force: float) -> void:
 
 	# Double the scale of the collision shape
 	collision_shape.scale = Vector3(2.0, 2.0, 2.0)
+	
+	var pivot = $Pivot
+	pivot.scale = Vector3(2.0, 2.0, 2.0)
 
 	# Also scale the visual mesh so players can see the bigger sandwich
-	var mesh_instance = $Pivot/MeshInstance3D
-	mesh_instance.scale = Vector3(2.0, 2.0, 2.0)
+	#var mesh_instance = $Pivot/MeshInstance3D
+	#mesh_instance.scale = Vector3(2.0, 2.0, 2.0)
 
 	Log.dbg("Sandwich thrown with 2x bigger hitbox and visual!")

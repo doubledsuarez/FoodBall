@@ -73,7 +73,8 @@ func attach_to_hand(held_object: Node3D):
 	var hand_socket = $Pivot/Player_Model/Rig_Human/Skeleton3D/Hand_Holds/Hand_Holds  # Your BoneAttachment3D
 	if hand_socket and held_object:
 		hand_socket.add_child(held_object)
-		held_object.global_transform = hand_socket.global_transform
+		#held_object.global_transform = hand_socket.global_transform
+		#held_object.position = hand_socket.position
 
 func _physics_process(delta: float) -> void:
 	#setLabelColor()
@@ -166,6 +167,7 @@ func throw(throw_force: float) -> void:
 	var momentum_direction = (throw_direction + player_velocity.normalized() * 0.1).normalized()
 
 	# Pass both momentum direction and final throw force
+	equipped.rotatePivot(Vector3(0, 0, 270))
 	equipped.throw(throw_direction, final_throw_force)
 	equipped.reparent(get_parent())
 	hasFood = false
