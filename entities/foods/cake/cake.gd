@@ -18,7 +18,7 @@ func hit_ground() -> void:
 		gravity_scale = 1.0
 		is_trap = true
 		inAction = false  # Stop it from being a projectile
-		rotatePivot(Vector3(0, 0, 90))
+		rotatePivot(Vector3(0, 90, 270))
 
 		# Freeze the cake in place to stop rolling
 		freeze = true
@@ -41,12 +41,12 @@ func hit(player) -> void:
 			player.equipped.gravity_scale = 1.0
 			player.equipped.reparent(get_parent())
 			player.hasFood = false
-			player.equipped.queue_free()
+			#player.equipped.queue_free()
+			player.equipped.throw(Vector3(0, 1, 0), 2.0)
 		else:
 			Log.dbg("Player has no food to drop")
 
-		# Destroy the cake trap after use
-		queue_free()
+		super.hit(player)
 	else:
 		# Normal hit behavior if cake is still flying
 		super.hit(player)

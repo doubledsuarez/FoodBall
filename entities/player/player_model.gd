@@ -15,7 +15,7 @@ func attach_to_hand(held_object: Node3D):
 	var hand_socket = $Rig_Human/Skeleton3D/Hand_Holds  # Your BoneAttachment3D
 	if hand_socket and held_object:
 		hand_socket.add_child(held_object)
-		held_object.global_transform = hand_socket.global_transform
+		#held_object.global_transform = hand_socket.global_transform
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

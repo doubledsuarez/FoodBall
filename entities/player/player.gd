@@ -5,13 +5,14 @@ extends CharacterBody3D
 @export var speed : float = 10.0
 @export var powerExp : float = 1.5
 
-@export var max_power : float = 21.0
-
 @onready var DebuffTimer = $DebuffTimer
 @onready var SlipTimer = $SlipTimer
 
 var target_velocity = Vector3.ZERO
 var current_velocity = Vector3.ZERO
+
+var maxPowerScale : float = 8.0
+var maxPower : float = maxPowerScale * 3.0
 
 var hasFood : bool = false
 var equipped = null
@@ -29,6 +30,7 @@ var inHitAni : bool = false
 
 var isSlippery: bool = false
 var slip_direction: Vector3 = Vector3.ZERO
+var throw_triggered: bool = false
 
 var AniPlayer
 
@@ -50,6 +52,7 @@ func _ready() -> void:
 	add_child(throwTimer)
 
 	AniPlayer = $Pivot/Player_Model.animation_player
+	#AniPlayer.speed_scale = 1.5
 
 	PlayerLabel = $SubViewport/PlayerNum
 
@@ -67,7 +70,7 @@ func setLabelColor() -> void:
 		PlayerLabel.label_settings.font_color = Color.RED
 	elif team == "blue":
 		PlayerLabel.label_settings.font_color = Color.BLUE
-	
+
 
 func attach_to_hand(held_object: Node3D):
 	var hand_socket = $Pivot/Player_Model/Rig_Human/Skeleton3D/Hand_Holds/Hand_Holds  # Your BoneAttachment3D
@@ -112,6 +115,13 @@ func _physics_process(delta: float) -> void:
 		# Force movement in slip direction, ignore input
 		target_velocity.x = slip_direction.x * speed
 		target_velocity.z = slip_direction.z * speed
+	elif inHitAni:
+		if team == "red":
+			target_velocity.x = -speed/2
+			target_velocity.z = 0
+		elif team == "blue":
+			target_velocity.x = speed/2
+			target_velocity.z = 0
 	else:
 		target_velocity.x = direction.x * speed
 		target_velocity.z = direction.z * speed
@@ -131,10 +141,12 @@ func _physics_process(delta: float) -> void:
 			#AniPlayer.speed_scale = 2.0
 			AniPlayer.play("Throwing_WindUp")
 		if input.is_action_just_released("throw") and throwStarted:
-			throw_power = (7.0 - throwTimer.get_time_left()) * 3
+			throw_power = (maxPowerScale - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
+			AniPlayer.speed_scale = 2.0
 			AniPlayer.play("Throwing_Release")
 			inThrowAni = true
+			throw_triggered = false  # Reset throw flag
 			#speed *= powerExp
 
 	if input.is_action_just_pressed("eat") and !inThrowAni:
@@ -142,23 +154,24 @@ func _physics_process(delta: float) -> void:
 			hasFood = false
 			powerUp()
 			equipped.eat()
-			
-	if AniPlayer.current_animation == ("Throwing_Release") and snapped(AniPlayer.get_current_animation_position(), 0.01) == 0.48:
-		throw(throw_power)
-		
-	if AniPlayer.current_animation == ("Throwing_Release"):
-		print(snapped(AniPlayer.get_current_animation_position(), 0.01))
+
+	# Trigger throw in animation range and only once
+	if AniPlayer.current_animation == "Throwing_Release" and not throw_triggered:
+		var anim_pos = AniPlayer.get_current_animation_position()
+		if anim_pos >= 0.45 and anim_pos <= 0.55:  # Range around 0.48
+			throw(throw_power)
+			throw_triggered = true  # Prevent multiple throws
 
 
 func throw(throw_force: float) -> void:
 	if isMaxPower:
-		throw_force = max_power
+		throw_force = maxPower
 
 	# Get player's current momentum
 	var player_velocity = current_velocity
 	var throw_direction
 
-	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 5, input.get_vector("move_left","move_right","move_forward","move_back").y)
+	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 0.5, input.get_vector("move_left","move_right","move_forward","move_back").y * 2)
 
 	# Calculate momentum bonus based on movement direction
 	var momentum_factor = player_velocity.dot(throw_direction.normalized())
@@ -227,10 +240,10 @@ func on_animation_finished(anim_name: String) -> void:
 	elif anim_name == "Throwing_Release":
 		throwStarted = false
 		inThrowAni = false
-		#AniPlayer.speed_scale = 1.0
+		AniPlayer.speed_scale = 1.0
 	elif anim_name == "Getting_Hit":
 		inHitAni = false
-		#AniPlayer.speed_scale = 1.0
+		AniPlayer.speed_scale = 1.0
 
 func set_sticky() -> void:
 	isSticky = true

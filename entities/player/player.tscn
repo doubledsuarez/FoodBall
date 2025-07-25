@@ -30,6 +30,9 @@ shape = SubResource("BoxShape3D_sfv1e")
 
 [node name="Player_Model" parent="Pivot" instance=ExtResource("2_sglur")]
 
+[node name="Hand_Holds" parent="Pivot/Player_Model/Rig_Human/Skeleton3D" index="0"]
+transform = Transform3D(-0.62589, 0.742449, -0.238812, 0.00653442, 0.311186, 0.950327, 0.779884, 0.593239, -0.199619, -0.688518, 0.329357, -0.746275)
+
 [node name="TeamColor" type="MeshInstance3D" parent="Pivot"]
 visible = false
 mesh = SubResource("BoxMesh_symyc")

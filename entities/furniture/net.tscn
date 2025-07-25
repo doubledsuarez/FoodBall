@@ -4,7 +4,7 @@
 size = Vector3(0.125, 1, 30)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wf60q"]
-size = Vector3(0.125, 1, 30)
+size = Vector3(0.125, 2, 40)
 
 [node name="Net" type="StaticBody3D"]
 collision_layer = 4
