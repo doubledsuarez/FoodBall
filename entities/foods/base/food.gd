@@ -76,15 +76,16 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 					hit(body)
 					g.red_points += 1
 		elif (!inAction and !body.hasFood and !isEquipped):
-			body.hasFood = true
-			body.equipped = foodInstance
 			foodInstance.human = body
 			foodInstance.team = ps._get_player_data(body.player, "team")
 			#foodInstance.position = body.find_child("Hand").position
 			foodInstance.isEquipped = true
 			foodInstance.gravity_scale = 0
 			#foodInstance.set_scale(Vector3(0.125,0.125,0.125))
-			body.find_child("Pivot").add_child(foodInstance)
+			#body.find_child("Pivot").add_child(foodInstance)
+			body.hasFood = true
+			body.equipped = foodInstance
+			body.attach_to_hand(foodInstance)
 			queue_free()
 	elif body.name == "Ground":
 		hit_ground()

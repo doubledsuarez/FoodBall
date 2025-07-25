@@ -12,7 +12,7 @@ size = Vector3(1, 1.75, 1.25049)
 [sub_resource type="SphereMesh" id="SphereMesh_sglur"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_symyc"]
-font_size = 60
+font_size = 30
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_symyc"]
 viewport_path = NodePath("SubViewport")
@@ -57,7 +57,7 @@ label_settings = SubResource("LabelSettings_symyc")
 horizontal_alignment = 1
 
 [node name="PlayerNumLabel" type="Sprite3D" parent="."]
-transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 1, 0)
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0.666667, 0)
 texture = SubResource("ViewportTexture_symyc")
 
 [node name="LeaveTimer" type="Timer" parent="."]

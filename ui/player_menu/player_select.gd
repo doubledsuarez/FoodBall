@@ -26,6 +26,8 @@ const PLAYER_MODELS = [
 var player_data: Dictionary = {}
 var player_panels = []
 
+var players = 0
+
 var blue_team = 0
 var red_team = 0
 
@@ -59,7 +61,7 @@ func _restart():
 	# Reset the main label back to default
 	var connect_label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if connect_label:
-		connect_label.text = "PRESS A/B TO JOIN"
+		connect_label.text = "SELECT YOUR TEAM!"
 
 	# Kill any countdowns that might be running
 	countdown_active = false
@@ -128,33 +130,42 @@ func _join_player(device: int):
 	
 
 func _join_team(device: int, team: String):
-	Log.info("Player %s Joining Team %s " % [device + 1, team])
+	Log.info("Device %s Joining Team %s " % [device, team])
 	for i in MAX_PLAYERS:
 		if not player_data.has(i):
-			Log.info("Assigning Player %s to %s team" % [i, team])  # DEBUG: announce team assignment
-			player_data[i] = {
-				"device": device,
-				"team": team
-			}
+			var team_pos : int
 			
 			if team == "red":
-				red_team += 1
 				if red_team == 2:
-					_show_player(1)
-				elif red_team == 1:
-					_show_player(0)
-			elif team == "blue":		
-				blue_team += 1
+					Log.info("Red team full! Can't join this team.")
+					return
+				else:
+					team_pos = red_team
+					red_team += 1
+			elif team == "blue":
 				if blue_team == 2:
-					_show_player(3)
-				elif blue_team == 1:
-					_show_player(2)
+					Log.info("Blue team full! Can't join this team.")
+					return
+				else:
+					team_pos = blue_team + 2
+					blue_team += 1
 			else:
 				Log.err("Invalid team %s passed to _join_team." % team)
 				
-			#_show_player(i)
+			players += 1
+						
+			Log.info("Adding device %s to %s team with player_num %s and panel pos %s" % [device, team, i + 1, team_pos])
+			
+			player_data[i] = {
+				"device": device,
+				"team": team,
+				"player_num": i + 1,
+				"pos": team_pos
+			}
+				
+			_show_player(i)
 			player_joined.emit(i)
-			Log.info("Player %s joined using device %s" % [i, device])
+			Log.info("Player %s joined %s team using device %s" % [i + 1, team, device])
 			return
 	Log.info("No free slots for device", device)
 	
@@ -162,10 +173,17 @@ func _join_team(device: int, team: String):
 func _remove_player(index: int):
 	Log.info("Removing Player")
 	if player_data.has(index):
-		_clear_panel(index)
+		players -= 1
+		
+		if _get_player_data(index, "team") == "red":
+			red_team -= 1
+		elif _get_player_data(index, "team") == "blue":
+			blue_team -= 1
+			
+		_clear_panel(_get_player_data(index, "pos"))
 		player_data.erase(index)
 		player_left.emit(index)
-		Log.info("Player %s removed" % index)
+		Log.info("Player %s removed" % _get_player_data(index, "player_num"))
 
 func _show_player(index: int):
 	Log.info("Showing Player %d" % index)
@@ -174,7 +192,7 @@ func _show_player(index: int):
 		Log.info("Invalid player index:", index)
 		return
 
-	var panel = player_panels[index]
+	var panel = player_panels[_get_player_data(index, "pos")]
 	var viewport = panel.get_node_or_null("PJVBox/PJSVPContainer/PJSVP")
 	if viewport == null:
 		Log.info("Missing viewport for player", index)
@@ -183,7 +201,7 @@ func _show_player(index: int):
 	# Need this if for the restart to work. 
 	if viewport.world_3d == null:
 		viewport.world_3d = World3D.new()
-	var model = load(PLAYER_MODELS[index]).instantiate()
+	var model = load("res://entities/player/player.glb").instantiate()
 	model.name = "PlayerModel" #This let's us clear them later.
 	viewport.add_child(model)
 
@@ -194,12 +212,13 @@ func _show_player(index: int):
 
 	var mesh = model.get_node_or_null("Rig_Human/Skeleton3D/Cube")
 	if mesh and mesh is MeshInstance3D:
-		#var color = PLAYER_COLORS[index]
+		var texture = g.Player_Textures[_get_player_data(index, "pos")]
 		var original_mat = mesh.get_active_material(0)
-		if original_mat and original_mat is StandardMaterial3D:
+		if original_mat:
 			var mat = original_mat.duplicate()
-			#mat.albedo_color = color
+			mat.albedo_texture = texture
 			mesh.set_surface_override_material(0, mat)
+			
 
 	var anim = model.get_node_or_null("AnimationPlayer")
 	if anim and anim.has_animation("Idle_Holding"):
@@ -225,7 +244,10 @@ func _clear_panel(index: int):
 
 	var label = panel.get_node_or_null("PJVBox/PJStatusLabel")
 	if label:
-		label.text = "PRESS A TO JOIN"
+		if index < 2:
+			label.text = "PRESS A/X TO JOIN"
+		elif index >= 2:
+			label.text = "PRESS B/O TO JOIN"
 
 func _device_joined(device: int) -> bool:
 	for entry in player_data.values():

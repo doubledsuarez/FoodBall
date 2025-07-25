@@ -29,7 +29,7 @@ size_flags_vertical = 4
 [node name="ConnectLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 80
-text = "Connect your Controllers!"
+text = "SELECT YOUR TEAM!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -89,7 +89,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox"]
 layout_mode = 2
-text = "Press A to Join"
+text = "Press A/X to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin1/PJVBox"]
@@ -142,7 +142,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox"]
 layout_mode = 2
-text = "Press A to Join"
+text = "Press A/X to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin2/PJVBox"]
@@ -195,7 +195,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
 layout_mode = 2
-text = "Press B to Join"
+text = "Press B/O to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin3/PJVBox"]
@@ -248,7 +248,7 @@ omni_attenuation = -0.299
 
 [node name="PJStatusLabel" type="Label" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]
 layout_mode = 2
-text = "Press B to Join"
+text = "Press B/O to Join"
 horizontal_alignment = 1
 
 [node name="Spacer2" type="Control" parent="Player Select/PanelContainer/VBoxContainer/JSHBox/PlayerJoin4/PJVBox"]

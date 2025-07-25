@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0o0qj8jjim4h"]
+[gd_scene load_steps=6 format=3 uid="uid://b0o0qj8jjim4h"]
 
 [ext_resource type="Script" uid="uid://dh8m4o3r3jyth" path="res://entities/foods/peas/peas.gd" id="1_jivid"]
+[ext_resource type="PackedScene" uid="uid://d3wl6e6p0ebhb" path="res://entities/foods/peas/Peas.glb" id="2_s5q5q"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -22,8 +23,12 @@ shape = SubResource("SphereShape3D_ylt38")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_bw6vg")
 mesh = SubResource("SphereMesh_bw6vg")
+
+[node name="Peas_Model" parent="Pivot" instance=ExtResource("2_s5q5q")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8

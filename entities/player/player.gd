@@ -67,6 +67,13 @@ func setLabelColor() -> void:
 		PlayerLabel.label_settings.font_color = Color.RED
 	elif team == "blue":
 		PlayerLabel.label_settings.font_color = Color.BLUE
+	
+
+func attach_to_hand(held_object: Node3D):
+	var hand_socket = $Pivot/Player_Model/Rig_Human/Skeleton3D/Hand_Holds/Hand_Holds  # Your BoneAttachment3D
+	if hand_socket and held_object:
+		hand_socket.add_child(held_object)
+		held_object.global_transform = hand_socket.global_transform
 
 func _physics_process(delta: float) -> void:
 	#setLabelColor()
@@ -133,6 +140,8 @@ func _physics_process(delta: float) -> void:
 			hasFood = false
 			powerUp()
 			equipped.eat()
+			
+	#print(AniPlayer.get_current_animation_position())
 
 
 func throw(throw_force: float) -> void:
