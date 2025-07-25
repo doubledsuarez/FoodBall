@@ -11,7 +11,7 @@ extends CharacterBody3D
 var target_velocity = Vector3.ZERO
 var current_velocity = Vector3.ZERO
 
-var maxPowerScale : float = 8.0
+var maxPowerScale : float = 7.5
 var maxPower : float = maxPowerScale * 3.0
 
 var hasFood : bool = false

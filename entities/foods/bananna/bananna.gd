@@ -64,7 +64,7 @@ func throw(direction: Vector3, throw_force: float) -> void:
 	initial_position = global_position
 
 	# Moderate speed throw
-	var final_force = initial_direction * (throw_force)
+	var final_force = initial_direction * (throw_force) * 1.5
 
 	Log.dbg("Throwing banana boomerang with force: ", final_force)
 
