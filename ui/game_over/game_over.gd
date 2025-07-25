@@ -17,8 +17,6 @@ func _ready():
 	# Make sure the Restart button is focused
 	$"Round Over/rohbox/rovbox/rorestart".grab_focus()
 	
-	#stop music
-	ps.get_node("CombatMusic").stop()
 
 func _on_rorestart_pressed():
 	# Clear everything. 

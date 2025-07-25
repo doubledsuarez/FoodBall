@@ -37,6 +37,15 @@ func unHide():
 	
 func _restart():
 	#print_tree_pretty()
+	g.secret_found = false
+	g.secret_ingredient = g.foods[randi() % g.foods.size()].instantiate().name
+	Log.dbg("Secret ingredient is %s " % g.secret_ingredient)
+	
+	red_team = 0
+	blue_team = 0
+	
+	g.red_points = 0
+	g.blue_points = 0
 	
 	# Hide any menus left over like the game over UI
 	for child in get_parent().get_children():
@@ -71,6 +80,10 @@ func _restart():
 	# Just in case the screen was hidden, show it again and resume input checks
 	$"Player Select".show()
 	set_process(true)
+	
+	if (!g.MenuMusic.is_playing()):
+		g.CombatMusic.stop()
+		g.MenuMusic.play()
 
 	Log.info("Player Select screen reset — waiting for input.")
 
@@ -245,9 +258,9 @@ func _clear_panel(index: int):
 	var label = panel.get_node_or_null("PJVBox/PJStatusLabel")
 	if label:
 		if index < 2:
-			label.text = "PRESS A/X TO JOIN"
+			label.text = "PRESS A|X|LC TO JOIN"
 		elif index >= 2:
-			label.text = "PRESS B/O TO JOIN"
+			label.text = "PRESS B|O|RC TO JOIN"
 
 func _device_joined(device: int) -> bool:
 	for entry in player_data.values():
@@ -303,7 +316,8 @@ func _start_game_countdown():
 	countdown_time = 5
 	countdown_active = true  # prevent label from being reset
 	
-	$CombatMusic.play()
+	g.MenuMusic.stop()
+	g.CombatMusic.play()
 
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if label:

@@ -9,9 +9,12 @@ extends Node
 func _ready():
 	config_helper.init_config_if_missing()
 	g.foods = foods
-	g.secret_ingredient = g.foods[randi() % g.foods.size()].instantiate().name
+	#g.secret_ingredient = g.foods[randi() % g.foods.size()].instantiate().name
+	#
+	#Log.dbg("Secret ingredient is %s " % g.secret_ingredient)
 	
-	Log.dbg("Secret ingredient is %s " % g.secret_ingredient)
+	g.MenuMusic = $MenuMusic
+	g.CombatMusic = $CombatMusic
 	
 	add_child(main_menu_scene.instantiate())
 	

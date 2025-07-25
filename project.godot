@@ -132,3 +132,7 @@ Start={
 3d_physics/layer_2="Ground"
 3d_physics/layer_3="Walls"
 3d_physics/layer_4="Food"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.305882, 0.576471, 0.592157, 1)

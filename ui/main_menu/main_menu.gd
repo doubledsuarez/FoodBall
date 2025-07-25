@@ -11,6 +11,10 @@ func _ready():
 	config_helper.load_settings()
 	# Make sure the Start button is focused
 	$"Main Menu/mmhbox/mmvbox/mmstart".grab_focus()
+	
+	if (!g.MenuMusic.is_playing()):
+		g.CombatMusic.stop()
+		g.MenuMusic.play()
 
 func _on_mmstart_pressed():
 	# Hide the main menu

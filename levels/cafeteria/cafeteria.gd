@@ -3,9 +3,8 @@ extends Node3D
 @onready var player_scene = preload("res://entities/player/player.tscn")
 @onready var game_over_scene = preload("res://ui/game_over/game_over.tscn")
 
+@onready var FoundLabel = $Found
 
-var roundTimer : float = 90.0
-var pointsToWin : int = 15
 
 # map from player integer to the player node
 var player_nodes = {}
@@ -13,7 +12,7 @@ var player_nodes = {}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	g.roundTimer.connect("timeout", on_round_timer_timeout)
-	g.roundTimer.set_wait_time(roundTimer)
+	g.roundTimer.set_wait_time(g.roundTimeLimit)
 	g.roundTimer.set_one_shot(true)
 	g.roundTimer.start()
 	
@@ -39,19 +38,27 @@ func _process(_delta: float) -> void:
 	if g.roundTimer.get_time_left() != 0.0:
 		$Countdown.text = "Time left: %s seconds" % ceili(g.roundTimer.get_time_left())
 
-	if g.red_points == pointsToWin:
+	if g.red_points == g.pointsToWin:
 		$Countdown.text = "Round Over! Red team wins!"
 		g.round_over.emit()
-	if g.blue_points == pointsToWin:
+	if g.blue_points == g.pointsToWin:
 		$Countdown.text = "Round Over! Blue team wins!"
 		g.round_over.emit()
-	if g.blue_points == g.red_points and g.blue_points == pointsToWin and g.red_points == pointsToWin:
-		Log.info("somehow both teams scored %s points on the same frame. crazy. it's a tie?" % pointsToWin)
+	if g.blue_points == g.red_points and g.blue_points == g.pointsToWin and g.red_points == g.pointsToWin:
+		Log.info("somehow both teams scored %s points on the same frame. crazy. it's a tie?" % g.pointsToWin)
 		$Countdown.text = "Round Over! It was a tie!"
 		g.round_over.emit()
+		
+	if !g.secret_found:
+		FoundLabel.visible = false
+		
 	
 
 
+func setFoundLabel(whoFound : String):
+	FoundLabel.set_text(whoFound)
+	FoundLabel.visible = true
+	
 func on_round_timer_timeout() -> void:
 	if g.red_points > g.blue_points:
 		$Countdown.text = "Round Over! Red team wins!"
