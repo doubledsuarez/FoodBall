@@ -72,9 +72,11 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 			match [opp, team]:
 				["red", "blue"]:
+					#body.AniPlayer.speed_scale = 2.0
 					hit(body)
 					g.blue_points += 1
 				["blue", "red"]:
+					#body.AniPlayer.speed_scale = 2.0
 					hit(body)
 					g.red_points += 1
 		elif (!inAction and !body.hasFood and !isEquipped):

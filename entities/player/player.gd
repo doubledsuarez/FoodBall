@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody3D
 
 # How fast the player moves in meters per second.
-@export var speed : float = 15.0
+@export var speed : float = 10.0
 @export var powerExp : float = 1.5
 
 @export var max_power : float = 21.0
@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if !inThrowAni and !isSticky and !inHitAni and !isSlippery:
+	if !inThrowAni and !isSticky and !inHitAni and !isSlippery and !throwStarted:
 		# We check for each move input and update the direction accordingly.
 		if input.is_action_pressed("move_right"):
 			direction.x += 1
@@ -127,14 +127,15 @@ func _physics_process(delta: float) -> void:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
-			speed /= powerExp
+			#speed /= powerExp
+			#AniPlayer.speed_scale = 2.0
 			AniPlayer.play("Throwing_WindUp")
 		if input.is_action_just_released("throw") and throwStarted:
 			throw_power = (7.0 - throwTimer.get_time_left()) * 3
 			throwTimer.stop()
 			AniPlayer.play("Throwing_Release")
 			inThrowAni = true
-			speed *= powerExp
+			#speed *= powerExp
 
 	if input.is_action_just_pressed("eat") and !inThrowAni:
 		if hasFood == true and powerup_active == false:
@@ -142,7 +143,11 @@ func _physics_process(delta: float) -> void:
 			powerUp()
 			equipped.eat()
 			
-	#print(AniPlayer.get_current_animation_position())
+	if AniPlayer.current_animation == ("Throwing_Release") and snapped(AniPlayer.get_current_animation_position(), 0.01) == 0.48:
+		throw(throw_power)
+		
+	if AniPlayer.current_animation == ("Throwing_Release"):
+		print(snapped(AniPlayer.get_current_animation_position(), 0.01))
 
 
 func throw(throw_force: float) -> void:
@@ -153,7 +158,7 @@ func throw(throw_force: float) -> void:
 	var player_velocity = current_velocity
 	var throw_direction
 
-	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 0.5, input.get_vector("move_left","move_right","move_forward","move_back").y)
+	throw_direction = global_transform.basis.x + Vector3(0, input.get_vector("move_left","move_right","move_forward","move_back").x * 5, input.get_vector("move_left","move_right","move_forward","move_back").y)
 
 	# Calculate momentum bonus based on movement direction
 	var momentum_factor = player_velocity.dot(throw_direction.normalized())
@@ -222,9 +227,10 @@ func on_animation_finished(anim_name: String) -> void:
 	elif anim_name == "Throwing_Release":
 		throwStarted = false
 		inThrowAni = false
-		throw(throw_power)
+		#AniPlayer.speed_scale = 1.0
 	elif anim_name == "Getting_Hit":
 		inHitAni = false
+		#AniPlayer.speed_scale = 1.0
 
 func set_sticky() -> void:
 	isSticky = true
