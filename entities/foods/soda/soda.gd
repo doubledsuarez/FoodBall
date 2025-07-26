@@ -18,7 +18,7 @@ func hit_ground() -> void:
 		gravity_scale = 1.0
 		is_trap = true
 		inAction = false  # Stop it from being a projectile
-		rotatePivot(Vector3(0, 90, 270))
+		#rotatePivot(Vector3(0, 180, 0))
 
 		# Freeze the soda in place to stop rolling
 		freeze = true
