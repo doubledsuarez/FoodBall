@@ -2,7 +2,6 @@ class_name Food
 extends RigidBody3D
 
 @onready var area = $Area3D		# Area3D I need to make collisions easier
-@onready var foodInstance = duplicate()
 
 # properties
 var human
@@ -18,11 +17,7 @@ func _ready():
 	gravity_scale = 0.0
 
 func _physics_process(delta: float) -> void:
-	#if (isEquipped):
-		#position = human.find_child("Hand").position
-		#position = human.find_child("Hand_Holds").position
-		#position = $"../Player_Model/Rig_Human/Skeleton3D/Hand_Holds".position
-		#position = get_parent().get_node("Hand_Holds").position
+	# No manual positioning needed - attach_to_hand handles it
 	pass
 
 
@@ -30,6 +25,8 @@ func throw(direction: Vector3, throw_force: float) -> void:
 	isEquipped = false
 	inAction = true
 
+	# Re-enable physics when thrown
+	freeze = false
 	gravity_scale = 1.0
 
 	Log.dbg("Throwing food with direction: ", direction)
@@ -73,31 +70,32 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			var opp = ps._get_player_data(body.player, "team")
 			match [opp, team]:
 				["red", "blue"]:
-					#body.AniPlayer.speed_scale = 2.0
 					hit(body)
 					g.blue_points += 1
 				["blue", "red"]:
-					#body.AniPlayer.speed_scale = 2.0
 					hit(body)
 					g.red_points += 1
 		elif (!inAction and !body.hasFood and !isEquipped):
 			body.hasFood = true
-			foodInstance.human = body
-			foodInstance.position = body.find_child("Hand").position
-			foodInstance.team = ps._get_player_data(body.player, "team")
-			foodInstance.isEquipped = true
-			foodInstance.gravity_scale = 0
-			foodInstance.rotatePivot(Vector3(0, 90, 0))
-			body.attach_to_hand(foodInstance)
-			body.equipped = foodInstance
-			#body.equipped = self
-			#body.attach_to_hand(self)
-			#human = body
-			##position = body.find_child("Hand").position
-			#team = ps._get_player_data(body.player, "team")
-			#isEquipped = true
-			#gravity_scale = 0
+			body.equipped = self
+			human = body
+			team = ps._get_player_data(body.player, "team")
+			isEquipped = true
+
+			# Disable physics when equipped
+			freeze = true
+			gravity_scale = 0
+			linear_velocity = Vector3.ZERO
+			angular_velocity = Vector3.ZERO
+
+			# Reset any scaling that might have been applied during throwing
+			scale = Vector3(1.0, 1.0, 1.0)
+			if has_node("Pivot/MeshInstance3D"):
+				get_node("Pivot/MeshInstance3D").scale = Vector3(0.5, 0.5, 0.5)
+
 			#rotatePivot(Vector3(0, 90, 0))
-			queue_free()
+
+			# Let attach_to_hand handle positioning through deferred reparenting
+			body.attach_to_hand(self)
 	elif body.name == "Ground":
 		hit_ground()

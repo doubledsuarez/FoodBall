@@ -73,11 +73,18 @@ func setLabelColor() -> void:
 
 
 func attach_to_hand(held_object: Node3D):
-	var hand_socket = $Pivot/Player_Model/Rig_Human/Skeleton3D/Hand_Holds/Hand_Holds  # Your BoneAttachment3D
+	# Use deferred reparenting to avoid physics callback error
+	call_deferred("_deferred_attach_to_hand", held_object)
+
+func _deferred_attach_to_hand(held_object: Node3D):
+	var hand_socket = $Pivot/Player_Model/Rig_Human/Skeleton3D/Hand_Holds/Hand_Holds
 	if hand_socket and held_object:
-		hand_socket.add_child(held_object)
-		#held_object.global_transform = hand_socket.global_transform
-		#held_object.position = hand_socket.position
+		held_object.reparent(hand_socket)
+		held_object.global_position = hand_socket.global_position
+		if (team == "red"):
+			held_object.position = Vector3(0.25, 1, -0.5)
+		elif (team == "blue"):
+			held_object.position = Vector3(-0.25, 1, -0.5)
 
 func _physics_process(delta: float) -> void:
 	#setLabelColor()
@@ -188,6 +195,7 @@ func throw(throw_force: float) -> void:
 	equipped.rotatePivot(Vector3(0, 0, 270))
 	equipped.throw(throw_direction, final_throw_force)
 	equipped.reparent(get_parent())
+	#get_parent().add_child(equipped)
 	hasFood = false
 	isMaxPower = false
 

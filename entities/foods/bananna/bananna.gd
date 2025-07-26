@@ -59,6 +59,9 @@ func throw(direction: Vector3, throw_force: float) -> void:
 	flight_timer = 0.0
 	boomerang_phase = "forward"
 
+	# Re-enable physics when thrown (was frozen during pickup)
+	freeze = false
+
 	# Store initial values
 	initial_direction = direction.normalized()
 	initial_position = global_position
