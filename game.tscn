@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4ejbhsvcm1fe"]
+[gd_scene load_steps=13 format=3 uid="uid://c4ejbhsvcm1fe"]
 
 [ext_resource type="Script" uid="uid://dj2bbrrv1b72b" path="res://game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://cuh3jcs72b7hr" path="res://entities/foods/apple/apple.tscn" id="2_fc0e3"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b0o0qj8jjim4h" path="res://entities/foods/peas/peas.tscn" id="9_vef74"]
 [ext_resource type="PackedScene" uid="uid://b7tii7f7rm4yl" path="res://music/combat_music.tscn" id="10_hve3p"]
 [ext_resource type="AudioStream" uid="uid://byt2ox8dc4ksn" path="res://audio/foodfight-menu.wav" id="11_mfdv2"]
+[ext_resource type="AudioStream" uid="uid://bwkimx4xktkyh" path="res://audio/Foodfight-Combat.wav" id="12_iotsf"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_feb5d")
@@ -22,5 +23,6 @@ autoplay = false
 bus = &"Music"
 
 [node name="CombatMusic" parent="." instance=ExtResource("10_hve3p")]
+stream = ExtResource("12_iotsf")
 autoplay = false
 bus = &"Music"

@@ -6,7 +6,7 @@ var MenuMusic
 var CombatMusic
 
 var roundTimeLimit : float = 180.0
-var pointsToWin : int = 20 
+var pointsToWin : int = 99 
 
 var red_points : int = 0
 var blue_points : int = 0
