@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://dobseb3g88a3p" path="res://entities/foods/icecream/IceCream_IceCream.png" id="3_pbjpn"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
-radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6vg"]
 albedo_color = Color(0.992157, 0.364706, 1, 1)
@@ -33,7 +32,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 visible = false
 
 [node name="IceCream" type="Sprite3D" parent="Pivot"]
-transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0, 0, 0)
 billboard = 1
 alpha_cut = 2
 texture = ExtResource("3_pbjpn")
