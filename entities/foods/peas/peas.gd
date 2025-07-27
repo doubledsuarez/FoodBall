@@ -13,18 +13,18 @@ func _process(delta: float) -> void:
 	pass
 
 func hit_ground() -> void:
-	Log.dbg("Peas hit_ground() called! is_trap: %s" % is_trap)
 	if not is_trap:
 		gravity_scale = 1.0
 		is_trap = true
 		inAction = false  # Stop it from being a projectile
-		#rotatePivot(Vector3(0, 90, 270))
 
 		# Freeze the peas in place to stop rolling
 		freeze = true
+		
+		$Pivot/Peas.visible = false
+		$Pivot/Splatter.visible = true
+		rotatePivot(Vector3(0, 0, 0))
 
-		Log.dbg("Peas became a slippery trap!")
-	# Don't call queue_free() - let it stay as a trap
 
 func hit(player) -> void:
 	if is_trap:

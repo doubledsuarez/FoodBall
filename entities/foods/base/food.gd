@@ -75,7 +75,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 				["blue", "red"]:
 					hit(body)
 					g.red_points += 1
-		elif (!inAction and !body.hasFood and !isEquipped):
+		elif (!inAction and !body.hasFood and !isEquipped and !body.inHitAni):
 			body.hasFood = true
 			body.equipped = self
 			human = body
@@ -90,10 +90,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 
 			# Reset any scaling that might have been applied during throwing
 			scale = Vector3(1.0, 1.0, 1.0)
-			if has_node("Pivot/MeshInstance3D"):
-				get_node("Pivot/MeshInstance3D").scale = Vector3(0.5, 0.5, 0.5)
-
-			#rotatePivot(Vector3(0, 90, 0))
 
 			# Let attach_to_hand handle positioning through deferred reparenting
 			body.attach_to_hand(self)

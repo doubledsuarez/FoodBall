@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ngfgv56f58w7"]
+[gd_scene load_steps=8 format=3 uid="uid://ngfgv56f58w7"]
 
 [ext_resource type="Script" uid="uid://dp1sjgmtsx5v4" path="res://entities/foods/cake/cake.gd" id="1_tuppd"]
 [ext_resource type="PackedScene" uid="uid://oeop6lta4br3" path="res://entities/foods/cake/LavaCake.glb" id="2_alc5b"]
+[ext_resource type="Texture2D" uid="uid://p1cbrc1kxhlw" path="res://entities/foods/cake/LavaCake_Lavacake.png" id="2_j8c60"]
+[ext_resource type="Texture2D" uid="uid://ch41aolxfuxnr" path="res://entities/foods/splats/Splatter2.png" id="3_jpgev"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -16,7 +18,6 @@ collision_mask = 2
 script = ExtResource("1_tuppd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -29,13 +30,25 @@ mesh = SubResource("SphereMesh_bw6vg")
 
 [node name="LavaCake2" parent="Pivot" instance=ExtResource("2_alc5b")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+
+[node name="Cake" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0, 0, 0)
+billboard = 1
+alpha_cut = 2
+texture = ExtResource("2_j8c60")
+
+[node name="Splatter" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.125, 0, 0, 0, -5.46392e-09, 0.125, 0, -0.125, -5.46392e-09, 0, 0, 0)
+visible = false
+billboard = 1
+texture = ExtResource("3_jpgev")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8
 collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

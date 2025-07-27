@@ -1,20 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://d4a0i5l1sb4bw"]
+[gd_scene load_steps=15 format=3 uid="uid://d4a0i5l1sb4bw"]
 
 [ext_resource type="Script" uid="uid://da08bwmmr7m52" path="res://levels/cafeteria/cafeteria.gd" id="1_ogs0t"]
 [ext_resource type="PackedScene" uid="uid://d2tp6os6xeghj" path="res://entities/furniture/net.tscn" id="2_ogs0t"]
+[ext_resource type="PackedScene" uid="uid://gmbd0jad1o70" path="res://entities/furniture/Cafeteria_Floor.glb" id="2_woofr"]
 [ext_resource type="PackedScene" uid="uid://dfuyuck0xgnya" path="res://entities/furniture/wall.tscn" id="3_fycxm"]
 [ext_resource type="PackedScene" uid="uid://ujuhui2i4hg8" path="res://utilities/food_spawn.tscn" id="5_ahiyj"]
 [ext_resource type="PackedScene" uid="uid://bqaa0jxi4ifyi" path="res://entities/furniture/b_table.tscn" id="5_h2u8y"]
 [ext_resource type="PackedScene" uid="uid://brbmj63rnork7" path="res://entities/furniture/table.tscn" id="6_h2u8y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oqph1"]
-size = Vector3(60, 1, 40)
+size = Vector3(60, 1, 35)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbq2m"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_obwsy"]
-size = Vector3(60, 1, 40)
+size = Vector3(60, 1, 35)
 
 [sub_resource type="LabelSettings" id="LabelSettings_h2u8y"]
 font_size = 40
@@ -48,13 +49,17 @@ collision_layer = 2
 collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_oqph1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
 material_override = SubResource("StandardMaterial3D_jbq2m")
 mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 30, 30)
@@ -67,13 +72,12 @@ transform = Transform3D(2, 0, 0, 0, 1.73205, 1, 0, -1, 1.73205, 0, 14, 17)
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 projection = 1
 current = true
-size = 30.0
+size = 25.0
 
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.505371)
 
 [node name="Back Wall" type="Node3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 3.5, 3)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 2.5, 5)
 
 [node name="Wall" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1.4, 1.25, -15)
@@ -204,16 +208,16 @@ label_settings = SubResource("LabelSettings_7hb8m")
 horizontal_alignment = 1
 
 [node name="FoodSpawns" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="FoodSpawn" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
 
 [node name="FoodSpawn2" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -13)
 
 [node name="FoodSpawn3" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -8)
 
 [node name="FoodSpawn4" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 15)
@@ -225,13 +229,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 7)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 10)
 
 [node name="FoodSpawn7" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
 
 [node name="FoodSpawn8" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -13)
 
 [node name="FoodSpawn9" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -8)
 
 [node name="FoodSpawn10" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 15)
@@ -255,37 +259,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 6)
 
 [node name="Furtniture" type="Node3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.5, 0)
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 0, 0)
 
 [node name="Table7" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -0.5, -7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.5, -7)
 
 [node name="Table8" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -0.5, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, -0.5, 3)
 
 [node name="Table10" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.5, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.5, 7.5)
 
 [node name="Table9" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.5, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, -0.5, -2)
 
 [node name="Table11" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.5, -7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5, -7)
 
 [node name="Table12" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, -0.5, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, -0.5, 3)
 
 [node name="Table13" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5, 7.5)
 
 [node name="Table14" parent="Furtniture" instance=ExtResource("6_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -0.5, -2)
 
 [node name="BTable" parent="Furtniture" instance=ExtResource("5_h2u8y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, -0.5, -8.28265)
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, -5, -0.5, -8.75)
 
 [node name="BTable2" parent="Furtniture" instance=ExtResource("5_h2u8y")]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 7, -0.5, 8)
+transform = Transform3D(0.883884, 0, -0.883884, 0, 1.25, 0, 0.883884, 0, 0.883884, 7.57143, -0.5, -5.71429)
 
 [node name="Found" type="Label" parent="."]
 offset_top = 64.0

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqfmcnq8s7cts"]
+
+[ext_resource type="Script" uid="uid://cvb0m1ed8dd0d" path="res://entities/foods/bananna/banana.gd" id="1_frb2j"]
+[ext_resource type="PackedScene" uid="uid://t0xbm25pet7i" path="res://entities/foods/bananna/Banana.glb" id="2_4kegv"]
+[ext_resource type="Texture2D" uid="uid://d2t54rjunkyjk" path="res://entities/foods/bananna/Banana_Banana.png" id="3_58ldi"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6vg"]
+albedo_color = Color(1, 0.976471, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_bw6vg"]
+
+[node name="Banana" type="RigidBody3D"]
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_frb2j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("SphereShape3D_ylt38")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_bw6vg")
+mesh = SubResource("SphereMesh_bw6vg")
+
+[node name="Banana2" parent="Pivot" instance=ExtResource("2_4kegv")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+
+[node name="Banana" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0, 0, 0)
+billboard = 1
+alpha_cut = 2
+texture = ExtResource("3_58ldi")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_ylt38")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

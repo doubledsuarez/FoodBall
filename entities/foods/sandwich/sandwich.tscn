@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dj2sy2w8wbksa"]
+[gd_scene load_steps=7 format=3 uid="uid://dj2sy2w8wbksa"]
 
 [ext_resource type="Script" uid="uid://c1bilapsdtvpp" path="res://entities/foods/sandwich/sandwich.gd" id="1_a15p8"]
 [ext_resource type="PackedScene" uid="uid://c4x0r41gw2mkx" path="res://entities/foods/sandwich/Sandwich.glb" id="2_gist8"]
+[ext_resource type="Texture2D" uid="uid://bop3615sp2kl" path="res://entities/foods/sandwich/Sandwich_Sandwich.png" id="3_ywhoh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -16,7 +17,6 @@ collision_mask = 0
 script = ExtResource("1_a15p8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -29,13 +29,19 @@ mesh = SubResource("SphereMesh_bw6vg")
 
 [node name="Sandwich2" parent="Pivot" instance=ExtResource("2_gist8")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+
+[node name="Sandwich" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0, 0, 0)
+billboard = 1
+alpha_cut = 2
+texture = ExtResource("3_ywhoh")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8
 collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

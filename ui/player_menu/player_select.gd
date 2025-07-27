@@ -313,11 +313,16 @@ func _check_start_conditions():
 # Start countdown to launch game
 func _start_game_countdown():
 	Log.info("Countdown started")
-	countdown_time = 5
-	countdown_active = true  # prevent label from being reset
 	
 	g.MenuMusic.stop()
 	g.CombatMusic.play()
+	
+	# Waits .08 seconds for the music to time perfectly
+	await get_tree().create_timer(.08).timeout
+	
+	countdown_time = 5
+	countdown_active = true  # prevent label from being reset
+
 
 	var label = $"Player Select/PanelContainer/VBoxContainer/ConnectLabel"
 	if label:

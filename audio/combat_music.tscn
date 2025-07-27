@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7tii7f7rm4yl"]
-
-[ext_resource type="AudioStream" uid="uid://87n83fxr5mmi" path="res://music/Foodfight-Combat.wav" id="1_m8if4"]
-
-[node name="CombatMusic" type="AudioStreamPlayer"]
-stream = ExtResource("1_m8if4")
-autoplay = true
-stream_paused = true
