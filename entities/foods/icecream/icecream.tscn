@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://br5qljq8y78og"]
+[gd_scene load_steps=7 format=3 uid="uid://br5qljq8y78og"]
 
 [ext_resource type="Script" uid="uid://cq5v454ubyo41" path="res://entities/foods/icecream/icecream.gd" id="1_qjpcs"]
 [ext_resource type="PackedScene" uid="uid://6suhsip5v6e2" path="res://entities/foods/icecream/IceCream.glb" id="2_cvffu"]
+[ext_resource type="Texture2D" uid="uid://dobseb3g88a3p" path="res://entities/foods/icecream/IceCream_IceCream.png" id="3_pbjpn"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
+radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw6vg"]
 albedo_color = Color(0.992157, 0.364706, 1, 1)
@@ -16,7 +18,6 @@ collision_mask = 0
 script = ExtResource("1_qjpcs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -29,13 +30,19 @@ mesh = SubResource("SphereMesh_bw6vg")
 
 [node name="IceCream2" parent="Pivot" instance=ExtResource("2_cvffu")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
+
+[node name="IceCream" type="Sprite3D" parent="Pivot"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+billboard = 1
+alpha_cut = 2
+texture = ExtResource("3_pbjpn")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8
 collision_mask = 15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 shape = SubResource("SphereShape3D_ylt38")
 
 [node name="DebuffTimer" type="Timer" parent="."]

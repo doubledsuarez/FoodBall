@@ -75,7 +75,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 				["blue", "red"]:
 					hit(body)
 					g.red_points += 1
-		elif (!inAction and !body.hasFood and !isEquipped):
+		elif (!inAction and !body.hasFood and !isEquipped and !body.inHitAni):
 			body.hasFood = true
 			body.equipped = self
 			human = body

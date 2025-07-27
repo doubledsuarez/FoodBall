@@ -22,6 +22,10 @@ func hit_ground() -> void:
 
 		# Freeze the peas in place to stop rolling
 		freeze = true
+		
+		$Pivot/Peas.visible = false
+		$Pivot/Splatter.visible = true
+		rotatePivot(Vector3(0, 0, 0))
 
 		Log.dbg("Peas became a slippery trap!")
 	# Don't call queue_free() - let it stay as a trap
