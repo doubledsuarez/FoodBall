@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2tp6os6xeghj"]
+[gd_scene load_steps=4 format=3 uid="uid://d2tp6os6xeghj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m88a6"]
 size = Vector3(2, 2, 40)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wf60q"]
 size = Vector3(0.125, 2, 40)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vvgtc"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="Net" type="StaticBody3D"]
 collision_layer = 4
@@ -15,3 +18,4 @@ shape = SubResource("BoxShape3D_m88a6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_wf60q")
+surface_material_override/0 = SubResource("StandardMaterial3D_vvgtc")

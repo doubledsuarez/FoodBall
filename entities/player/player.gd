@@ -91,10 +91,16 @@ func _physics_process(delta: float) -> void:
 
 	var direction = Vector3.ZERO
 	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
+		if AniPlayer.is_playing() and AniPlayer.get_current_animation() != "Idle_Holding":
+			AniPlayer.stop()
+		
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
 	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
+		if AniPlayer.is_playing() and AniPlayer.get_current_animation() != "Walk_Holding":
+			AniPlayer.stop()
+		
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
@@ -156,7 +162,7 @@ func _physics_process(delta: float) -> void:
 			throw_triggered = false  # Reset throw flag
 			#speed *= powerExp
 
-	if input.is_action_just_pressed("eat") and !inThrowAni:
+	if input.is_action_just_pressed("eat") and !throwStarted:
 		if hasFood == true and powerup_active == false:
 			hasFood = false
 			powerUp()
@@ -255,6 +261,10 @@ func on_animation_finished(anim_name: String) -> void:
 	elif anim_name == "Getting_Hit":
 		inHitAni = false
 		AniPlayer.speed_scale = 1.0
+		if inThrowAni:
+			inThrowAni = false
+		if throwStarted:
+			throwStarted = false
 
 func set_sticky() -> void:
 	isSticky = true
