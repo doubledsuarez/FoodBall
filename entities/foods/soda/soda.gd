@@ -22,6 +22,9 @@ func hit_ground() -> void:
 
 		# Freeze the soda in place to stop rolling
 		freeze = true
+		
+		$Pivot/Soda.visible = false
+		$Pivot/Splatter.visible = true
 
 		Log.dbg("Soda became a sticky trap!")
 	# Don't call queue_free() - let it stay as a trap
