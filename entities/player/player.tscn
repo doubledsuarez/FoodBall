@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://wu14x6pdx8fq"]
+[gd_scene load_steps=10 format=3 uid="uid://wu14x6pdx8fq"]
 
 [ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Script" uid="uid://cqbpu4vebvpg2" path="res://entities/player/team_color.gd" id="2_abrql"]
 [ext_resource type="PackedScene" uid="uid://28wumv6s4x7g" path="res://entities/player/player_model.tscn" id="2_sglur"]
+[ext_resource type="Theme" uid="uid://d3p2ie3xlw22q" path="res://ui/player_menu/player.tres" id="4_bls4j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
 size = Vector3(1, 1.75, 1.25049)
@@ -418,6 +419,7 @@ size = Vector2i(256, 256)
 custom_minimum_size = Vector2(256, 256)
 offset_right = 40.0
 offset_bottom = 23.0
+theme = ExtResource("4_bls4j")
 text = "Player #"
 label_settings = SubResource("LabelSettings_symyc")
 horizontal_alignment = 1

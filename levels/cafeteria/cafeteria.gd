@@ -93,7 +93,7 @@ func spawn_player(player: int):
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 0, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.RED
 		#player_node.setLabelColor()
-		player_node.position = Vector3(randf_range(-13, -2), 0, randf_range(-13, 13))
+		player_node.position = Vector3(randf_range(-13, -2), -1, randf_range(-13, 13))
 		player_node.find_child("Player_Model").set_player_texture(g.Player_Textures[ps._get_player_data(player, "pos")])
 	elif ps._get_player_data(player, "team") == "blue":
 		player_node.team = "blue"
@@ -101,7 +101,7 @@ func spawn_player(player: int):
 		player_node.get_node("PlayerNumLabel").set_rotation_degrees(Vector3(0, 180, 0))
 		#player_node.find_child("PlayerNum").label_settings.font_color = Color.BLUE
 		#player_node.setLabelColor()
-		player_node.position = Vector3(randf_range(2, 13), 0, randf_range(-13, 13))
+		player_node.position = Vector3(randf_range(2, 13), -1, randf_range(-13, 13))
 		player_node.find_child("Player_Model").set_player_texture(g.Player_Textures[ps._get_player_data(player, "pos")])
 		
 
