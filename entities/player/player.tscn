@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://f5rq7mfe77mn" path="res://entities/player/player.gd" id="1_symyc"]
 [ext_resource type="Script" uid="uid://cqbpu4vebvpg2" path="res://entities/player/team_color.gd" id="2_abrql"]
-[ext_resource type="PackedScene" uid="uid://28wumv6s4x7g" path="res://entities/player/player_model.tscn" id="2_sglur"]
+[ext_resource type="PackedScene" uid="uid://b4xno7ogm0mnk" path="res://entities/player/player_model.tscn" id="2_sglur"]
 [ext_resource type="Theme" uid="uid://d3p2ie3xlw22q" path="res://ui/player_menu/player.tres" id="4_bls4j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sfv1e"]
@@ -81,5 +81,3 @@ one_shot = true
 [connection signal="timeout" from="DebuffTimer" to="." method="_on_debuff_timer_timeout"]
 [connection signal="timeout" from="StickyTimer" to="." method="_on_sticky_timer_timeout"]
 [connection signal="timeout" from="SlipTimer" to="." method="_on_slip_timer_timeout"]
-
-[editable path="Pivot/Player_Model"]

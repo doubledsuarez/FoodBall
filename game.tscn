@@ -23,3 +23,5 @@ bus = &"Music"
 
 [node name="CombatMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_iotsf")
+volume_db = 15.0
+bus = &"Music"

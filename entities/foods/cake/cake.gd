@@ -52,6 +52,8 @@ func hit(player) -> void:
 			player.equipped.throw(Vector3(0, 1, 0), 2.0)
 		else:
 			Log.dbg("Player has no food to drop")
+			
+		await get_tree().create_timer(1.0).timeout
 
 		super.hit(player)
 	else:
