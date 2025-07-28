@@ -4,6 +4,7 @@ var is_trap: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Pivot/Splatter.modulate = Color(0.55, 0.71, 0)
 	gravity_scale = 0.0
 	type = "peas"
 
