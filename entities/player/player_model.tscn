@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://28wumv6s4x7g"]
 
 [ext_resource type="PackedScene" uid="uid://d0dkjr2u5t6ya" path="res://entities/player/player.glb" id="1_hwc0q"]
-[ext_resource type="Script" uid="uid://ceos0ptmdqfy8" path="res://entities/player/player_model.gd" id="2_58iv5"]
+[ext_resource type="Script" uid="uid://defaj8p18w4nh" path="res://entities/player/player_model.gd" id="2_58iv5"]
 
 [node name="Player Model" instance=ExtResource("1_hwc0q")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
@@ -190,7 +190,6 @@ bones/468/scale = Vector3(0.966686, 0.966686, 0.966685)
 bones/469/rotation = Quaternion(0.591152, -0.0201432, -0.000265209, 0.806308)
 bones/469/scale = Vector3(1.00155, 1.00155, 1.00155)
 bones/471/rotation = Quaternion(-3.35276e-08, 1.49012e-08, -3.44527e-09, 1)
-bones/471/scale = Vector3(1, 1, 1)
 bones/472/rotation = Quaternion(-0.121383, -0.105219, -0.0468318, 0.985902)
 bones/473/rotation = Quaternion(0.171392, -1.16807e-07, -2.41017e-08, 0.985203)
 bones/477/rotation = Quaternion(-0.177973, 1.49653e-09, 5.09449e-08, 0.984035)
@@ -314,7 +313,6 @@ bones/839/rotation = Quaternion(-0.496129, 0.186179, -0.163152, 0.832211)
 bones/839/scale = Vector3(1.02486, 1.02486, 1.02486)
 bones/840/position = Vector3(1.67984e-08, 1.28677e-08, 3.11993e-08)
 bones/841/rotation = Quaternion(2.93836e-07, 1.68802e-09, -9.69638e-08, 1)
-bones/841/scale = Vector3(1, 1, 1)
 bones/843/rotation = Quaternion(-0.302411, -0.00499078, -0.00158349, 0.953163)
 bones/843/scale = Vector3(1, 0.999999, 1)
 bones/852/rotation = Quaternion(-0.351901, 0.0420039, 0.281378, 0.891755)
@@ -413,8 +411,8 @@ bones/916/rotation = Quaternion(-4.6981e-11, 0.999992, -0.0039614, -7.55609e-08)
 bones/917/rotation = Quaternion(0.00160312, 0.951958, -0.306184, -0.00498439)
 
 [node name="Hand_Holds" parent="Rig_Human/Skeleton3D" index="0"]
-transform = Transform3D(1, 0, -4.47035e-08, -2.38419e-07, 1, -2.68221e-07, 4.47035e-08, 1.19209e-07, 1, 1.3411e-07, -1.19209e-07, -2.08616e-07)
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 2.08616e-07, -1.49012e-08, 5.96046e-08, 1, -6.70552e-07, 4.17233e-07, 1.78814e-07)
 
 [node name="Hand_Holds" parent="Rig_Human/Skeleton3D/Hand_Holds" index="0"]
 transform = Transform3D(-1, -4.76837e-07, 8.74229e-08, -4.76837e-07, 1, -5.36442e-07, -8.74226e-08, -5.36442e-07, -1, 0, 0, 0)
-visible = false
+layers = 0

@@ -64,6 +64,96 @@ mesh = SubResource("BoxMesh_obwsy")
 [node name="Cafeteria_Floor2" parent="Ground" instance=ExtResource("2_woofr")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
+[node name="Ground5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, 0)
+collision_layer = 2
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_oqph1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
+material_override = SubResource("StandardMaterial3D_jbq2m")
+mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground5" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Ground6" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, 35)
+collision_layer = 2
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_oqph1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
+material_override = SubResource("StandardMaterial3D_jbq2m")
+mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground6" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Ground2" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 35)
+collision_layer = 2
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_oqph1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
+material_override = SubResource("StandardMaterial3D_jbq2m")
+mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground2" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Ground3" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 60, 0, 35)
+collision_layer = 2
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_oqph1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
+material_override = SubResource("StandardMaterial3D_jbq2m")
+mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground3" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Ground4" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 60, 0, 1)
+collision_layer = 2
+collision_mask = 15
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_oqph1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.505371)
+visible = false
+material_override = SubResource("StandardMaterial3D_jbq2m")
+mesh = SubResource("BoxMesh_obwsy")
+
+[node name="Cafeteria_Floor2" parent="Ground4" instance=ExtResource("2_woofr")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 31, 30)
 shadow_enabled = true
@@ -72,13 +162,37 @@ shadow_enabled = true
 transform = Transform3D(1.99239, 0.0871557, -0.150958, 0, 1.73205, 1, 0.174311, -0.996194, 1.72546, -2, 15, 20)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(0.5, -7.26432e-08, 7.07805e-08, 0, 0.5, -2.98023e-08, 0, 0, 0.5, -0.498097, -0.0217891, 0.0377388)
 projection = 1
 current = true
 size = 25.0
 
+[node name="NetOfTables" type="Node3D" parent="."]
+
+[node name="Table" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -13)
+
+[node name="Table2" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -8)
+
+[node name="Table3" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -3)
+
+[node name="Table4" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
+
+[node name="Table5" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 7)
+
+[node name="Table6" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 12)
+
+[node name="Table7" parent="NetOfTables" instance=ExtResource("6_h2u8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 17)
+
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 
 [node name="Back Wall" type="Node3D" parent="."]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 3.5, 5)
@@ -123,7 +237,7 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 18.4, 1.
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 21.8, 1.25, -15)
 
 [node name="Front Wall" type="Node3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 5, 52)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 5, 53)
 visible = false
 
 [node name="Wall" parent="Front Wall" instance=ExtResource("3_fycxm")]
