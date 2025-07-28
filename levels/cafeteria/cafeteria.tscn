@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d4a0i5l1sb4bw"]
+[gd_scene load_steps=19 format=3 uid="uid://d4a0i5l1sb4bw"]
 
 [ext_resource type="Script" uid="uid://da08bwmmr7m52" path="res://levels/cafeteria/cafeteria.gd" id="1_ogs0t"]
 [ext_resource type="PackedScene" uid="uid://d2tp6os6xeghj" path="res://entities/furniture/net.tscn" id="2_ogs0t"]
@@ -6,7 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dfuyuck0xgnya" path="res://entities/furniture/wall.tscn" id="3_fycxm"]
 [ext_resource type="PackedScene" uid="uid://ujuhui2i4hg8" path="res://utilities/food_spawn.tscn" id="5_ahiyj"]
 [ext_resource type="PackedScene" uid="uid://bqaa0jxi4ifyi" path="res://entities/furniture/b_table.tscn" id="5_h2u8y"]
+[ext_resource type="Theme" uid="uid://bi36aqas10egu" path="res://ui/player_menu/redteamplayer.tres" id="5_tmpwa"]
 [ext_resource type="PackedScene" uid="uid://brbmj63rnork7" path="res://entities/furniture/table.tscn" id="6_h2u8y"]
+[ext_resource type="Theme" uid="uid://drs1aeord7pgx" path="res://ui/player_menu/blueteamplayer.tres" id="6_mnn18"]
+[ext_resource type="Theme" uid="uid://cq7yef5qym1vr" path="res://ui/main_menu/main_menu.tres" id="7_r4qy4"]
+[ext_resource type="Theme" uid="uid://cpljgmx452bm5" path="res://ui/options_menu/options_menu.tres" id="11_mnn18"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oqph1"]
 size = Vector3(60, 1, 35)
@@ -44,7 +48,6 @@ outline_color = Color(0, 0, 0, 1)
 script = ExtResource("1_ogs0t")
 
 [node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 collision_layer = 2
 collision_mask = 15
 
@@ -62,11 +65,11 @@ mesh = SubResource("BoxMesh_obwsy")
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 30, 30)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 31, 30)
 shadow_enabled = true
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 1.73205, 1, 0, -1, 1.73205, 0, 14, 17)
+transform = Transform3D(2, 0, 0, 0, 1.73205, 1, 0, -1, 1.73205, 0, 15, 17)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -75,9 +78,10 @@ current = true
 size = 25.0
 
 [node name="Net" parent="." instance=ExtResource("2_ogs0t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Back Wall" type="Node3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 2.5, 5)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 3.5, 5)
 
 [node name="Wall" parent="Back Wall" instance=ExtResource("3_fycxm")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1.4, 1.25, -15)
@@ -119,7 +123,7 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 18.4, 1.
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 21.8, 1.25, -15)
 
 [node name="Front Wall" type="Node3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 4, 52)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 5, 52)
 visible = false
 
 [node name="Wall" parent="Front Wall" instance=ExtResource("3_fycxm")]
@@ -186,6 +190,7 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29, 1.25
 offset_left = 8.0
 offset_right = 320.0
 offset_bottom = 55.0
+theme = ExtResource("5_tmpwa")
 theme_override_font_sizes/font_size = 40
 text = "Lorem"
 label_settings = SubResource("LabelSettings_h2u8y")
@@ -194,6 +199,7 @@ label_settings = SubResource("LabelSettings_h2u8y")
 offset_left = 1600.0
 offset_right = 1918.0
 offset_bottom = 55.0
+theme = ExtResource("6_mnn18")
 theme_override_font_sizes/font_size = 40
 text = "Ipsum"
 label_settings = SubResource("LabelSettings_woofr")
@@ -202,13 +208,14 @@ horizontal_alignment = 2
 [node name="Countdown" type="Label" parent="."]
 offset_right = 1920.0
 offset_bottom = 64.0
+theme = ExtResource("7_r4qy4")
 theme_override_font_sizes/font_size = 40
 text = "Timer"
 label_settings = SubResource("LabelSettings_7hb8m")
 horizontal_alignment = 1
 
 [node name="FoodSpawns" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="FoodSpawn" parent="FoodSpawns" instance=ExtResource("5_ahiyj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
@@ -259,7 +266,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 6)
 
 [node name="Furtniture" type="Node3D" parent="."]
-transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 0, 0)
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 1, 0)
 
 [node name="Table7" parent="Furtniture" instance=ExtResource("6_h2u8y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, -0.5, -7)
@@ -295,6 +302,7 @@ transform = Transform3D(0.883884, 0, -0.883884, 0, 1.25, 0, 0.883884, 0, 0.88388
 offset_top = 64.0
 offset_right = 1920.0
 offset_bottom = 192.0
+theme = ExtResource("11_mnn18")
 text = "Player # has found the secret ingredient! It's \"\"."
 label_settings = SubResource("LabelSettings_1o3gt")
 horizontal_alignment = 1
