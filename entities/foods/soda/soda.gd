@@ -4,6 +4,7 @@ var is_trap: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Pivot/Splatter.set_texture(g.Splatter_Textures[randi() % g.Splatter_Textures.size()])
 	$Pivot/Splatter.modulate = Color.BLUE
 	gravity_scale = 0.0
 	type = "soda"

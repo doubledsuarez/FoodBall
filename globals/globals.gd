@@ -27,5 +27,12 @@ var Player_Textures = [
 	preload("res://entities/player/player textures/player_model_4_Character_Blue.png") as Texture2D
 ]
 
+var Splatter_Textures = [
+	preload("res://entities/foods/splats/FlatPuddle2.png") as Texture2D,
+	preload("res://entities/foods/splats/FlatSplatter1.png") as Texture2D,
+	preload("res://entities/foods/splats/Splatter2.png") as Texture2D,
+	preload("res://entities/foods/splats/Splatter.png") as Texture2D
+]
+
 func _ready():
 	add_child(roundTimer)
