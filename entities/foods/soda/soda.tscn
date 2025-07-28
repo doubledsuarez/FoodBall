@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://4yfyoa35vlo4"]
+[gd_scene load_steps=7 format=3 uid="uid://4yfyoa35vlo4"]
 
 [ext_resource type="Script" uid="uid://1h4rd7sa8r4n" path="res://entities/foods/soda/soda.gd" id="1_ke7p7"]
 [ext_resource type="PackedScene" uid="uid://b2q6v3t5hop0e" path="res://entities/foods/soda/Soda.glb" id="2_1c5lx"]
 [ext_resource type="Texture2D" uid="uid://cdtclppucf5" path="res://entities/foods/soda/Soda_Soda.png" id="3_w3313"]
-[ext_resource type="Texture2D" uid="uid://fdd36xasl6wg" path="res://entities/foods/splats/FlatPuddle2.png" id="4_k0uro"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -42,7 +41,6 @@ texture = ExtResource("3_w3313")
 transform = Transform3D(0.125, 0, 0, 0, -5.46392e-09, 0.125, 0, -0.125, -5.46392e-09, 0, 0, 0)
 visible = false
 billboard = 1
-texture = ExtResource("4_k0uro")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8

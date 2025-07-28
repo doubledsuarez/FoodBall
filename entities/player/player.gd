@@ -90,17 +90,23 @@ func _physics_process(delta: float) -> void:
 	#setLabelColor()
 
 	var direction = Vector3.ZERO
-	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
+	if input.get_vector("move_left","move_right","move_forward","move_back") == Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery and !isSticky:
 		if AniPlayer.is_playing() and AniPlayer.get_current_animation() != "Idle_Holding":
 			AniPlayer.stop()
-		
+
+		if AniPlayer.speed_scale > 1.0:
+			AniPlayer.set_speed_scale(1.0)
+
 		AniPlayer.play("Idle_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
-	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery:
+	if input.get_vector("move_left","move_right","move_forward","move_back") != Vector2.ZERO and !inThrowAni and !throwStarted and !inHitAni and !isSlippery and !isSticky:
 		if AniPlayer.is_playing() and AniPlayer.get_current_animation() != "Walk_Holding":
 			AniPlayer.stop()
-		
+
+		if AniPlayer.speed_scale > 1.0:
+			AniPlayer.set_speed_scale(1.0)
+
 		AniPlayer.play("Walk_Holding")
 		rotatePivot(Vector3(0, 270, 0))
 
@@ -128,7 +134,7 @@ func _physics_process(delta: float) -> void:
 		# Force movement in slip direction, ignore input
 		target_velocity.x = slip_direction.x * speed
 		target_velocity.z = slip_direction.z * speed
-	elif inHitAni:
+	elif inHitAni and !isSticky:
 		if team == "red":
 			target_velocity.x = -speed/2
 			target_velocity.z = 0
@@ -205,6 +211,9 @@ func throw(throw_force: float) -> void:
 	hasFood = false
 	isMaxPower = false
 
+	# Check for nearby food after throwing (in case player is standing in food)
+	# call_deferred("_check_for_nearby_food")  # TODO: Fix after jam
+
 func on_throw_timer_timeout() -> void:
 	isMaxPower = true
 
@@ -265,10 +274,25 @@ func on_animation_finished(anim_name: String) -> void:
 			inThrowAni = false
 		if throwStarted:
 			throwStarted = false
+		if isSticky:
+			isSticky = false
+		if AniPlayer.speed_scale > 1.0:
+			AniPlayer.set_speed_scale(1.0)
+	elif anim_name == "Sticky":
+		isSticky = false
+		if inThrowAni:
+			inThrowAni = false
+		if throwStarted:
+			throwStarted = false
+		if inHitAni:
+			inHitAni = false
+		if AniPlayer.speed_scale > 1.0:
+			AniPlayer.set_speed_scale(1.0)
 
 func set_sticky() -> void:
 	isSticky = true
 	$StickyTimer.start()
+	AniPlayer.play("Stuck")
 	Log.info("Soda stickiness trap triggered.")
 
 
@@ -280,6 +304,12 @@ func _on_debuff_timer_timeout() -> void:
 
 func _on_sticky_timer_timeout() -> void:
 	isSticky = false
+	inThrowAni = false
+	throwStarted = false
+	inHitAni = false
+	AniPlayer.stop()
+	if AniPlayer.speed_scale > 1.0:
+		AniPlayer.set_speed_scale(1.0)
 	Log.info("Soda stickiness removed.")
 
 func set_slippery(duration: float):
@@ -295,3 +325,27 @@ func _on_slip_timer_timeout():
 	isSlippery = false
 	slip_direction = Vector3.ZERO
 	Log.info("Player slip ended")
+
+func _check_for_nearby_food():
+	if hasFood:  # Already have food, don't need to check
+		return
+
+	# Use physics query to find nearby food objects
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsShapeQueryParameters3D.new()
+	var shape = SphereShape3D.new()
+	shape.radius = 1.5  # Pickup range
+	query.shape = shape
+	query.transform.origin = global_position
+	query.collision_mask = 8  # Food collision layer (Area3D uses collision_layer = 8)
+
+	var results = space_state.intersect_shape(query)
+	for result in results:
+		var collider = result.collider
+		# Check if it's a food area
+		if collider.name == "Area3D" and collider.get_parent() is Food:
+			var food = collider.get_parent()
+			if not food.inAction and not food.isEquipped:
+				# Manually trigger food pickup
+				food._on_area_3d_body_entered(self)
+				break  # Only pick up one food

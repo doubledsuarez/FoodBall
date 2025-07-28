@@ -2,8 +2,12 @@ extends Food
 
 var is_trap: bool = false
 
+const color = Color(0.5, 0, 0)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Pivot/Splatter.set_texture(g.Splatter_Textures[randi() % g.Splatter_Textures.size()])
+	$Pivot/Splatter.modulate = Color.BROWN
 	gravity_scale = 0.0
 	type = "cake"
 
@@ -49,6 +53,8 @@ func hit(player) -> void:
 			player.equipped.throw(Vector3(0, 1, 0), 2.0)
 		else:
 			Log.dbg("Player has no food to drop")
+			
+		await get_tree().create_timer(1.0).timeout
 
 		super.hit(player)
 	else:

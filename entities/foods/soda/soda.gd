@@ -4,6 +4,8 @@ var is_trap: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Pivot/Splatter.set_texture(g.Splatter_Textures[randi() % g.Splatter_Textures.size()])
+	$Pivot/Splatter.modulate = Color.BLUE
 	gravity_scale = 0.0
 	type = "soda"
 
@@ -40,6 +42,8 @@ func hit(player) -> void:
 			Log.dbg("Player is now sticky for 1 second!")
 		else:
 			Log.dbg("Warning: Player doesn't have set_sticky method!")
+
+		await get_tree().create_timer(1.0).timeout
 
 		# Destroy the soda trap after use
 		queue_free()

@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ngfgv56f58w7"]
+[gd_scene load_steps=7 format=3 uid="uid://ngfgv56f58w7"]
 
 [ext_resource type="Script" uid="uid://dp1sjgmtsx5v4" path="res://entities/foods/cake/cake.gd" id="1_tuppd"]
 [ext_resource type="PackedScene" uid="uid://oeop6lta4br3" path="res://entities/foods/cake/LavaCake.glb" id="2_alc5b"]
 [ext_resource type="Texture2D" uid="uid://p1cbrc1kxhlw" path="res://entities/foods/cake/LavaCake_Lavacake.png" id="2_j8c60"]
-[ext_resource type="Texture2D" uid="uid://ch41aolxfuxnr" path="res://entities/foods/splats/Splatter2.png" id="3_jpgev"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ylt38"]
 
@@ -42,7 +41,6 @@ texture = ExtResource("2_j8c60")
 transform = Transform3D(0.125, 0, 0, 0, -5.46392e-09, 0.125, 0, -0.125, -5.46392e-09, 0, 0, 0)
 visible = false
 billboard = 1
-texture = ExtResource("3_jpgev")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8

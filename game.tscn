@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://4yfyoa35vlo4" path="res://entities/foods/soda/soda.tscn" id="7_eow3j"]
 [ext_resource type="PackedScene" uid="uid://dj2sy2w8wbksa" path="res://entities/foods/sandwich/sandwich.tscn" id="8_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://b0o0qj8jjim4h" path="res://entities/foods/peas/peas.tscn" id="9_vef74"]
-[ext_resource type="AudioStream" uid="uid://bqcquyt2gemk7" path="res://music/foodfight-menu.wav" id="11_mfdv2"]
+[ext_resource type="AudioStream" uid="uid://dbalb8yy281go" path="res://music/foodfight-menu-2.wav" id="10_mfdv2"]
 [ext_resource type="AudioStream" uid="uid://bwkimx4xktkyh" path="res://music/Foodfight-Combat.wav" id="12_iotsf"]
 
 [node name="Game" type="Node"]
@@ -17,7 +17,11 @@ script = ExtResource("1_feb5d")
 foods = Array[PackedScene]([ExtResource("2_fc0e3"), ExtResource("4_fc0e3"), ExtResource("4_7jktm"), ExtResource("5_7jktm"), ExtResource("6_ryrav"), ExtResource("7_eow3j"), ExtResource("8_j5wjh"), ExtResource("9_vef74")])
 
 [node name="MenuMusic" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_mfdv2")
+stream = ExtResource("10_mfdv2")
+volume_db = 15.0
+bus = &"Music"
 
 [node name="CombatMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_iotsf")
+volume_db = 15.0
+bus = &"Music"
