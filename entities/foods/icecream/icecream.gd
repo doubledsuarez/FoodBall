@@ -19,6 +19,7 @@ func hit(player : Player) -> void:
 		player.speed /= player.powerExp
 		player.DebuffTimer.start()
 		Log.info("Player debuffed. Current speed is %s" % player.speed)
+	player.AniPlayer.stop()
 	player.AniPlayer.play("Getting_Hit")
 	player.inHitAni = true
 	queue_free()

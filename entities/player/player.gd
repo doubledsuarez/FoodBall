@@ -152,12 +152,13 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if hasFood and !inThrowAni:
+	if hasFood and !inThrowAni and !isSticky and !inHitAni:
 		if input.is_action_just_pressed("throw"):
 			throwStarted = true
 			throwTimer.start()
 			#speed /= powerExp
 			#AniPlayer.speed_scale = 2.0
+			AniPlayer.stop()
 			AniPlayer.play("Throwing_WindUp")
 		if input.is_action_just_released("throw") and throwStarted:
 			throw_power = (maxPowerScale - throwTimer.get_time_left()) * 3
@@ -266,7 +267,12 @@ func on_animation_finished(anim_name: String) -> void:
 	elif anim_name == "Throwing_Release":
 		throwStarted = false
 		inThrowAni = false
-		AniPlayer.speed_scale = 1.0
+		if isSticky:
+			isSticky = false
+		if inHitAni:
+			inHitAni = false
+		if AniPlayer.speed_scale > 1.0:
+			AniPlayer.set_speed_scale(1.0)
 	elif anim_name == "Getting_Hit":
 		inHitAni = false
 		AniPlayer.speed_scale = 1.0

@@ -54,6 +54,7 @@ func eat() -> void:
 
 func hit(player : Player) -> void:
 	player.AniPlayer.speed_scale = 2.0
+	player.AniPlayer.stop()
 	player.AniPlayer.play("Getting_Hit")
 	player.inHitAni = true
 	queue_free()
